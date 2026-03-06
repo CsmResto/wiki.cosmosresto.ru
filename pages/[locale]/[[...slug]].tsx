@@ -12,34 +12,36 @@ import {
   WikiDirectoryData,
 } from '@/lib/markdown'
 
+type BreadcrumbItem = {
+  slug: string
+  label: string
+}
+
 type PageProps =
   | {
       kind: 'directory'
       locale: Locale
       directory: WikiDirectoryData
-      parentHref: string
+      breadcrumbs: BreadcrumbItem[]
     }
   | {
       kind: 'page'
       locale: Locale
       page: MarkdownData
-      parentHref: string
+      breadcrumbs: BreadcrumbItem[]
     }
 
 type UiText = {
-  back: string
   rootTitle: string
   homeDescription: string
 }
 
 const uiTextByLocale: Record<Locale, UiText> = {
   ru: {
-    back: 'Назад',
     rootTitle: 'CSM Wiki',
     homeDescription: 'Корневая страница wiki',
   },
   en: {
-    back: 'Back',
     rootTitle: 'CSM Wiki',
     homeDescription: 'Wiki root page',
   },
@@ -50,23 +52,56 @@ function buildWikiHref(locale: Locale, slug: string): string {
   return normalizedSlug ? `/${locale}/${normalizedSlug}` : `/${locale}`
 }
 
-function getParentHref(locale: Locale, slug: string): string {
-  const segments = slug.split('/').filter(Boolean)
-  if (segments.length <= 1) {
-    return `/${locale}`
+function buildDirectoryBreadcrumbs(locale: Locale, slug: string): BreadcrumbItem[] {
+  const normalizedSlug = slug.replace(/^\/+|\/+$/g, '')
+  if (!normalizedSlug) {
+    return []
   }
 
-  return `/${locale}/${segments.slice(0, -1).join('/')}`
+  const segments = normalizedSlug.split('/').filter(Boolean)
+  return segments.map((_, index) => {
+    const itemSlug = segments.slice(0, index + 1).join('/')
+    const directory = getWikiDirectoryData(locale, itemSlug)
+
+    return {
+      slug: itemSlug,
+      label: directory?.name ?? segments[index],
+    }
+  })
+}
+
+function buildPageBreadcrumbs(locale: Locale, page: MarkdownData): BreadcrumbItem[] {
+  const segments = page.slug.split('/').filter(Boolean)
+  const breadcrumbs: BreadcrumbItem[] = []
+
+  for (let index = 0; index < segments.length - 1; index += 1) {
+    const directorySlug = segments.slice(0, index + 1).join('/')
+    const directory = getWikiDirectoryData(locale, directorySlug)
+
+    breadcrumbs.push({
+      slug: directorySlug,
+      label: directory?.name ?? segments[index],
+    })
+  }
+
+  breadcrumbs.push({
+    slug: page.slug,
+    label: page.title,
+  })
+
+  return breadcrumbs
 }
 
 export default function WikiPage(props: PageProps) {
   const text = uiTextByLocale[props.locale]
   const currentSlug = props.kind === 'directory' ? props.directory.slug : props.page.slug
+  const breadcrumbs = props.breadcrumbs
 
   if (props.kind === 'directory') {
-    const { directory, parentHref, locale } = props
+    const { directory, locale } = props
     const isRootDirectory = directory.slug === ''
     const directoryTitle = isRootDirectory ? text.rootTitle : directory.name
+
     return (
       <>
         <Head>
@@ -75,7 +110,30 @@ export default function WikiPage(props: PageProps) {
         </Head>
         <main className="wiki-layout">
           <header className="wiki-toolbar">
-            {isRootDirectory ? <span /> : <p><Link href={parentHref}>← {text.back}</Link></p>}
+            {isRootDirectory ? (
+              <span />
+            ) : (
+              <nav className="wiki-breadcrumbs" aria-label="Breadcrumb">
+                <Link href={buildWikiHref(locale, '')} className="wiki-breadcrumb-link">
+                  {text.rootTitle}
+                </Link>
+                {breadcrumbs.map((item, index) => {
+                  const isLast = index === breadcrumbs.length - 1
+                  return (
+                    <span key={item.slug} className="wiki-breadcrumb-item">
+                      <span className="wiki-breadcrumb-separator">/</span>
+                      {isLast ? (
+                        <span className="wiki-breadcrumb-current">{item.label}</span>
+                      ) : (
+                        <Link href={buildWikiHref(locale, item.slug)} className="wiki-breadcrumb-link">
+                          {item.label}
+                        </Link>
+                      )}
+                    </span>
+                  )
+                })}
+              </nav>
+            )}
             <LocaleSwitcher locale={locale} slug={currentSlug} />
           </header>
 
@@ -104,7 +162,7 @@ export default function WikiPage(props: PageProps) {
     )
   }
 
-  const { page, parentHref, locale } = props
+  const { page, locale } = props
   return (
     <>
       <Head>
@@ -113,9 +171,26 @@ export default function WikiPage(props: PageProps) {
       </Head>
       <main className="wiki-layout">
         <header className="wiki-toolbar">
-          <p>
-            <Link href={parentHref}>← {text.back}</Link>
-          </p>
+          <nav className="wiki-breadcrumbs" aria-label="Breadcrumb">
+            <Link href={buildWikiHref(locale, '')} className="wiki-breadcrumb-link">
+              {text.rootTitle}
+            </Link>
+            {breadcrumbs.map((item, index) => {
+              const isLast = index === breadcrumbs.length - 1
+              return (
+                <span key={item.slug} className="wiki-breadcrumb-item">
+                  <span className="wiki-breadcrumb-separator">/</span>
+                  {isLast ? (
+                    <span className="wiki-breadcrumb-current">{item.label}</span>
+                  ) : (
+                    <Link href={buildWikiHref(locale, item.slug)} className="wiki-breadcrumb-link">
+                      {item.label}
+                    </Link>
+                  )}
+                </span>
+              )
+            })}
+          </nav>
           <LocaleSwitcher locale={locale} slug={currentSlug} />
         </header>
 
@@ -153,7 +228,6 @@ export const getStaticProps: GetStaticProps<PageProps, { locale: string; slug?: 
 
   const locale = params.locale
   const slug = params.slug?.join('/') ?? ''
-  const parentHref = getParentHref(locale, slug)
 
   if (isDirectorySlug(locale, slug)) {
     const directory = getWikiDirectoryData(locale, slug)
@@ -166,7 +240,7 @@ export const getStaticProps: GetStaticProps<PageProps, { locale: string; slug?: 
         kind: 'directory',
         locale,
         directory,
-        parentHref,
+        breadcrumbs: buildDirectoryBreadcrumbs(locale, slug),
       },
     }
   }
@@ -178,7 +252,7 @@ export const getStaticProps: GetStaticProps<PageProps, { locale: string; slug?: 
         kind: 'page',
         locale,
         page,
-        parentHref,
+        breadcrumbs: buildPageBreadcrumbs(locale, page),
       },
     }
   } catch {

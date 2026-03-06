@@ -45,6 +45,35 @@ a {
   align-items: center;
   gap: 16px;
   margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.wiki-breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 28px;
+}
+
+.wiki-breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wiki-breadcrumb-separator {
+  color: var(--colors-text-muted);
+}
+
+.wiki-breadcrumb-link {
+  color: var(--colors-link);
+  font-size: 14px;
+}
+
+.wiki-breadcrumb-current {
+  color: var(--colors-text-primary);
+  font-size: 14px;
 }
 
 .wiki-subtitle {
