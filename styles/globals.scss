@@ -9,6 +9,11 @@
   --colors-bg-inline-code: #242424;
   --colors-bg-code-block: #242424;
   --colors-text-code-block: #08CC58;
+  --colors-heading-marker: #e06823;
+  --colors-code-header-bg: #1e1e1e;
+  --colors-code-button-bg: #2a2a2a;
+  --colors-code-button-bg-active: #1f5f36;
+  --colors-code-button-bg-failed: #6a2b2b;
 }
 
 * {
@@ -160,23 +165,162 @@ a {
   border: 1px solid var(--colors-border);
   border-radius: 12px;
   padding: 24px;
+  line-height: 1.68;
 
   h1 {
     margin-top: 0;
+    margin-bottom: 12px;
+    font-size: clamp(28px, 4vw, 38px);
+    line-height: 1.15;
+    font-stretch: expanded;
   }
 
-  code {
+  h2,
+  h3,
+  h4 {
+    margin-bottom: 10px;
+    line-height: 1.25;
+    font-stretch: expanded;
+  }
+
+  h2 {
+    margin-top: 34px;
+    font-size: clamp(22px, 3vw, 30px);
+    border-bottom: 1px solid var(--colors-border);
+    padding-bottom: 6px;
+  }
+
+  h3 {
+    margin-top: 28px;
+    font-size: clamp(18px, 2.4vw, 23px);
+    position: relative;
+  }
+
+  h4 {
+    margin-top: 22px;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: var(--colors-text-secondary);
+  }
+
+  p,
+  ul,
+  ol,
+  blockquote,
+  figure,
+  pre {
+    margin-top: 0;
+    margin-bottom: 18px;
+  }
+
+  :not(pre) > code {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     background: var(--colors-bg-inline-code);
-    padding: 1px 4px;
+    padding: 2px 5px;
     border-radius: 4px;
   }
 
-  pre {
-    overflow-x: auto;
-    padding: 12px;
-    border-radius: 8px;
+  blockquote {
+    border-left: 2px solid var(--colors-heading-marker);
+    margin-left: 0;
+    padding: 8px 0 8px 16px;
+    color: var(--colors-text-secondary);
+  }
+
+  ul,
+  ol {
+    padding-left: 22px;
+  }
+
+  .task-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .task-list-item {
+    margin-bottom: 10px;
+
+    label {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      cursor: default;
+    }
+
+    input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--colors-link);
+      cursor: default;
+    }
+
+    input[type="checkbox"]:checked + span {
+      color: var(--colors-text-secondary);
+      text-decoration: line-through;
+      text-decoration-thickness: 1px;
+    }
+  }
+
+  .code-block {
+    margin: 0 0 22px;
+    border: 1px solid var(--colors-border);
+    border-radius: 10px;
+    overflow: hidden;
     background: var(--colors-bg-code-block);
-    color: var(--colors-text-code-block);
+
+    pre {
+      margin: 0;
+      overflow-x: auto;
+      padding: 14px;
+      background: var(--colors-bg-code-block);
+      color: var(--colors-text-code-block);
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+      display: block;
+      min-width: max-content;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  }
+
+  .code-block__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--colors-border);
+    background: var(--colors-code-header-bg);
+  }
+
+  .code-block__lang {
+    font-size: 12px;
+    color: var(--colors-text-secondary);
+    font-weight: 400;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .code-block__copy {
+    border: 1px solid var(--colors-border);
+    background: var(--colors-code-button-bg);
+    color: var(--colors-text-primary);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 9px;
+    cursor: pointer;
+  }
+
+  .code-block__copy.is-copied {
+    background: var(--colors-code-button-bg-active);
+  }
+
+  .code-block__copy.is-copy-failed {
+    background: var(--colors-code-button-bg-failed);
   }
 }

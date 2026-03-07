@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useEffect, useRef } from 'react'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
 import { isLocale, Locale, locales } from '@/lib/i18n/locales'
 import {
@@ -34,16 +35,25 @@ type PageProps =
 type UiText = {
   rootTitle: string
   homeDescription: string
+  copyLabel: string
+  copiedLabel: string
+  copyFailedLabel: string
 }
 
 const uiTextByLocale: Record<Locale, UiText> = {
   ru: {
     rootTitle: 'CSM Wiki',
     homeDescription: 'Корневая страница wiki',
+    copyLabel: 'Копировать',
+    copiedLabel: 'Скопировано',
+    copyFailedLabel: 'Ошибка',
   },
   en: {
     rootTitle: 'CSM Wiki',
     homeDescription: 'Wiki root page',
+    copyLabel: 'Copy',
+    copiedLabel: 'Copied',
+    copyFailedLabel: 'Failed',
   },
 }
 
@@ -96,6 +106,61 @@ export default function WikiPage(props: PageProps) {
   const text = uiTextByLocale[props.locale]
   const currentSlug = props.kind === 'directory' ? props.directory.slug : props.page.slug
   const breadcrumbs = props.breadcrumbs
+  const markdownContentRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (props.kind !== 'page') {
+      return
+    }
+
+    const root = markdownContentRef.current
+    if (!root) {
+      return
+    }
+
+    const buttons = root.querySelectorAll<HTMLButtonElement>('[data-copy-code]')
+    buttons.forEach((button) => {
+      button.textContent = text.copyLabel
+    })
+
+    const onClick = async (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null
+      const button = target?.closest<HTMLButtonElement>('[data-copy-code]')
+      if (!button) {
+        return
+      }
+
+      const codeNode = button.closest('.code-block')?.querySelector('pre code')
+      const codeText = codeNode?.textContent ?? ''
+      if (!codeText) {
+        return
+      }
+
+      try {
+        await navigator.clipboard.writeText(codeText)
+        button.textContent = text.copiedLabel
+        button.classList.add('is-copied')
+
+        window.setTimeout(() => {
+          button.textContent = text.copyLabel
+          button.classList.remove('is-copied')
+        }, 1400)
+      } catch {
+        button.textContent = text.copyFailedLabel
+        button.classList.add('is-copy-failed')
+
+        window.setTimeout(() => {
+          button.textContent = text.copyLabel
+          button.classList.remove('is-copy-failed')
+        }, 1700)
+      }
+    }
+
+    root.addEventListener('click', onClick)
+    return () => {
+      root.removeEventListener('click', onClick)
+    }
+  }, [props.kind, text.copyFailedLabel, text.copiedLabel, text.copyLabel])
 
   if (props.kind === 'directory') {
     const { directory, locale } = props
@@ -197,7 +262,7 @@ export default function WikiPage(props: PageProps) {
         <article className="wiki-article">
           <h1>{page.title}</h1>
           {page.description && <p className="wiki-subtitle">{page.description}</p>}
-          <div dangerouslySetInnerHTML={{ __html: page.contentHtml }} />
+          <div ref={markdownContentRef} className="wiki-markdown" dangerouslySetInnerHTML={{ __html: page.contentHtml }} />
         </article>
       </main>
     </>

@@ -100,6 +100,61 @@ function toSerializableValue(value: unknown): unknown {
   return value
 }
 
+function toSafeLanguageId(rawLanguage: string): string {
+  const normalized = rawLanguage.trim().toLowerCase()
+  if (!normalized) {
+    return 'text'
+  }
+
+  return normalized.replace(/[^a-z0-9#+-]/g, '')
+}
+
+function toLanguageLabel(language: string): string {
+  if (!language || language === 'text') {
+    return 'Text'
+  }
+
+  if (language === 'ts') {
+    return 'TypeScript'
+  }
+  if (language === 'js') {
+    return 'JavaScript'
+  }
+  if (language === 'sh') {
+    return 'Shell'
+  }
+
+  return language.toUpperCase()
+}
+
+function enhanceMarkdownHtml(contentHtml: string): string {
+  const withTaskItems = contentHtml.replace(/<li>\s*\[( |x|X)\]\s+([\s\S]*?)<\/li>/g, (_match, marker, itemHtml) => {
+    const isChecked = marker.toLowerCase() === 'x'
+    const checkedAttribute = isChecked ? ' checked' : ''
+    return `<li class="task-list-item"><label><input type="checkbox" disabled${checkedAttribute} /><span>${itemHtml}</span></label></li>`
+  })
+
+  const withTaskLists = withTaskItems.replace(/<ul>([\s\S]*?)<\/ul>/g, (listHtml, listInnerHtml) => {
+    if (!listInnerHtml.includes('class="task-list-item"')) {
+      return listHtml
+    }
+    return `<ul class="task-list">${listInnerHtml}</ul>`
+  })
+
+  const withTypedCodeBlocks = withTaskLists.replace(
+    /<pre><code class="language-([^"]+)">([\s\S]*?)<\/code><\/pre>/g,
+    (_match, language, codeHtml) => {
+      const safeLanguage = toSafeLanguageId(language)
+      const languageLabel = toLanguageLabel(safeLanguage)
+      return `<figure class="code-block" data-language="${safeLanguage}"><figcaption class="code-block__header"><span class="code-block__lang">${languageLabel}</span><button type="button" class="code-block__copy" data-copy-code>Copy</button></figcaption><pre><code class="language-${safeLanguage}">${codeHtml}</code></pre></figure>`
+    }
+  )
+
+  return withTypedCodeBlocks.replace(/<pre><code>([\s\S]*?)<\/code><\/pre>/g, (_match, codeHtml) => {
+    return `<figure class="code-block" data-language="text"><figcaption class="code-block__header"><span class="code-block__lang">Text</span><button type="button" class="code-block__copy" data-copy-code>Copy</button></figcaption><pre><code>${codeHtml}</code></pre></figure>`
+  })
+}
+
 function sortPages(pages: WikiPageMeta[], locale: Locale): WikiPageMeta[] {
   return pages.sort((left, right) => {
     const leftOrder = left.order ?? Number.MAX_SAFE_INTEGER
@@ -318,7 +373,7 @@ export async function getMarkdownData(locale: Locale, slug: string): Promise<Mar
 
   return {
     ...parseWikiMeta(normalizedSlug, fileContents),
-    contentHtml: processedContent.toString(),
+    contentHtml: enhanceMarkdownHtml(processedContent.toString()),
     frontmatter: toSerializableValue(data) as Record<string, unknown>,
   }
 }

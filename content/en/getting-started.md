@@ -66,3 +66,11 @@ export function greet(user: User): string {
 ### Nested section
 
 Use this area for additional details and implementation notes.
+
+## 6. Handmade checklist
+
+- [ ] Draft
+- [ ] Review
+- [x] Published
+
+When finished, mark the task as done.
