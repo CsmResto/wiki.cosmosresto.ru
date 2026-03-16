@@ -112,12 +112,6 @@ function buildPageBreadcrumbs(locale: Locale, page: MarkdownData): BreadcrumbIte
   return breadcrumbs
 }
 
-function toTitleCase(value: string): string {
-  return value
-    .replace(/[-_]/g, ' ')
-    .replace(/\b\w/g, (char) => char.toUpperCase())
-}
-
 function buildOpenSlugs(slug: string, kind: PageProps['kind']): Set<string> {
   const normalized = slug.replace(/^\/+|\/+$/g, '')
   if (!normalized) {
@@ -209,7 +203,7 @@ export default function WikiPage(props: PageProps) {
           return (
             <li key={directory.slug} className={`wiki-nav-item ${isActive ? 'is-active' : ''}`}>
               <Link href={buildWikiHref(props.locale, directory.slug)} className="wiki-nav-link">
-                {toTitleCase(directory.name)}
+                {directory.name}
               </Link>
               {isOpen && renderNavList(directory, level + 1)}
             </li>
@@ -396,7 +390,7 @@ export default function WikiPage(props: PageProps) {
                       <span className="wiki-page-icon" aria-hidden="true">
                         📁
                       </span>
-                      {toTitleCase(folder.name)}
+                      {folder.name}
                     </Link>
                   </li>
                 ))}

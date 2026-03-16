@@ -281,7 +281,12 @@ function sortPages(pages: WikiPageMeta[], locale: Locale): WikiPageMeta[] {
   })
 }
 
-function ensureDirectoryNode(root: WikiTreeNode, directoryMap: Map<string, WikiTreeNode>, directorySlug: string): WikiTreeNode {
+function ensureDirectoryNode(
+  root: WikiTreeNode,
+  directoryMap: Map<string, WikiTreeNode>,
+  directorySlug: string,
+  directoryTitleMap: Map<string, string>
+): WikiTreeNode {
   if (directoryMap.has(directorySlug)) {
     return directoryMap.get(directorySlug) as WikiTreeNode
   }
@@ -300,8 +305,9 @@ function ensureDirectoryNode(root: WikiTreeNode, directoryMap: Map<string, WikiT
       continue
     }
 
+    const titleOverride = directoryTitleMap.get(currentSlug)
     const nextNode: WikiTreeNode = {
-      name: segment,
+      name: titleOverride ?? toTitleFromSlug(currentSlug),
       slug: currentSlug,
       directories: [],
       pages: [],
@@ -425,16 +431,34 @@ export function getWikiTree(locale: Locale): WikiTreeNode {
   }
 
   const directoryMap = new Map<string, WikiTreeNode>([['', root]])
+  const pages = getAllWikiPages(locale)
+  const directoryTitleMap = new Map<string, string>()
 
-  for (const directorySlug of getAllDirectorySlugs(locale)) {
-    ensureDirectoryNode(root, directoryMap, directorySlug)
+  for (const page of pages) {
+    if (page.slug === 'index') {
+      continue
+    }
+
+    if (page.slug.endsWith('/index')) {
+      const directorySlug = page.slug.replace(/\/index$/, '')
+      if (directorySlug) {
+        directoryTitleMap.set(directorySlug, page.title)
+      }
+    }
   }
 
-  for (const page of getAllWikiPages(locale)) {
+  for (const directorySlug of getAllDirectorySlugs(locale)) {
+    ensureDirectoryNode(root, directoryMap, directorySlug, directoryTitleMap)
+  }
+
+  for (const page of pages) {
+    if (page.slug === 'index' || page.slug.endsWith('/index')) {
+      continue
+    }
     const segments = page.slug.split('/')
     segments.pop()
     const parentSlug = segments.join('/')
-    ensureDirectoryNode(root, directoryMap, parentSlug).pages.push(page)
+    ensureDirectoryNode(root, directoryMap, parentSlug, directoryTitleMap).pages.push(page)
   }
 
   return sortWikiTree(root, locale)
@@ -451,7 +475,7 @@ export function getWikiDirectoryData(locale: Locale, slug: string): WikiDirector
 
   return {
     slug: normalizedSlug,
-    name: normalizedSlug ? (normalizedSlug.split('/').pop() as string) : 'content',
+    name: node.name,
     directories: node.directories.map((directory) => ({
       name: directory.name,
       slug: directory.slug,
