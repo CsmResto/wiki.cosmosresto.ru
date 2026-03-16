@@ -127,6 +127,89 @@ function toLanguageLabel(language: string): string {
   return language.toUpperCase()
 }
 
+function slugifyHeading(text: string): string {
+  const normalized = text
+    .trim()
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[\s]+/g, '-')
+    .replace(/[^\p{L}\p{N}-]/gu, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+
+  return normalized || 'section'
+}
+
+type MarkdownNode = {
+  type?: string
+  value?: unknown
+  url?: string
+  children?: MarkdownNode[]
+  data?: {
+    hProperties?: Record<string, unknown>
+  }
+}
+
+function getHeadingText(node: MarkdownNode | null | undefined): string {
+  if (!node) {
+    return ''
+  }
+
+  if (node.type === 'text' || node.type === 'inlineCode') {
+    return String(node.value ?? '')
+  }
+
+  if (Array.isArray(node.children)) {
+    return node.children.map((child: MarkdownNode) => getHeadingText(child)).join('')
+  }
+
+  return ''
+}
+
+function remarkAutolinkHeadings() {
+  return (tree: MarkdownNode) => {
+    const slugCounts = new Map<string, number>()
+
+    const visit = (node: MarkdownNode | null | undefined) => {
+      if (!node || typeof node !== 'object') {
+        return
+      }
+
+      if (node.type === 'heading') {
+        const text = getHeadingText(node)
+        const baseSlug = slugifyHeading(text)
+        const currentCount = slugCounts.get(baseSlug) ?? 0
+        const nextCount = currentCount + 1
+        slugCounts.set(baseSlug, nextCount)
+        const slug = nextCount === 1 ? baseSlug : `${baseSlug}-${nextCount}`
+
+        node.data ||= {}
+        node.data.hProperties ||= {}
+        node.data.hProperties.id = slug
+
+        node.children = [
+          {
+            type: 'link',
+            url: `#${slug}`,
+            data: {
+              hProperties: {
+                className: ['heading-anchor'],
+              },
+            },
+            children: node.children ?? [],
+          },
+        ]
+      }
+
+      if (Array.isArray(node.children)) {
+        node.children.forEach((child: MarkdownNode) => visit(child))
+      }
+    }
+
+    visit(tree)
+  }
+}
+
 function enhanceMarkdownHtml(contentHtml: string): string {
   const withTaskItems = contentHtml.replace(/<li>\s*\[( |x|X)\]\s+([\s\S]*?)<\/li>/g, (_match, marker, itemHtml) => {
     const isChecked = marker.toLowerCase() === 'x'
@@ -368,6 +451,7 @@ export async function getMarkdownData(locale: Locale, slug: string): Promise<Mar
   const { data, content } = matter(fileContents)
 
   const processedContent = await remark()
+    .use(remarkAutolinkHeadings)
     .use(html)
     .process(content)
 

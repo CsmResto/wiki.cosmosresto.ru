@@ -125,6 +125,16 @@ export default function WikiPage(props: PageProps) {
 
     const onClick = async (event: MouseEvent) => {
       const target = event.target as HTMLElement | null
+      const headingLink = target?.closest<HTMLAnchorElement>('h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a, .heading-anchor')
+      if (headingLink) {
+        event.preventDefault()
+        const url = `${window.location.origin}${window.location.pathname}${headingLink.getAttribute('href') ?? ''}`
+        try {
+          await navigator.clipboard.writeText(url)
+        } catch {}
+        return
+      }
+
       const button = target?.closest<HTMLButtonElement>('[data-copy-code]')
       if (!button) {
         return
