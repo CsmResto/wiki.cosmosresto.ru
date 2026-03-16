@@ -40,6 +40,31 @@ updatedAt: 2026-03-06
 - `content/ru/getting-started.md` -> `/ru/getting-started`
 - `content/en/getting-started.md` -> `/en/getting-started`
 
+## Картинки в Markdown
+
+Где хранить:
+
+- Складывайте изображения в `public/<locale>/images/...`.
+- Так ссылки остаются относительными и корректно работают и локально, и на GitHub Pages (из-за `basePath`).
+
+Как ссылаться:
+
+- Используйте относительные пути до папки `images` внутри своей локали.
+- Абсолютные пути вида `/images/...` не подходят для GitHub Pages.
+- В альтернативном тексте (`![…]`) описывайте, что на изображении.
+
+Примеры:
+
+- Файл `content/ru/getting-started.md` (URL `/ru/getting-started`):
+  `![Схема](../images/getting-started/overview.png)`
+- Файл `content/ru/guide/setup.md` (URL `/ru/guide/setup`):
+  `![Схема](../../images/guide/setup/overview.png)`
+
+Если картинка нужна в двух языках, положите копию в обе папки:
+
+- `public/ru/images/...`
+- `public/en/images/...`
+
 ## Локальный запуск
 
 ```bash

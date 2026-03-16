@@ -67,7 +67,15 @@ export function greet(user: User): string {
 
 Use this area for additional details and implementation notes.
 
-## 6. Handmade checklist
+## 6. Images
+
+Example image:
+
+![Mock image](../images/mock.jpg)
+
+*Fig. 1. Mock example.*
+
+## 7. Handmade checklist
 
 - [ ] Draft
 - [ ] Review
