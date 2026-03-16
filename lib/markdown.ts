@@ -25,6 +25,7 @@ export interface MarkdownData extends WikiPageMeta {
 
 export interface WikiTreeNode {
   name: string
+  description?: string
   slug: string
   directories: WikiTreeNode[]
   pages: WikiPageMeta[]
@@ -33,7 +34,7 @@ export interface WikiTreeNode {
 export interface WikiDirectoryData {
   slug: string
   name: string
-  directories: Array<{ name: string; slug: string }>
+  directories: Array<{ name: string; description: string | null; slug: string }>
   pages: WikiPageMeta[]
 }
 
@@ -285,7 +286,7 @@ function ensureDirectoryNode(
   root: WikiTreeNode,
   directoryMap: Map<string, WikiTreeNode>,
   directorySlug: string,
-  directoryTitleMap: Map<string, string>
+  directoryMetaMap: Map<string, { title: string; description?: string }>
 ): WikiTreeNode {
   if (directoryMap.has(directorySlug)) {
     return directoryMap.get(directorySlug) as WikiTreeNode
@@ -305,9 +306,10 @@ function ensureDirectoryNode(
       continue
     }
 
-    const titleOverride = directoryTitleMap.get(currentSlug)
+    const metaOverride = directoryMetaMap.get(currentSlug)
     const nextNode: WikiTreeNode = {
-      name: titleOverride ?? toTitleFromSlug(currentSlug),
+      name: metaOverride?.title ?? toTitleFromSlug(currentSlug),
+      description: metaOverride?.description,
       slug: currentSlug,
       directories: [],
       pages: [],
@@ -432,7 +434,7 @@ export function getWikiTree(locale: Locale): WikiTreeNode {
 
   const directoryMap = new Map<string, WikiTreeNode>([['', root]])
   const pages = getAllWikiPages(locale)
-  const directoryTitleMap = new Map<string, string>()
+  const directoryMetaMap = new Map<string, { title: string; description?: string }>()
 
   for (const page of pages) {
     if (page.slug === 'index') {
@@ -442,13 +444,16 @@ export function getWikiTree(locale: Locale): WikiTreeNode {
     if (page.slug.endsWith('/index')) {
       const directorySlug = page.slug.replace(/\/index$/, '')
       if (directorySlug) {
-        directoryTitleMap.set(directorySlug, page.title)
+        directoryMetaMap.set(directorySlug, {
+          title: page.title,
+          description: page.description,
+        })
       }
     }
   }
 
   for (const directorySlug of getAllDirectorySlugs(locale)) {
-    ensureDirectoryNode(root, directoryMap, directorySlug, directoryTitleMap)
+    ensureDirectoryNode(root, directoryMap, directorySlug, directoryMetaMap)
   }
 
   for (const page of pages) {
@@ -458,7 +463,7 @@ export function getWikiTree(locale: Locale): WikiTreeNode {
     const segments = page.slug.split('/')
     segments.pop()
     const parentSlug = segments.join('/')
-    ensureDirectoryNode(root, directoryMap, parentSlug, directoryTitleMap).pages.push(page)
+    ensureDirectoryNode(root, directoryMap, parentSlug, directoryMetaMap).pages.push(page)
   }
 
   return sortWikiTree(root, locale)
@@ -478,6 +483,7 @@ export function getWikiDirectoryData(locale: Locale, slug: string): WikiDirector
     name: node.name,
     directories: node.directories.map((directory) => ({
       name: directory.name,
+      description: directory.description ?? null,
       slug: directory.slug,
     })),
     pages: node.pages,

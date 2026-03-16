@@ -392,6 +392,7 @@ export default function WikiPage(props: PageProps) {
                       </span>
                       {folder.name}
                     </Link>
+                    {folder.description && <p className="wiki-page-meta">{folder.description}</p>}
                   </li>
                 ))}
               </ul>
