@@ -140,6 +140,7 @@ export default function WikiPage(props: PageProps) {
   const markdownContentRef = useRef<HTMLDivElement | null>(null)
   const [theme, setTheme] = useState<'light' | 'dark'>('dark')
   const [isHeaderHidden, setIsHeaderHidden] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const openSlugs = buildOpenSlugs(currentSlug, props.kind)
 
   useEffect(() => {
@@ -188,7 +189,7 @@ export default function WikiPage(props: PageProps) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [isHeaderHidden])
 
-  const renderNavList = (node: WikiTreeNode, level: number) => {
+  const renderNavList = (node: WikiTreeNode, level: number, onNavigate?: () => void) => {
     const hasChildren = node.directories.length > 0 || node.pages.length > 0
     if (!hasChildren) {
       return null
@@ -201,10 +202,10 @@ export default function WikiPage(props: PageProps) {
           const isActive = currentSlug === directory.slug
           return (
             <li key={directory.slug} className={`wiki-nav-item ${isActive ? 'is-active' : ''}`}>
-              <Link href={buildWikiHref(props.locale, directory.slug)} className="wiki-nav-link">
+              <Link href={buildWikiHref(props.locale, directory.slug)} className="wiki-nav-link" onClick={onNavigate}>
                 {directory.name}
               </Link>
-              {isOpen && renderNavList(directory, level + 1)}
+              {isOpen && renderNavList(directory, level + 1, onNavigate)}
             </li>
           )
         })}
@@ -212,7 +213,7 @@ export default function WikiPage(props: PageProps) {
           const isActive = currentSlug === page.slug
           return (
             <li key={page.slug} className={`wiki-nav-item ${isActive ? 'is-active' : ''}`}>
-              <Link href={buildWikiHref(props.locale, page.slug)} className="wiki-nav-link">
+              <Link href={buildWikiHref(props.locale, page.slug)} className="wiki-nav-link" onClick={onNavigate}>
                 {page.title}
               </Link>
             </li>
@@ -325,6 +326,21 @@ export default function WikiPage(props: PageProps) {
     }
   }, [props.kind, text.copyFailedLabel, text.copiedLabel, text.copyLabel])
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      document.body.style.overflow = ''
+      return
+    }
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isMobileMenuOpen])
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false)
+  }
+
   if (props.kind === 'directory') {
     const { directory, locale } = props
     const isRootDirectory = directory.slug === ''
@@ -377,7 +393,47 @@ export default function WikiPage(props: PageProps) {
                 </button>
                 <LocaleSwitcher locale={locale} slug={currentSlug} />
               </div>
+              <button
+                type="button"
+                className="wiki-mobile-menu-toggle"
+                aria-label="Open menu"
+                aria-controls="wiki-mobile-menu"
+                aria-expanded={isMobileMenuOpen}
+                onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+              >
+                <span className="wiki-mobile-menu-toggle__bar" aria-hidden="true" />
+                <span className="wiki-mobile-menu-toggle__bar" aria-hidden="true" />
+                <span className="wiki-mobile-menu-toggle__bar" aria-hidden="true" />
+              </button>
             </header>
+            <div className={`wiki-mobile-menu ${isMobileMenuOpen ? 'is-open' : ''}`} id="wiki-mobile-menu">
+              <button type="button" className="wiki-mobile-menu__backdrop" onClick={closeMobileMenu} aria-hidden="true" />
+              <div className="wiki-mobile-menu__panel" role="dialog" aria-modal="true">
+                <div className="wiki-mobile-menu__header">
+                  <Link
+                    href={buildWikiHref(locale, '')}
+                    className="wiki-mobile-menu__logo"
+                    aria-label={text.rootTitle}
+                    onClick={closeMobileMenu}
+                  >
+                    <span className="wiki-mobile-menu__logo-image" aria-hidden="true" />
+                  </Link>
+                  <button type="button" className="wiki-mobile-menu__close" onClick={closeMobileMenu} aria-label="Close menu">
+                    <span className="wiki-mobile-menu__close-icon" aria-hidden="true" />
+                    <span className="wiki-mobile-menu__close-icon" aria-hidden="true" />
+                  </button>
+                </div>
+                <div className="wiki-mobile-menu__controls">
+                  <button type="button" className="wiki-theme-toggle" onClick={toggleTheme} aria-pressed={theme === 'light'}>
+                    {theme === 'light' ? text.themeLightLabel : text.themeDarkLabel}
+                  </button>
+                  <LocaleSwitcher locale={locale} slug={currentSlug} />
+                </div>
+                <nav className="wiki-mobile-menu__nav" aria-label="Site navigation">
+                  {renderNavList(tree, 0, closeMobileMenu)}
+                </nav>
+              </div>
+            </div>
 
             <h1>{directoryTitle}</h1>
 
@@ -462,7 +518,47 @@ export default function WikiPage(props: PageProps) {
               </button>
               <LocaleSwitcher locale={locale} slug={currentSlug} />
             </div>
+            <button
+              type="button"
+              className="wiki-mobile-menu-toggle"
+              aria-label="Open menu"
+              aria-controls="wiki-mobile-menu"
+              aria-expanded={isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+            >
+              <span className="wiki-mobile-menu-toggle__bar" aria-hidden="true" />
+              <span className="wiki-mobile-menu-toggle__bar" aria-hidden="true" />
+              <span className="wiki-mobile-menu-toggle__bar" aria-hidden="true" />
+            </button>
           </header>
+          <div className={`wiki-mobile-menu ${isMobileMenuOpen ? 'is-open' : ''}`} id="wiki-mobile-menu">
+            <button type="button" className="wiki-mobile-menu__backdrop" onClick={closeMobileMenu} aria-hidden="true" />
+            <div className="wiki-mobile-menu__panel" role="dialog" aria-modal="true">
+            <div className="wiki-mobile-menu__header">
+              <Link
+                href={buildWikiHref(locale, '')}
+                className="wiki-mobile-menu__logo"
+                aria-label={text.rootTitle}
+                onClick={closeMobileMenu}
+              >
+                <span className="wiki-mobile-menu__logo-image" aria-hidden="true" />
+              </Link>
+              <button type="button" className="wiki-mobile-menu__close" onClick={closeMobileMenu} aria-label="Close menu">
+                <span className="wiki-mobile-menu__close-icon" aria-hidden="true" />
+                <span className="wiki-mobile-menu__close-icon" aria-hidden="true" />
+              </button>
+            </div>
+              <div className="wiki-mobile-menu__controls">
+                <button type="button" className="wiki-theme-toggle" onClick={toggleTheme} aria-pressed={theme === 'light'}>
+                  {theme === 'light' ? text.themeLightLabel : text.themeDarkLabel}
+                </button>
+                <LocaleSwitcher locale={locale} slug={currentSlug} />
+              </div>
+              <nav className="wiki-mobile-menu__nav" aria-label="Site navigation">
+                {renderNavList(tree, 0, closeMobileMenu)}
+              </nav>
+            </div>
+          </div>
 
           <article className="wiki-article">
             <h1>{page.title}</h1>

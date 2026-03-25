@@ -96,8 +96,8 @@ a {
 
 .wiki-sidebar__logo {
   display: block;
-  width: 160px;
-  height: 28px;
+  width: 144px;
+  height: 26px;
   background: url('/assets/logo-full.svg') no-repeat left center / contain;
 }
 
@@ -132,6 +132,124 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 10px;
+}
+
+.wiki-mobile-menu-toggle {
+  border: 1px solid var(--colors-border);
+  background: var(--colors-bg-surface);
+  color: var(--colors-text-primary);
+  border-radius: 999px;
+  padding: 8px 10px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.wiki-mobile-menu-toggle__bar {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 999px;
+}
+
+.wiki-mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+}
+
+.wiki-mobile-menu.is-open {
+  display: block;
+}
+
+.wiki-mobile-menu__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  border: none;
+  padding: 0;
+}
+
+.wiki-mobile-menu__panel {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  left: 12px;
+  max-height: 90vh;
+  border-radius: 16px;
+  background: var(--colors-bg);
+  border: 1px solid var(--colors-border);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wiki-mobile-menu__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.wiki-mobile-menu__logo {
+  display: inline-flex;
+  align-items: center;
+}
+
+.wiki-mobile-menu__logo-image {
+  display: block;
+  width: 144px;
+  height: 26px;
+  background: url('/assets/logo-full.svg') no-repeat left center / contain;
+}
+
+.wiki-mobile-menu__close {
+  border: 1px solid var(--colors-border);
+  background: var(--colors-bg-surface);
+  color: var(--colors-text-secondary);
+  border-radius: 999px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.wiki-mobile-menu__close-icon {
+  position: absolute;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 999px;
+}
+
+.wiki-mobile-menu__close-icon:first-child {
+  transform: rotate(45deg);
+}
+
+.wiki-mobile-menu__close-icon:last-child {
+  transform: rotate(-45deg);
+}
+
+.wiki-mobile-menu__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.wiki-mobile-menu__nav {
+  display: grid;
+  gap: 12px;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .wiki-breadcrumbs {
@@ -542,9 +660,21 @@ a {
 }
 
 @media (max-width: 640px) {
+  .wiki-sidebar {
+    display: none;
+  }
+
+  .wiki-toolbar__controls {
+    display: none;
+  }
+
+  .wiki-mobile-menu-toggle {
+    display: inline-flex;
+  }
+
   .wiki-sidebar__logo {
-    width: 36px;
-    height: 28px;
+    width: 32px;
+    height: 24px;
     background-image: url('/assets/logo-compact.svg');
   }
 
