@@ -14,12 +14,6 @@
   --colors-code-button-bg: #2a2a2a;
   --colors-code-button-bg-active: #1f5f36;
   --colors-code-button-bg-failed: #6a2b2b;
-  --logo-full-dark: url('/assets/logo-full.svg');
-  --logo-compact-dark: url('/assets/logo-compact.svg');
-  --logo-full-light: url('/assets/logo-full-accent.svg');
-  --logo-compact-light: url('/assets/logo-compact-accent.svg');
-  --logo-full-url: var(--logo-full-dark);
-  --logo-compact-url: var(--logo-compact-dark);
 }
 
 :root[data-theme="light"] {
@@ -38,8 +32,6 @@
   --colors-code-button-bg: #ecebe8;
   --colors-code-button-bg-active: #d8e8dd;
   --colors-code-button-bg-failed: #f1d6d6;
-  --logo-full-url: var(--logo-full-light);
-  --logo-compact-url: var(--logo-compact-light);
 }
 
 * {
@@ -103,10 +95,25 @@ a {
 }
 
 .wiki-sidebar__logo {
+  display: inline-flex;
+  align-items: center;
+}
+
+.wiki-logo__full,
+.wiki-logo__compact {
   display: block;
-  width: 144px;
   height: 26px;
-  background: var(--logo-full-url) no-repeat left center / contain;
+  width: auto;
+}
+
+.wiki-logo__full {
+  width: 144px;
+}
+
+.wiki-logo__compact {
+  display: none;
+  width: 32px;
+  height: 24px;
 }
 
 .wiki-content {
@@ -211,10 +218,8 @@ a {
 }
 
 .wiki-mobile-menu__logo-image {
-  display: block;
-  width: 144px;
-  height: 26px;
-  background: var(--logo-full-url) no-repeat left center / contain;
+  display: inline-flex;
+  align-items: center;
 }
 
 .wiki-mobile-menu__close {
@@ -680,10 +685,12 @@ a {
     display: inline-flex;
   }
 
-  .wiki-sidebar__logo {
-    width: 32px;
-    height: 24px;
-    background-image: var(--logo-compact-url);
+  .wiki-logo__full {
+    display: none;
+  }
+
+  .wiki-logo__compact {
+    display: block;
   }
 
   .wiki-article img {

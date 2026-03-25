@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { CSSProperties, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
 import { isLocale, Locale, locales } from '@/lib/i18n/locales'
 import {
@@ -136,12 +136,6 @@ function buildOpenSlugs(slug: string, kind: PageProps['kind']): Set<string> {
 export default function WikiPage(props: PageProps) {
   const { basePath } = useRouter()
   const assetPrefix = basePath ? `${basePath}/` : '/'
-  const shellStyle = {
-    '--logo-full-dark': `url(${assetPrefix}assets/logo-full.svg)`,
-    '--logo-compact-dark': `url(${assetPrefix}assets/logo-compact.svg)`,
-    '--logo-full-light': `url(${assetPrefix}assets/logo-full-accent.svg)`,
-    '--logo-compact-light': `url(${assetPrefix}assets/logo-compact-accent.svg)`,
-  } as CSSProperties
   const text = uiTextByLocale[props.locale]
   const currentSlug = props.kind === 'directory' ? props.directory.slug : props.page.slug
   const breadcrumbs = props.breadcrumbs
@@ -361,11 +355,22 @@ export default function WikiPage(props: PageProps) {
           <title>{directoryTitle} | CSM Wiki</title>
           <meta name="description" content={text.homeDescription} />
         </Head>
-        <main className="wiki-shell" style={shellStyle}>
+        <main className="wiki-shell">
           <aside className="wiki-sidebar">
             <div className="wiki-sidebar__header">
               <Link href={buildWikiHref(locale, '')} className="wiki-sidebar__title" aria-label={text.rootTitle}>
-                <span className="wiki-sidebar__logo" aria-hidden="true" />
+                <span className="wiki-sidebar__logo" aria-hidden="true">
+                  <img
+                    className="wiki-logo__full"
+                    src={`${assetPrefix}assets/logo-full${theme === 'light' ? '-accent' : ''}.svg`}
+                    alt=""
+                  />
+                  <img
+                    className="wiki-logo__compact"
+                    src={`${assetPrefix}assets/logo-compact${theme === 'light' ? '-accent' : ''}.svg`}
+                    alt=""
+                  />
+                </span>
               </Link>
             </div>
             {renderNavList(tree, 0)}
@@ -425,7 +430,18 @@ export default function WikiPage(props: PageProps) {
                     aria-label={text.rootTitle}
                     onClick={closeMobileMenu}
                   >
-                    <span className="wiki-mobile-menu__logo-image" aria-hidden="true" />
+                    <span className="wiki-mobile-menu__logo-image" aria-hidden="true">
+                      <img
+                        className="wiki-logo__full"
+                        src={`${assetPrefix}assets/logo-full${theme === 'light' ? '-accent' : ''}.svg`}
+                        alt=""
+                      />
+                      <img
+                        className="wiki-logo__compact"
+                        src={`${assetPrefix}assets/logo-compact${theme === 'light' ? '-accent' : ''}.svg`}
+                        alt=""
+                      />
+                    </span>
                   </Link>
                   <button type="button" className="wiki-mobile-menu__close" onClick={closeMobileMenu} aria-label="Close menu">
                     <span className="wiki-mobile-menu__close-icon" aria-hidden="true" />
@@ -490,12 +506,23 @@ export default function WikiPage(props: PageProps) {
         <title>{page.title} | CSM Wiki</title>
         {page.description && <meta name="description" content={page.description} />}
       </Head>
-      <main className="wiki-shell" style={shellStyle}>
+      <main className="wiki-shell">
         <aside className="wiki-sidebar">
           <div className="wiki-sidebar__header">
-            <Link href={buildWikiHref(locale, '')} className="wiki-sidebar__title" aria-label={text.rootTitle}>
-              <span className="wiki-sidebar__logo" aria-hidden="true" />
-            </Link>
+              <Link href={buildWikiHref(locale, '')} className="wiki-sidebar__title" aria-label={text.rootTitle}>
+                <span className="wiki-sidebar__logo" aria-hidden="true">
+                  <img
+                    className="wiki-logo__full"
+                    src={`${assetPrefix}assets/logo-full${theme === 'light' ? '-accent' : ''}.svg`}
+                    alt=""
+                  />
+                  <img
+                    className="wiki-logo__compact"
+                    src={`${assetPrefix}assets/logo-compact${theme === 'light' ? '-accent' : ''}.svg`}
+                    alt=""
+                  />
+                </span>
+              </Link>
           </div>
           {renderNavList(tree, 0)}
         </aside>
@@ -544,14 +571,25 @@ export default function WikiPage(props: PageProps) {
             <button type="button" className="wiki-mobile-menu__backdrop" onClick={closeMobileMenu} aria-hidden="true" />
             <div className="wiki-mobile-menu__panel" role="dialog" aria-modal="true">
             <div className="wiki-mobile-menu__header">
-              <Link
-                href={buildWikiHref(locale, '')}
-                className="wiki-mobile-menu__logo"
-                aria-label={text.rootTitle}
-                onClick={closeMobileMenu}
-              >
-                <span className="wiki-mobile-menu__logo-image" aria-hidden="true" />
-              </Link>
+                <Link
+                  href={buildWikiHref(locale, '')}
+                  className="wiki-mobile-menu__logo"
+                  aria-label={text.rootTitle}
+                  onClick={closeMobileMenu}
+                >
+                  <span className="wiki-mobile-menu__logo-image" aria-hidden="true">
+                    <img
+                      className="wiki-logo__full"
+                      src={`${assetPrefix}assets/logo-full${theme === 'light' ? '-accent' : ''}.svg`}
+                      alt=""
+                    />
+                    <img
+                      className="wiki-logo__compact"
+                      src={`${assetPrefix}assets/logo-compact${theme === 'light' ? '-accent' : ''}.svg`}
+                      alt=""
+                    />
+                  </span>
+                </Link>
               <button type="button" className="wiki-mobile-menu__close" onClick={closeMobileMenu} aria-label="Close menu">
                 <span className="wiki-mobile-menu__close-icon" aria-hidden="true" />
                 <span className="wiki-mobile-menu__close-icon" aria-hidden="true" />
