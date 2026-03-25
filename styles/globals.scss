@@ -94,6 +94,13 @@ a {
   color: var(--colors-text-primary);
 }
 
+.wiki-sidebar__logo {
+  display: block;
+  width: 160px;
+  height: 28px;
+  background: url('/assets/logo-full.svg') no-repeat left center / contain;
+}
+
 .wiki-content {
   min-width: 0;
 }
@@ -406,6 +413,12 @@ a {
     margin-bottom: 18px;
   }
 
+  img {
+    max-width: min(100%, 720px);
+    height: auto;
+    display: block;
+  }
+
   :not(pre) > code {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     background: var(--colors-bg-inline-code);
@@ -525,5 +538,18 @@ a {
 
   .wiki-sidebar {
     position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .wiki-sidebar__logo {
+    width: 36px;
+    height: 28px;
+    background-image: url('/assets/logo-compact.svg');
+  }
+
+  .wiki-article img {
+    width: 100%;
+    max-width: 100%;
   }
 }

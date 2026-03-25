@@ -339,8 +339,8 @@ export default function WikiPage(props: PageProps) {
         <main className="wiki-shell">
           <aside className="wiki-sidebar">
             <div className="wiki-sidebar__header">
-              <Link href={buildWikiHref(locale, '')} className="wiki-sidebar__title">
-                {text.rootTitle}
+              <Link href={buildWikiHref(locale, '')} className="wiki-sidebar__title" aria-label={text.rootTitle}>
+                <span className="wiki-sidebar__logo" aria-hidden="true" />
               </Link>
             </div>
             {renderNavList(tree, 0)}
@@ -428,8 +428,8 @@ export default function WikiPage(props: PageProps) {
       <main className="wiki-shell">
         <aside className="wiki-sidebar">
           <div className="wiki-sidebar__header">
-            <Link href={buildWikiHref(locale, '')} className="wiki-sidebar__title">
-              {text.rootTitle}
+            <Link href={buildWikiHref(locale, '')} className="wiki-sidebar__title" aria-label={text.rootTitle}>
+              <span className="wiki-sidebar__logo" aria-hidden="true" />
             </Link>
           </div>
           {renderNavList(tree, 0)}
