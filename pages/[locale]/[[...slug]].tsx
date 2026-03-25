@@ -157,37 +157,36 @@ export default function WikiPage(props: PageProps) {
     window.localStorage.setItem('wiki-theme', nextTheme)
   }
 
-  // если надо будет скрывать на скролл вниз:
-  // useEffect(() => {
-  //   let lastY = window.scrollY
-  //   let ticking = false
+  useEffect(() => {
+    let lastY = window.scrollY
+    let ticking = false
 
-  //   const update = () => {
-  //     const currentY = window.scrollY
-  //     const delta = currentY - lastY
-  //     const nextHidden = currentY > 80 && delta > 6
-  //     const shouldShow = delta < -6 || currentY < 40
+    const update = () => {
+      const currentY = window.scrollY
+      const delta = currentY - lastY
+      const nextHidden = currentY > 80 && delta > 6
+      const shouldShow = delta < -6 || currentY < 40
 
-  //     if (nextHidden !== isHeaderHidden && nextHidden) {
-  //       setIsHeaderHidden(true)
-  //     } else if (shouldShow && isHeaderHidden) {
-  //       setIsHeaderHidden(false)
-  //     }
+      if (nextHidden !== isHeaderHidden && nextHidden) {
+        setIsHeaderHidden(true)
+      } else if (shouldShow && isHeaderHidden) {
+        setIsHeaderHidden(false)
+      }
 
-  //     lastY = currentY
-  //     ticking = false
-  //   }
+      lastY = currentY
+      ticking = false
+    }
 
-  //   const onScroll = () => {
-  //     if (!ticking) {
-  //       ticking = true
-  //       window.requestAnimationFrame(update)
-  //     }
-  //   }
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true
+        window.requestAnimationFrame(update)
+      }
+    }
 
-  //   window.addEventListener('scroll', onScroll, { passive: true })
-  //   return () => window.removeEventListener('scroll', onScroll)
-  // }, [isHeaderHidden])
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [isHeaderHidden])
 
   const renderNavList = (node: WikiTreeNode, level: number) => {
     const hasChildren = node.directories.length > 0 || node.pages.length > 0
