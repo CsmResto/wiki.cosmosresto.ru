@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
+import SearchBox, { SearchText } from '@/components/SearchBox'
 import { isLocale, Locale, locales } from '@/lib/i18n/locales'
 import {
   getAllWikiRouteSlugs,
@@ -45,6 +46,7 @@ type UiText = {
   copyFailedLabel: string
   themeLightLabel: string
   themeDarkLabel: string
+  search: SearchText
 }
 
 const uiTextByLocale: Record<Locale, UiText> = {
@@ -56,6 +58,17 @@ const uiTextByLocale: Record<Locale, UiText> = {
     copyFailedLabel: 'Ошибка',
     themeLightLabel: 'Светлая',
     themeDarkLabel: 'Темная',
+    search: {
+      openLabel: 'Поиск',
+      label: 'Поиск',
+      placeholder: 'Искать по вики',
+      loading: 'Загружаю индекс…',
+      empty: 'Введите минимум 2 символа',
+      noResults: 'Ничего не найдено',
+      error: 'Не удалось загрузить поиск',
+      clearLabel: 'Очистить',
+      closeLabel: 'Закрыть',
+    },
   },
   en: {
     rootTitle: 'CSM Wiki',
@@ -65,6 +78,17 @@ const uiTextByLocale: Record<Locale, UiText> = {
     copyFailedLabel: 'Failed',
     themeLightLabel: 'Light',
     themeDarkLabel: 'Dark',
+    search: {
+      openLabel: 'Search',
+      label: 'Search',
+      placeholder: 'Search the wiki',
+      loading: 'Loading index…',
+      empty: 'Type at least 2 characters',
+      noResults: 'No results',
+      error: 'Search is unavailable',
+      clearLabel: 'Clear',
+      closeLabel: 'Close',
+    },
   },
 }
 
@@ -422,6 +446,7 @@ export default function WikiPage(props: PageProps) {
                 </nav>
               )}
               <div className="wiki-toolbar__controls">
+                <SearchBox locale={locale} assetPrefix={assetPrefix} text={text.search} />
                 <button type="button" className="wiki-theme-toggle" onClick={toggleTheme} aria-pressed={theme === 'light'}>
                   {theme === 'light' ? text.themeLightLabel : text.themeDarkLabel}
                 </button>
@@ -473,6 +498,15 @@ export default function WikiPage(props: PageProps) {
                     {theme === 'light' ? text.themeLightLabel : text.themeDarkLabel}
                   </button>
                   <LocaleSwitcher locale={locale} slug={currentSlug} />
+                </div>
+                <div className="wiki-mobile-menu__search">
+                  <SearchBox
+                    locale={locale}
+                    assetPrefix={assetPrefix}
+                    text={text.search}
+                    onNavigate={closeMobileMenu}
+                    onOpen={closeMobileMenu}
+                  />
                 </div>
                 <nav className="wiki-mobile-menu__nav" aria-label="Site navigation">
                   {renderNavList(tree, 0, closeMobileMenu)}
@@ -529,20 +563,20 @@ export default function WikiPage(props: PageProps) {
       <main className="wiki-shell">
         <aside className="wiki-sidebar">
           <div className="wiki-sidebar__header">
-              <Link href={buildWikiHref(locale, '')} className="wiki-sidebar__title" aria-label={text.rootTitle}>
-                <span className="wiki-sidebar__logo" aria-hidden="true">
-                  <img
-                    className="wiki-logo__full"
-                    src={`${assetPrefix}assets/logo-full${theme === 'light' ? '-accent' : ''}.svg`}
-                    alt=""
-                  />
-                  <img
-                    className="wiki-logo__compact"
-                    src={`${assetPrefix}assets/logo-compact${theme === 'light' ? '-accent' : ''}.svg`}
-                    alt=""
-                  />
-                </span>
-              </Link>
+            <Link href={buildWikiHref(locale, '')} className="wiki-sidebar__title" aria-label={text.rootTitle}>
+              <span className="wiki-sidebar__logo" aria-hidden="true">
+                <img
+                  className="wiki-logo__full"
+                  src={`${assetPrefix}assets/logo-full${theme === 'light' ? '-accent' : ''}.svg`}
+                  alt=""
+                />
+                <img
+                  className="wiki-logo__compact"
+                  src={`${assetPrefix}assets/logo-compact${theme === 'light' ? '-accent' : ''}.svg`}
+                  alt=""
+                />
+              </span>
+            </Link>
           </div>
           {renderNavList(tree, 0)}
         </aside>
@@ -569,6 +603,7 @@ export default function WikiPage(props: PageProps) {
                 })}
               </nav>
             <div className="wiki-toolbar__controls">
+              <SearchBox locale={locale} assetPrefix={assetPrefix} text={text.search} />
               <button type="button" className="wiki-theme-toggle" onClick={toggleTheme} aria-pressed={theme === 'light'}>
                 {theme === 'light' ? text.themeLightLabel : text.themeDarkLabel}
               </button>
@@ -590,7 +625,7 @@ export default function WikiPage(props: PageProps) {
           <div className={`wiki-mobile-menu ${isMobileMenuOpen ? 'is-open' : ''}`} id="wiki-mobile-menu">
             <button type="button" className="wiki-mobile-menu__backdrop" onClick={closeMobileMenu} aria-hidden="true" />
             <div className="wiki-mobile-menu__panel" role="dialog" aria-modal="true">
-            <div className="wiki-mobile-menu__header">
+              <div className="wiki-mobile-menu__header">
                 <Link
                   href={buildWikiHref(locale, '')}
                   className="wiki-mobile-menu__logo"
@@ -610,16 +645,25 @@ export default function WikiPage(props: PageProps) {
                     />
                   </span>
                 </Link>
-              <button type="button" className="wiki-mobile-menu__close" onClick={closeMobileMenu} aria-label="Close menu">
-                <span className="wiki-mobile-menu__close-icon" aria-hidden="true" />
-                <span className="wiki-mobile-menu__close-icon" aria-hidden="true" />
-              </button>
-            </div>
+                <button type="button" className="wiki-mobile-menu__close" onClick={closeMobileMenu} aria-label="Close menu">
+                  <span className="wiki-mobile-menu__close-icon" aria-hidden="true" />
+                  <span className="wiki-mobile-menu__close-icon" aria-hidden="true" />
+                </button>
+              </div>
               <div className="wiki-mobile-menu__controls">
                 <button type="button" className="wiki-theme-toggle" onClick={toggleTheme} aria-pressed={theme === 'light'}>
                   {theme === 'light' ? text.themeLightLabel : text.themeDarkLabel}
                 </button>
                 <LocaleSwitcher locale={locale} slug={currentSlug} />
+              </div>
+              <div className="wiki-mobile-menu__search">
+                <SearchBox
+                  locale={locale}
+                  assetPrefix={assetPrefix}
+                  text={text.search}
+                  onNavigate={closeMobileMenu}
+                  onOpen={closeMobileMenu}
+                />
               </div>
               <nav className="wiki-mobile-menu__nav" aria-label="Site navigation">
                 {renderNavList(tree, 0, closeMobileMenu)}
