@@ -286,9 +286,82 @@ function enhanceMarkdownHtml(contentHtml: string): string {
     }
   )
 
-  return withTypedCodeBlocks.replace(/<pre><code>([\s\S]*?)<\/code><\/pre>/g, (_match, codeHtml) => {
+  const withPlainCodeBlocks = withTypedCodeBlocks.replace(/<pre><code>([\s\S]*?)<\/code><\/pre>/g, (_match, codeHtml) => {
     return `<figure class="code-block" data-language="text"><figcaption class="code-block__header"><span class="code-block__lang">Text</span><button type="button" class="code-block__copy" data-copy-code>Copy</button></figcaption><pre><code>${codeHtml}</code></pre></figure>`
   })
+
+  return applyGalleryBlocks(withPlainCodeBlocks)
+}
+
+function applyGalleryBlocks(contentHtml: string): string {
+  const buildGalleryWrapper = (paramsRaw: string, inner: string) => {
+    const params: Record<string, string> = {}
+    const paramRe = /([a-zA-Z0-9_-]+)\s*=\s*([^\s]+)/g
+    let paramMatch: RegExpExecArray | null
+
+    while ((paramMatch = paramRe.exec(paramsRaw)) !== null) {
+      params[paramMatch[1]] = paramMatch[2]
+    }
+
+    const styleParts: string[] = []
+
+    if (params.columns) {
+      const columns = Number.parseInt(params.columns, 10)
+      if (Number.isFinite(columns) && columns > 0) {
+        styleParts.push(`--gallery-columns:${columns}`)
+      }
+    }
+
+    if (params.gap) {
+      const rawGap = params.gap.trim()
+      const gapNumber = Number.parseInt(rawGap, 10)
+      if (Number.isFinite(gapNumber) && gapNumber >= 0) {
+        const gapValue = rawGap.endsWith('px') ? rawGap : `${gapNumber}px`
+        styleParts.push(`--gallery-gap:${gapValue}`)
+      }
+    }
+
+    const styleAttr = styleParts.length > 0 ? ` style="${styleParts.join(';')}"` : ''
+    return `<div class="wiki-gallery"${styleAttr}>${inner}</div>`
+  }
+
+  const sameParagraphRe = /<p>\s*\[\[gallery([^\]]*)\]\]\s*([\s\S]*?)\s*\[\[\/gallery\]\]\s*<\/p>/gi
+  let normalizedHtml = contentHtml.replace(sameParagraphRe, (_match, paramsRaw, innerHtml) => {
+    return buildGalleryWrapper(paramsRaw ?? '', innerHtml)
+  })
+
+  const openRe = /<p>\s*\[\[gallery([^\]]*)\]\]\s*<\/p>/i
+  const closeRe = /<p>\s*\[\[\/gallery\]\]\s*<\/p>/i
+
+  let remaining = normalizedHtml
+  let result = ''
+
+  while (true) {
+    const openMatch = remaining.match(openRe)
+    if (!openMatch || openMatch.index === undefined) {
+      result += remaining
+      break
+    }
+
+    const openIndex = openMatch.index
+    const afterOpen = remaining.slice(openIndex + openMatch[0].length)
+    const closeMatch = afterOpen.match(closeRe)
+
+    if (!closeMatch || closeMatch.index === undefined) {
+      result += remaining
+      break
+    }
+
+    const closeIndex = closeMatch.index
+    const inner = afterOpen.slice(0, closeIndex)
+
+    result += remaining.slice(0, openIndex)
+    result += buildGalleryWrapper(openMatch[1] ?? '', inner)
+
+    remaining = afterOpen.slice(closeIndex + closeMatch[0].length)
+  }
+
+  return result
 }
 
 function sortPages(pages: WikiPageMeta[], locale: Locale): WikiPageMeta[] {

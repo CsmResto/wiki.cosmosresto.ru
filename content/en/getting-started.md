@@ -81,6 +81,14 @@ Example image:
 
 *Fig. 1. Mock example.*
 
+Gallery:
+
+[[gallery columns=3 gap=12]]
+![Mock image](../images/mock.jpg)
+![Mock image](../images/mock.jpg)
+![Mock image](../images/mock.jpg)
+[[/gallery]]
+
 ## 7. Handmade checklist
 
 - [ ] Draft

@@ -67,6 +67,26 @@ a {
   gap: 24px;
 }
 
+.wiki-gallery {
+  --gallery-columns: 3;
+  --gallery-gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(var(--gallery-columns), minmax(0, 1fr));
+  gap: var(--gallery-gap);
+  margin: 18px 0 24px;
+}
+
+.wiki-gallery .wiki-image {
+  margin: 0;
+}
+
+.wiki-gallery img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
 [data-rmiz-modal-overlay="visible"] {
   background-color: var(--colors-zoom-overlay) !important;
   backdrop-filter: blur(10px);

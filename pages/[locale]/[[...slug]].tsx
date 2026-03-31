@@ -183,6 +183,16 @@ function renderMarkdown(contentHtml: string) {
     return imgProps
   }
 
+  const getMeaningfulChildren = (
+    children: Array<{ type: string; name?: string; attribs?: Record<string, string>; data?: string }>
+  ) =>
+    children.filter((child) => {
+      if (child.type === 'text') {
+        return Boolean(child.data?.trim())
+      }
+      return true
+    })
+
   const options: HTMLReactParserOptions = {
     replace: (domNode: DOMNode) => {
       if (domNode.type !== 'tag') {
@@ -195,12 +205,7 @@ function renderMarkdown(contentHtml: string) {
           children?: Array<{ type: string; name?: string; attribs?: Record<string, string>; data?: string }>
         }
         const children = paragraph.children ?? []
-        const meaningfulChildren = children.filter((child) => {
-          if (child.type === 'text') {
-            return Boolean(child.data?.trim())
-          }
-          return true
-        })
+        const meaningfulChildren = getMeaningfulChildren(children)
 
         if (meaningfulChildren.length === 1 && meaningfulChildren[0]?.type === 'tag' && meaningfulChildren[0].name === 'img') {
           const imgChild = meaningfulChildren[0]
@@ -217,6 +222,16 @@ function renderMarkdown(contentHtml: string) {
 
       if (element.name !== 'img') {
         return undefined
+      }
+
+      const parent = (domNode as unknown as { parent?: { name?: string; children?: Array<{ type: string; data?: string }> } })
+        .parent
+      if (parent?.name === 'p') {
+        const meaningful = getMeaningfulChildren((parent.children ?? []) as Array<{ type: string; data?: string }>)
+        if (meaningful.length > 1) {
+          const imgProps = buildImgProps(element.attribs)
+          return <img {...imgProps} />
+        }
       }
 
       const imgProps = buildImgProps(element.attribs)
