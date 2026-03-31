@@ -321,8 +321,9 @@ function applyGalleryBlocks(contentHtml: string): string {
       }
     }
 
+    const layout = params.layout === 'carousel' ? 'carousel' : 'grid'
     const styleAttr = styleParts.length > 0 ? ` style="${styleParts.join(';')}"` : ''
-    return `<div class="wiki-gallery"${styleAttr}>${inner}</div>`
+    return `<div class="wiki-gallery" data-gallery-layout="${layout}"${styleAttr}>${inner}</div>`
   }
 
   const sameParagraphRe = /<p>\s*\[\[gallery([^\]]*)\]\]\s*([\s\S]*?)\s*\[\[\/gallery\]\]\s*<\/p>/gi

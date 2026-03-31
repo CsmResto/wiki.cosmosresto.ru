@@ -89,6 +89,14 @@ export function greet(user: User): string {
 ![Пример картинки](../images/mock.jpg)
 [[/gallery]]
 
+Карусель:
+
+[[gallery gap=12 layout=carousel]]
+![Пример картинки](../images/mock.jpg)
+![Пример картинки](../images/mock.jpg)
+![Пример картинки](../images/mock.jpg)
+[[/gallery]]
+
 ## 7. Чеклист руками
 
 - [ ] Черновик

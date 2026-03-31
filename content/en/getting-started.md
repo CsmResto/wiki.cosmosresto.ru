@@ -89,6 +89,14 @@ Gallery:
 ![Mock image](../images/mock.jpg)
 [[/gallery]]
 
+Carousel:
+
+[[gallery gap=12 layout=carousel]]
+![Mock image](../images/mock.jpg)
+![Mock image](../images/mock.jpg)
+![Mock image](../images/mock.jpg)
+[[/gallery]]
+
 ## 7. Handmade checklist
 
 - [ ] Draft
