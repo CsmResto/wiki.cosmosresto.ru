@@ -2,7 +2,10 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import type { ImgHTMLAttributes } from 'react'
+import parse, { DOMNode, HTMLReactParserOptions } from 'html-react-parser'
+import Zoom from 'react-medium-image-zoom'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
 import SearchBox, { SearchText } from '@/components/SearchBox'
 import { isLocale, Locale, locales } from '@/lib/i18n/locales'
@@ -157,6 +160,78 @@ function buildOpenSlugs(slug: string, kind: PageProps['kind']): Set<string> {
   return open
 }
 
+function renderMarkdown(contentHtml: string) {
+  const buildImgProps = (attribs: Record<string, string> | undefined) => {
+    const safeAttribs = attribs ?? {}
+    const imgProps: ImgHTMLAttributes<HTMLImageElement> = {
+      src: safeAttribs.src ?? '',
+      alt: safeAttribs.alt ?? '',
+    }
+
+    if (safeAttribs.title) imgProps.title = safeAttribs.title
+    if (safeAttribs.width) imgProps.width = Number(safeAttribs.width)
+    if (safeAttribs.height) imgProps.height = Number(safeAttribs.height)
+    if (safeAttribs.loading) imgProps.loading = safeAttribs.loading as ImgHTMLAttributes<HTMLImageElement>['loading']
+    if (safeAttribs.decoding) imgProps.decoding = safeAttribs.decoding as ImgHTMLAttributes<HTMLImageElement>['decoding']
+    if (safeAttribs.sizes) imgProps.sizes = safeAttribs.sizes
+    if (safeAttribs.srcset) imgProps.srcSet = safeAttribs.srcset
+    if (safeAttribs.referrerpolicy) {
+      imgProps.referrerPolicy = safeAttribs.referrerpolicy as ImgHTMLAttributes<HTMLImageElement>['referrerPolicy']
+    }
+    if (safeAttribs.class) imgProps.className = safeAttribs.class
+
+    return imgProps
+  }
+
+  const options: HTMLReactParserOptions = {
+    replace: (domNode: DOMNode) => {
+      if (domNode.type !== 'tag') {
+        return undefined
+      }
+
+      const element = domNode as { name?: string; attribs?: Record<string, string> }
+      if (element.name === 'p') {
+        const paragraph = domNode as unknown as {
+          children?: Array<{ type: string; name?: string; attribs?: Record<string, string>; data?: string }>
+        }
+        const children = paragraph.children ?? []
+        const meaningfulChildren = children.filter((child) => {
+          if (child.type === 'text') {
+            return Boolean(child.data?.trim())
+          }
+          return true
+        })
+
+        if (meaningfulChildren.length === 1 && meaningfulChildren[0]?.type === 'tag' && meaningfulChildren[0].name === 'img') {
+          const imgChild = meaningfulChildren[0]
+          const imgProps = buildImgProps(imgChild.attribs)
+          return (
+            <div className="wiki-image">
+              <Zoom>
+                <img {...imgProps} />
+              </Zoom>
+            </div>
+          )
+        }
+      }
+
+      if (element.name !== 'img') {
+        return undefined
+      }
+
+      const imgProps = buildImgProps(element.attribs)
+
+      return (
+        <Zoom>
+          <img {...imgProps} />
+        </Zoom>
+      )
+    },
+  }
+
+  return parse(contentHtml, options)
+}
+
 export default function WikiPage(props: PageProps) {
   const { basePath } = useRouter()
   const [assetPrefix, setAssetPrefix] = useState(basePath ? `${basePath}/` : '/')
@@ -169,6 +244,12 @@ export default function WikiPage(props: PageProps) {
   const [isHeaderHidden, setIsHeaderHidden] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const openSlugs = buildOpenSlugs(currentSlug, props.kind)
+  const markdownContent = useMemo(() => {
+    if (props.kind !== 'page') {
+      return null
+    }
+    return renderMarkdown(props.page.contentHtml)
+  }, [props.kind, props.kind === 'page' ? props.page.contentHtml : null])
 
   useEffect(() => {
     const stored = window.localStorage.getItem('wiki-theme')
@@ -674,7 +755,9 @@ export default function WikiPage(props: PageProps) {
           <article className="wiki-article">
             <h1>{page.title}</h1>
             {page.description && <p className="wiki-subtitle">{page.description}</p>}
-            <div ref={markdownContentRef} className="wiki-markdown" dangerouslySetInnerHTML={{ __html: page.contentHtml }} />
+            <div ref={markdownContentRef} className="wiki-markdown">
+              {markdownContent}
+            </div>
           </article>
         </section>
       </main>

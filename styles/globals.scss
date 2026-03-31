@@ -14,6 +14,7 @@
   --colors-code-button-bg: #2a2a2a;
   --colors-code-button-bg-active: #1f5f36;
   --colors-code-button-bg-failed: #6a2b2b;
+  --colors-zoom-overlay: rgba(13, 12, 13, 0.72);
 }
 
 :root[data-theme="light"] {
@@ -32,6 +33,7 @@
   --colors-code-button-bg: #ecebe8;
   --colors-code-button-bg-active: #d8e8dd;
   --colors-code-button-bg-failed: #f1d6d6;
+  --colors-zoom-overlay: rgba(245, 244, 242, 0.72);
 }
 
 * {
@@ -63,6 +65,16 @@ a {
   display: grid;
   grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
   gap: 24px;
+}
+
+[data-rmiz-modal-overlay="visible"] {
+  background-color: var(--colors-zoom-overlay) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+[data-rmiz-modal-overlay="hidden"] {
+  background-color: transparent !important;
 }
 
 .wiki-sidebar {
