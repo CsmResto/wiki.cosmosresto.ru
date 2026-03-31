@@ -799,6 +799,24 @@ a {
     height: auto;
   }
 
+  .empty-state__icon--light {
+    display: none;
+  }
+
+  .empty-state__icon--dark {
+    display: block;
+  }
+
+  :root[data-theme="light"] & {
+    .empty-state__icon--light {
+      display: block;
+    }
+
+    .empty-state__icon--dark {
+      display: none;
+    }
+  }
+
   .empty-state__text {
     margin: 0;
     color: var(--colors-text-secondary);
