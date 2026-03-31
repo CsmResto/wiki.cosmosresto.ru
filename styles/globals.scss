@@ -784,6 +784,28 @@ a {
     padding-left: 22px;
   }
 
+  .empty-state {
+    margin: 24px 0;
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: grid;
+    justify-items: center;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .empty-state__icon {
+    width: min(240px, 70vw);
+    height: auto;
+  }
+
+  .empty-state__text {
+    margin: 0;
+    color: var(--colors-text-secondary);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
   .task-list {
     list-style: none;
     padding-left: 0;
