@@ -301,27 +301,61 @@ export default function WikiPage(props: PageProps) {
     window.localStorage.setItem('wiki-theme', nextTheme)
   }
 
+  const lastScrollYRef = useRef(0)
+  const headerHiddenRef = useRef(false)
+  const scrollTargetRef = useRef<HTMLElement | Document | Window | null>(null)
+
   useEffect(() => {
-    let lastY = window.scrollY
+    headerHiddenRef.current = isHeaderHidden
+  }, [isHeaderHidden])
+
+  useEffect(() => {
+    const getScrollTop = () => {
+      const target = scrollTargetRef.current
+      if (target === window) {
+        return window.scrollY ?? 0
+      }
+      if (target === document) {
+        return document.scrollingElement?.scrollTop ?? window.scrollY ?? 0
+      }
+      if (target && 'scrollTop' in target) {
+        return (target as HTMLElement).scrollTop ?? 0
+      }
+      return document.scrollingElement?.scrollTop ?? window.scrollY ?? 0
+    }
+
+    lastScrollYRef.current = getScrollTop()
     let ticking = false
 
     const update = () => {
-      const currentY = window.scrollY
-      const delta = currentY - lastY
+      const currentY = getScrollTop()
+      const delta = currentY - lastScrollYRef.current
       const nextHidden = currentY > 80 && delta > 6
       const shouldShow = delta < -6 || currentY < 40
 
-      if (nextHidden !== isHeaderHidden && nextHidden) {
+      if (nextHidden && !headerHiddenRef.current) {
+        headerHiddenRef.current = true
         setIsHeaderHidden(true)
-      } else if (shouldShow && isHeaderHidden) {
+      } else if (shouldShow && headerHiddenRef.current) {
+        headerHiddenRef.current = false
         setIsHeaderHidden(false)
       }
 
-      lastY = currentY
+      lastScrollYRef.current = currentY
       ticking = false
     }
 
-    const onScroll = () => {
+    const onScroll = (event?: Event) => {
+      if (!scrollTargetRef.current) {
+        const target = event?.target
+        if (target instanceof HTMLElement) {
+          scrollTargetRef.current = target
+        } else if (target === document) {
+          scrollTargetRef.current = document
+        } else {
+          scrollTargetRef.current = window
+        }
+      }
       if (!ticking) {
         ticking = true
         window.requestAnimationFrame(update)
@@ -329,8 +363,12 @@ export default function WikiPage(props: PageProps) {
     }
 
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [isHeaderHidden])
+    document.addEventListener('scroll', onScroll, { passive: true, capture: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      document.removeEventListener('scroll', onScroll, { capture: true })
+    }
+  }, [])
 
   const renderNavList = (node: WikiTreeNode, level: number, onNavigate?: () => void) => {
     const hasChildren = node.directories.length > 0 || node.pages.length > 0
@@ -513,7 +551,7 @@ export default function WikiPage(props: PageProps) {
                 </span>
               </Link>
             </div>
-            {renderNavList(tree, 0)}
+            <div className="wiki-sidebar__nav">{renderNavList(tree, 0)}</div>
           </aside>
           <section className="wiki-content">
             <header className={`wiki-toolbar wiki-toolbar--sticky ${isHeaderHidden ? 'is-hidden' : ''}`}>
@@ -674,7 +712,7 @@ export default function WikiPage(props: PageProps) {
               </span>
             </Link>
           </div>
-          {renderNavList(tree, 0)}
+          <div className="wiki-sidebar__nav">{renderNavList(tree, 0)}</div>
         </aside>
         <section className="wiki-content">
           <header className={`wiki-toolbar wiki-toolbar--sticky ${isHeaderHidden ? 'is-hidden' : ''}`}>
