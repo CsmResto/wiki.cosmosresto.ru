@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type { CSSProperties, ImgHTMLAttributes } from 'react'
+import type { CSSProperties, ImgHTMLAttributes, ReactNode } from 'react'
 import parse, { DOMNode, HTMLReactParserOptions } from 'html-react-parser'
 import Zoom from 'react-medium-image-zoom'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
@@ -102,7 +102,7 @@ function buildWikiHref(locale: Locale, slug: string): string {
 
 const ICONS_BASE_PATH = '/assets/icons'
 
-function renderNavIcon(icon: string | null): JSX.Element | null {
+function renderNavIcon(icon: string | null): ReactNode {
   if (!icon) {
     return null
   }
