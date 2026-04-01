@@ -160,6 +160,20 @@ function buildOpenSlugs(slug: string, kind: PageProps['kind']): Set<string> {
   return open
 }
 
+function buildSlugPath(slug: string): string[] {
+  const normalized = slug.replace(/^\/+|\/+$/g, '')
+  if (!normalized) {
+    return []
+  }
+
+  const segments = normalized.split('/').filter(Boolean)
+  const path: string[] = []
+  for (let index = 0; index < segments.length; index += 1) {
+    path.push(segments.slice(0, index + 1).join('/'))
+  }
+  return path
+}
+
 function renderMarkdown(contentHtml: string) {
   const buildImgProps = (attribs: Record<string, string> | undefined) => {
     const safeAttribs = attribs ?? {}
@@ -258,13 +272,33 @@ export default function WikiPage(props: PageProps) {
   const [theme, setTheme] = useState<'light' | 'dark'>('dark')
   const [isHeaderHidden, setIsHeaderHidden] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const openSlugs = buildOpenSlugs(currentSlug, props.kind)
+  const [openSlugs, setOpenSlugs] = useState<Set<string>>(() => buildOpenSlugs(currentSlug, props.kind))
   const markdownContent = useMemo(() => {
     if (props.kind !== 'page') {
       return null
     }
     return renderMarkdown(props.page.contentHtml)
   }, [props.kind, props.kind === 'page' ? props.page.contentHtml : null])
+
+  useEffect(() => {
+    setOpenSlugs(buildOpenSlugs(currentSlug, props.kind))
+  }, [currentSlug, props.kind])
+
+  const toggleDirectory = (slug: string) => {
+    setOpenSlugs((prev) => {
+      if (prev.has(slug)) {
+        const next = new Set(prev)
+        next.forEach((openSlug) => {
+          if (openSlug === slug || openSlug.startsWith(`${slug}/`)) {
+            next.delete(openSlug)
+          }
+        })
+        return next
+      }
+
+      return new Set(buildSlugPath(slug))
+    })
+  }
 
   useEffect(() => {
     const stored = window.localStorage.getItem('wiki-theme')
@@ -381,11 +415,28 @@ export default function WikiPage(props: PageProps) {
         {node.directories.map((directory) => {
           const isOpen = openSlugs.has(directory.slug)
           const isActive = currentSlug === directory.slug
+          const canToggle = directory.directories.length > 0 || directory.pages.length > 0
           return (
             <li key={directory.slug} className={`wiki-nav-item ${isActive ? 'is-active' : ''}`}>
-              <Link href={buildWikiHref(props.locale, directory.slug)} className="wiki-nav-link" onClick={onNavigate}>
-                {directory.name}
-              </Link>
+              <div className="wiki-nav-row">
+                <Link href={buildWikiHref(props.locale, directory.slug)} className="wiki-nav-link" onClick={onNavigate}>
+                  {directory.icon && (
+                    <span className="wiki-nav-icon" aria-hidden="true">
+                      {directory.icon}
+                    </span>
+                  )}
+                  {directory.name}
+                </Link>
+                {canToggle && (
+                  <button
+                    type="button"
+                    className={`wiki-nav-toggle ${isOpen ? 'is-open' : ''}`}
+                    aria-label={`Toggle ${directory.name}`}
+                    aria-expanded={isOpen}
+                    onClick={() => toggleDirectory(directory.slug)}
+                  />
+                )}
+              </div>
               {isOpen && renderNavList(directory, level + 1, onNavigate)}
             </li>
           )
@@ -395,6 +446,11 @@ export default function WikiPage(props: PageProps) {
           return (
             <li key={page.slug} className={`wiki-nav-item ${isActive ? 'is-active' : ''}`}>
               <Link href={buildWikiHref(props.locale, page.slug)} className="wiki-nav-link" onClick={onNavigate}>
+                {page.icon && (
+                  <span className="wiki-nav-icon" aria-hidden="true">
+                    {page.icon}
+                  </span>
+                )}
                 {page.title}
               </Link>
             </li>
@@ -655,9 +711,11 @@ export default function WikiPage(props: PageProps) {
                 {directory.directories.map((folder) => (
                   <li key={folder.slug} className="wiki-page-list-item is-folder">
                     <Link href={buildWikiHref(locale, folder.slug)} className="wiki-page-link">
-                      <span className="wiki-page-icon" aria-hidden="true">
-                        📁
-                      </span>
+                      {folder.icon && (
+                        <span className="wiki-page-icon" aria-hidden="true">
+                          {folder.icon}
+                        </span>
+                      )}
                       {folder.name}
                     </Link>
                     {folder.description && <p className="wiki-page-meta">{folder.description}</p>}
@@ -671,9 +729,11 @@ export default function WikiPage(props: PageProps) {
                 {directory.pages.map((page) => (
                   <li key={page.slug} className="wiki-page-list-item is-page">
                     <Link href={buildWikiHref(locale, page.slug)} className="wiki-page-link">
-                      <span className="wiki-page-icon" aria-hidden="true">
-                        📄
-                      </span>
+                      {page.icon && (
+                        <span className="wiki-page-icon" aria-hidden="true">
+                          {page.icon}
+                        </span>
+                      )}
                       {page.title}
                     </Link>
                     {page.description && <p className="wiki-page-meta">{page.description}</p>}
