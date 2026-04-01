@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import { remark } from 'remark'
+import remarkGfm from 'remark-gfm'
 import html from 'remark-html'
 import { Locale } from '@/lib/i18n/locales'
 
@@ -290,7 +291,36 @@ function enhanceMarkdownHtml(contentHtml: string): string {
     return `<figure class="code-block" data-language="text"><figcaption class="code-block__header"><span class="code-block__lang">Text</span><button type="button" class="code-block__copy" data-copy-code>Copy</button></figcaption><pre><code>${codeHtml}</code></pre></figure>`
   })
 
-  return applyGalleryBlocks(withPlainCodeBlocks)
+  const withTables = wrapMarkdownTables(withPlainCodeBlocks)
+
+  return applyGalleryBlocks(withTables)
+}
+
+function wrapMarkdownTables(contentHtml: string): string {
+  const withClasses = contentHtml.replace(/<table(\s[^>]*)?>/g, (_match, attrs) => {
+    const normalizedAttrs = typeof attrs === 'string' ? attrs.trim() : ''
+    if (!normalizedAttrs) {
+      return '<table class="wiki-table">'
+    }
+
+    if (/class\s*=/.test(normalizedAttrs)) {
+      const mergedAttrs = normalizedAttrs.replace(
+        /class=(\"([^\"]*)\"|'([^']*)')/,
+        (_classMatch, _raw, doubleQuoted, singleQuoted) => {
+          const current = (doubleQuoted ?? singleQuoted ?? '').trim()
+          const merged = current ? `${current} wiki-table` : 'wiki-table'
+          return `class="${merged}"`
+        }
+      )
+      return `<table ${mergedAttrs}>`
+    }
+
+    return `<table ${normalizedAttrs} class="wiki-table">`
+  })
+
+  return withClasses.replace(/<table[\s\S]*?<\/table>/g, (tableHtml) => {
+    return `<div class="table-wrap">${tableHtml}</div>`
+  })
 }
 
 function applyGalleryBlocks(contentHtml: string): string {
@@ -607,6 +637,7 @@ export async function getMarkdownData(locale: Locale, slug: string): Promise<Mar
   const { data, content } = matter(fileContents)
 
   const processedContent = await remark()
+    .use(remarkGfm)
     .use(remarkAutolinkHeadings)
     .use(html)
     .process(content)

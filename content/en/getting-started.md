@@ -2,7 +2,7 @@
 title: Getting Started
 description: Demo page with core markdown blocks
 order: 10
-updatedAt: 2026-03-06
+updatedAt: 2026-04-01
 ---
 
 # Welcome
@@ -104,3 +104,11 @@ Carousel:
 - [x] Published
 
 When finished, mark the task as done.
+
+## 8. Tables
+
+| Plan | Price | Notes |
+| --- | ---: | --- |
+| Starter | $9 | Drafts and quick notes |
+| Team | $29 | Collaboration space |
+| Enterprise | Custom | Dedicated support |
