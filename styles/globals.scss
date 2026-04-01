@@ -1108,6 +1108,10 @@ a {
     margin-top: calc(var(--wiki-toolbar-fixed-offset) + 10px);
   }
 
+  .wiki-content > h1 {
+    margin-top: calc(var(--wiki-toolbar-fixed-offset) + 10px);
+  }
+
   .wiki-article h1,
   .wiki-article h2,
   .wiki-article h3,

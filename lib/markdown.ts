@@ -26,7 +26,7 @@ export interface MarkdownData extends WikiPageMeta {
 
 export interface WikiTreeNode {
   name: string
-  description?: string
+  description: string | null
   slug: string
   directories: WikiTreeNode[]
   pages: WikiPageMeta[]
@@ -434,7 +434,7 @@ function ensureDirectoryNode(
     const metaOverride = directoryMetaMap.get(currentSlug)
     const nextNode: WikiTreeNode = {
       name: metaOverride?.title ?? toTitleFromSlug(currentSlug),
-      description: metaOverride?.description,
+      description: metaOverride?.description ?? null,
       slug: currentSlug,
       directories: [],
       pages: [],
@@ -552,6 +552,7 @@ export function getAllWikiRouteSlugs(locale: Locale): string[] {
 export function getWikiTree(locale: Locale): WikiTreeNode {
   const root: WikiTreeNode = {
     name: 'content',
+    description: null,
     slug: '',
     directories: [],
     pages: [],
