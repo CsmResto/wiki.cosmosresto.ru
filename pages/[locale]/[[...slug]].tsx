@@ -102,7 +102,22 @@ function buildWikiHref(locale: Locale, slug: string): string {
 
 const ICONS_BASE_PATH = '/assets/icons'
 
-function renderNavIcon(icon: string | null): ReactNode {
+function resolveIconPath(raw: string, basePath: string): string {
+  const trimmed = raw.trim()
+
+  if (trimmed.startsWith('http')) {
+    return trimmed
+  }
+
+  const normalizedBase = basePath?.replace(/\/+$/g, '') ?? ''
+  if (trimmed.startsWith('/')) {
+    return `${normalizedBase}${trimmed}`
+  }
+
+  return `${normalizedBase}/${trimmed}`
+}
+
+function renderIcon(icon: string | null, basePath: string, classBase: string): ReactNode {
   if (!icon) {
     return null
   }
@@ -119,17 +134,18 @@ function renderNavIcon(icon: string | null): ReactNode {
 
   if (!isNonAscii && (isExplicitPath || isFileLike || isSimpleName)) {
     const iconPath = isSimpleName ? `${ICONS_BASE_PATH}/${trimmed}.svg` : trimmed
+    const resolvedPath = resolveIconPath(iconPath, basePath)
     return (
       <span
-        className="wiki-nav-icon wiki-nav-icon--image"
+        className={`${classBase} ${classBase}--image`}
         aria-hidden="true"
-        style={{ '--wiki-icon-url': `url("${iconPath}")` } as CSSProperties}
+        style={{ '--wiki-icon-url': `url("${resolvedPath}")` } as CSSProperties}
       />
     )
   }
 
   return (
-    <span className="wiki-nav-icon" aria-hidden="true">
+    <span className={classBase} aria-hidden="true">
       {icon}
     </span>
   )
@@ -455,7 +471,7 @@ export default function WikiPage(props: PageProps) {
             <li key={directory.slug} className={`wiki-nav-item ${isActive ? 'is-active' : ''}`}>
               <div className="wiki-nav-row">
                 <Link href={buildWikiHref(props.locale, directory.slug)} className="wiki-nav-link" onClick={onNavigate}>
-                  {renderNavIcon(directory.icon)}
+                  {renderIcon(directory.icon, basePath, 'wiki-nav-icon')}
                   {directory.name}
                 </Link>
                 {canToggle && (
@@ -477,7 +493,7 @@ export default function WikiPage(props: PageProps) {
           return (
             <li key={page.slug} className={`wiki-nav-item ${isActive ? 'is-active' : ''}`}>
               <Link href={buildWikiHref(props.locale, page.slug)} className="wiki-nav-link" onClick={onNavigate}>
-                {renderNavIcon(page.icon ?? null)}
+                {renderIcon(page.icon ?? null, basePath, 'wiki-nav-icon')}
                 {page.title}
               </Link>
             </li>
@@ -738,11 +754,7 @@ export default function WikiPage(props: PageProps) {
                 {directory.directories.map((folder) => (
                   <li key={folder.slug} className="wiki-page-list-item is-folder">
                     <Link href={buildWikiHref(locale, folder.slug)} className="wiki-page-link">
-                      {folder.icon && (
-                        <span className="wiki-page-icon" aria-hidden="true">
-                          {folder.icon}
-                        </span>
-                      )}
+                      {renderIcon(folder.icon ?? null, basePath, 'wiki-page-icon')}
                       {folder.name}
                     </Link>
                     {folder.description && <p className="wiki-page-meta">{folder.description}</p>}
@@ -756,11 +768,7 @@ export default function WikiPage(props: PageProps) {
                 {directory.pages.map((page) => (
                   <li key={page.slug} className="wiki-page-list-item is-page">
                     <Link href={buildWikiHref(locale, page.slug)} className="wiki-page-link">
-                      {page.icon && (
-                        <span className="wiki-page-icon" aria-hidden="true">
-                          {page.icon}
-                        </span>
-                      )}
+                      {renderIcon(page.icon ?? null, basePath, 'wiki-page-icon')}
                       {page.title}
                     </Link>
                     {page.description && <p className="wiki-page-meta">{page.description}</p>}

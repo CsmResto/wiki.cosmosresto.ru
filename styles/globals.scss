@@ -797,7 +797,25 @@ a {
 }
 
 .wiki-page-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
   font-size: 12px;
+  color: inherit;
+}
+
+.wiki-page-icon--image {
+  background-color: currentColor;
+  mask-image: var(--wiki-icon-url);
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  mask-position: center;
+  -webkit-mask-image: var(--wiki-icon-url);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
 }
 
 .wiki-page-meta {
