@@ -141,14 +141,9 @@ a {
 
 [data-rmiz-modal][open] {
   inset: 0;
+  height: calc(var(--rmiz-vh, 1vh) * 100);
 }
 
-[data-rmiz-modal-img] {
-  max-width: calc(100vw - 24px);
-  max-width: calc(100dvw - 24px);
-  max-height: calc(100vh - 24px);
-  max-height: calc(100dvh - 24px);
-}
 
 .wiki-sidebar {
   position: sticky;
@@ -1094,4 +1089,5 @@ a {
   .wiki-gallery[data-gallery-layout="carousel"] > * {
     flex-basis: 86vw;
   }
+
 }

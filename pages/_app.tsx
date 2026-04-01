@@ -1,11 +1,35 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import '../styles/globals.scss'
+import { useEffect } from 'react'
 import 'react-medium-image-zoom/dist/styles.css'
+import '../styles/globals.scss'
 
 export default function App({ Component, pageProps }: AppProps) {
   const { basePath } = useRouter()
+
+  useEffect(() => {
+    const root = document.documentElement
+    const setViewportVars = () => {
+      const vv = window.visualViewport
+      const vh = (vv?.height ?? window.innerHeight) * 0.01
+
+      root.style.setProperty('--rmiz-vh', `${vh}px`)
+    }
+
+    setViewportVars()
+    window.addEventListener('resize', setViewportVars)
+    window.addEventListener('orientationchange', setViewportVars)
+    window.visualViewport?.addEventListener('resize', setViewportVars)
+    window.visualViewport?.addEventListener('scroll', setViewportVars)
+
+    return () => {
+      window.removeEventListener('resize', setViewportVars)
+      window.removeEventListener('orientationchange', setViewportVars)
+      window.visualViewport?.removeEventListener('resize', setViewportVars)
+      window.visualViewport?.removeEventListener('scroll', setViewportVars)
+    }
+  }, [])
 
   return (
     <>
