@@ -170,7 +170,6 @@ a {
   display: grid;
   gap: 16px;
   max-height: calc(100vh - 40px);
-  background: var(--colors-bg);
   z-index: 4;
 }
 
@@ -642,7 +641,25 @@ a {
 }
 
 .wiki-nav-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
   font-size: 12px;
+  color: inherit;
+}
+
+.wiki-nav-icon--image {
+  background-color: currentColor;
+  mask-image: var(--wiki-icon-url);
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  mask-position: center;
+  -webkit-mask-image: var(--wiki-icon-url);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
 }
 
 .wiki-nav-toggle {

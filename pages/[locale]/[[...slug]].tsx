@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type { ImgHTMLAttributes } from 'react'
+import type { CSSProperties, ImgHTMLAttributes } from 'react'
 import parse, { DOMNode, HTMLReactParserOptions } from 'html-react-parser'
 import Zoom from 'react-medium-image-zoom'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
@@ -98,6 +98,41 @@ const uiTextByLocale: Record<Locale, UiText> = {
 function buildWikiHref(locale: Locale, slug: string): string {
   const normalizedSlug = slug.replace(/^\/+|\/+$/g, '')
   return normalizedSlug ? `/${locale}/${normalizedSlug}` : `/${locale}`
+}
+
+const ICONS_BASE_PATH = '/assets/icons'
+
+function renderNavIcon(icon: string | null): JSX.Element | null {
+  if (!icon) {
+    return null
+  }
+
+  const trimmed = icon.trim()
+  if (!trimmed) {
+    return null
+  }
+
+  const isNonAscii = /[^\x00-\x7F]/.test(trimmed)
+  const isExplicitPath = trimmed.startsWith('/') || trimmed.startsWith('http') || trimmed.includes('/')
+  const isFileLike = trimmed.includes('.')
+  const isSimpleName = /^[a-z0-9_-]+$/i.test(trimmed)
+
+  if (!isNonAscii && (isExplicitPath || isFileLike || isSimpleName)) {
+    const iconPath = isSimpleName ? `${ICONS_BASE_PATH}/${trimmed}.svg` : trimmed
+    return (
+      <span
+        className="wiki-nav-icon wiki-nav-icon--image"
+        aria-hidden="true"
+        style={{ '--wiki-icon-url': `url("${iconPath}")` } as CSSProperties}
+      />
+    )
+  }
+
+  return (
+    <span className="wiki-nav-icon" aria-hidden="true">
+      {icon}
+    </span>
+  )
 }
 
 function buildDirectoryBreadcrumbs(locale: Locale, slug: string): BreadcrumbItem[] {
@@ -420,11 +455,7 @@ export default function WikiPage(props: PageProps) {
             <li key={directory.slug} className={`wiki-nav-item ${isActive ? 'is-active' : ''}`}>
               <div className="wiki-nav-row">
                 <Link href={buildWikiHref(props.locale, directory.slug)} className="wiki-nav-link" onClick={onNavigate}>
-                  {directory.icon && (
-                    <span className="wiki-nav-icon" aria-hidden="true">
-                      {directory.icon}
-                    </span>
-                  )}
+                  {renderNavIcon(directory.icon)}
                   {directory.name}
                 </Link>
                 {canToggle && (
@@ -446,11 +477,7 @@ export default function WikiPage(props: PageProps) {
           return (
             <li key={page.slug} className={`wiki-nav-item ${isActive ? 'is-active' : ''}`}>
               <Link href={buildWikiHref(props.locale, page.slug)} className="wiki-nav-link" onClick={onNavigate}>
-                {page.icon && (
-                  <span className="wiki-nav-icon" aria-hidden="true">
-                    {page.icon}
-                  </span>
-                )}
+                {renderNavIcon(page.icon ?? null)}
                 {page.title}
               </Link>
             </li>

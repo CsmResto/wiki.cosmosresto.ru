@@ -1,6 +1,7 @@
 ---
 title: Быстрый старт
 description: Демонстрационная страница со всеми базовыми markdown-блоками
+icon: summary
 order: 10
 updatedAt: 2026-04-01
 ---

@@ -1,6 +1,7 @@
 ---
 title: Getting Started
 description: Demo page with core markdown blocks
+icon: summary
 order: 10
 updatedAt: 2026-04-01
 ---
