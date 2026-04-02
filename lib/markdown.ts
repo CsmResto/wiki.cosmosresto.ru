@@ -37,6 +37,7 @@ export interface WikiTreeNode {
 export interface WikiDirectoryData {
   slug: string
   name: string
+  description: string | null
   icon: string | null
   directories: Array<{ name: string; description: string | null; slug: string; icon: string | null }>
   pages: WikiPageMeta[]
@@ -617,6 +618,7 @@ export function getWikiDirectoryData(locale: Locale, slug: string): WikiDirector
   return {
     slug: normalizedSlug,
     name: node.name,
+    description: node.description ?? null,
     icon: node.icon ?? null,
     directories: node.directories.map((directory) => ({
       name: directory.name,

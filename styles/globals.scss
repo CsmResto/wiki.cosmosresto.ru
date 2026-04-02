@@ -703,7 +703,8 @@ a {
   color: var(--colors-text-primary);
 }
 
-.wiki-nav-item.is-active > .wiki-nav-link {
+.wiki-nav-item.is-active > .wiki-nav-link,
+.wiki-nav-item.is-active > .wiki-nav-row > .wiki-nav-link {
   background: var(--colors-bg-surface);
   color: var(--colors-text-primary);
   font-weight: 600;

@@ -30,6 +30,7 @@ type PageProps =
       kind: 'directory'
       locale: Locale
       directory: WikiDirectoryData
+      indexPage?: MarkdownData | null
       breadcrumbs: BreadcrumbItem[]
       tree: WikiTreeNode
     }
@@ -324,12 +325,14 @@ export default function WikiPage(props: PageProps) {
   const [isHeaderHidden, setIsHeaderHidden] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [openSlugs, setOpenSlugs] = useState<Set<string>>(() => buildOpenSlugs(currentSlug, props.kind))
+  const indexPage = props.kind === 'directory' ? props.indexPage ?? null : null
+  const contentHtml = props.kind === 'page' ? props.page.contentHtml : indexPage?.contentHtml
   const markdownContent = useMemo(() => {
-    if (props.kind !== 'page') {
+    if (!contentHtml) {
       return null
     }
-    return renderMarkdown(props.page.contentHtml)
-  }, [props.kind, props.kind === 'page' ? props.page.contentHtml : null])
+    return renderMarkdown(contentHtml)
+  }, [contentHtml])
 
   useEffect(() => {
     setOpenSlugs(buildOpenSlugs(currentSlug, props.kind))
@@ -623,13 +626,14 @@ export default function WikiPage(props: PageProps) {
   if (props.kind === 'directory') {
     const { directory, locale } = props
     const isRootDirectory = directory.slug === ''
-    const directoryTitle = isRootDirectory ? text.rootTitle : directory.name
+    const directoryTitle = indexPage?.title ?? (isRootDirectory ? text.rootTitle : directory.name)
+    const directoryDescription = indexPage?.description ?? directory.description ?? null
 
     return (
       <>
         <Head>
           <title>{directoryTitle} | CSM Wiki</title>
-          <meta name="description" content={text.homeDescription} />
+          <meta name="description" content={directoryDescription ?? text.homeDescription} />
         </Head>
         <main className="wiki-shell">
           <aside className="wiki-sidebar">
@@ -796,7 +800,22 @@ export default function WikiPage(props: PageProps) {
               </div>
             </div>
 
-            <h1>{directoryTitle}</h1>
+            {indexPage ? (
+              <article className="wiki-article">
+                <h1>{directoryTitle}</h1>
+                {directoryDescription && <p className="wiki-subtitle">{directoryDescription}</p>}
+                {markdownContent && (
+                  <div ref={markdownContentRef} className="wiki-markdown">
+                    {markdownContent}
+                  </div>
+                )}
+              </article>
+            ) : (
+              <>
+                <h1>{directoryTitle}</h1>
+                {directoryDescription && <p className="wiki-subtitle">{directoryDescription}</p>}
+              </>
+            )}
 
             {directory.directories.length > 0 && (
               <ul className="wiki-tree-list">
@@ -1043,11 +1062,20 @@ export const getStaticProps: GetStaticProps<PageProps, { locale: string; slug?: 
       return { notFound: true }
     }
 
+    const indexSlug = slug ? `${slug}/index` : 'index'
+    let indexPage: MarkdownData | null = null
+    try {
+      indexPage = await getMarkdownData(locale, indexSlug)
+    } catch {
+      indexPage = null
+    }
+
     return {
       props: {
         kind: 'directory',
         locale,
         directory,
+        indexPage,
         breadcrumbs: buildDirectoryBreadcrumbs(locale, slug),
         tree: getWikiTree(locale),
       },
