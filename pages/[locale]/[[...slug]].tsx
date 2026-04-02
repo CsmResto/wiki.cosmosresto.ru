@@ -379,8 +379,7 @@ export default function WikiPage(props: PageProps) {
     setAssetPrefix('/')
   }, [basePath, props.locale])
 
-  const toggleTheme = () => {
-    const nextTheme = theme === 'light' ? 'dark' : 'light'
+  const applyTheme = (nextTheme: 'light' | 'dark') => {
     setTheme(nextTheme)
     document.documentElement.setAttribute('data-theme', nextTheme)
     window.localStorage.setItem('wiki-theme', nextTheme)
@@ -680,9 +679,34 @@ export default function WikiPage(props: PageProps) {
               )}
               <div className="wiki-toolbar__controls">
                 <SearchBox locale={locale} assetPrefix={assetPrefix} text={text.search} />
-                <button type="button" className="wiki-theme-toggle" onClick={toggleTheme} aria-pressed={theme === 'light'}>
-                  {theme === 'light' ? text.themeLightLabel : text.themeDarkLabel}
-                </button>
+                <div className="theme-switcher" role="group" aria-label="Theme switcher">
+                  <button
+                    type="button"
+                    className={`theme-switcher-button${theme === 'light' ? ' is-active' : ''}`}
+                    onClick={() => applyTheme('light')}
+                    aria-pressed={theme === 'light'}
+                    aria-label={text.themeLightLabel}
+                  >
+                    <span
+                      className="theme-switcher-icon theme-switcher-icon--image"
+                      style={{ '--theme-icon-url': `url("${assetPrefix}assets/icons/sun.svg")` } as CSSProperties}
+                      aria-hidden="true"
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    className={`theme-switcher-button${theme === 'dark' ? ' is-active' : ''}`}
+                    onClick={() => applyTheme('dark')}
+                    aria-pressed={theme === 'dark'}
+                    aria-label={text.themeDarkLabel}
+                  >
+                    <span
+                      className="theme-switcher-icon theme-switcher-icon--image"
+                      style={{ '--theme-icon-url': `url("${assetPrefix}assets/icons/moon.svg")` } as CSSProperties}
+                      aria-hidden="true"
+                    />
+                  </button>
+                </div>
                 <LocaleSwitcher locale={locale} slug={currentSlug} />
               </div>
               <button
@@ -727,9 +751,34 @@ export default function WikiPage(props: PageProps) {
                   </button>
                 </div>
                 <div className="wiki-mobile-menu__controls">
-                  <button type="button" className="wiki-theme-toggle" onClick={toggleTheme} aria-pressed={theme === 'light'}>
-                    {theme === 'light' ? text.themeLightLabel : text.themeDarkLabel}
-                  </button>
+                  <div className="theme-switcher" role="group" aria-label="Theme switcher">
+                    <button
+                      type="button"
+                      className={`theme-switcher-button${theme === 'light' ? ' is-active' : ''}`}
+                      onClick={() => applyTheme('light')}
+                      aria-pressed={theme === 'light'}
+                      aria-label={text.themeLightLabel}
+                    >
+                      <span
+                        className="theme-switcher-icon theme-switcher-icon--image"
+                        style={{ '--theme-icon-url': `url("${assetPrefix}assets/icons/sun.svg")` } as CSSProperties}
+                        aria-hidden="true"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      className={`theme-switcher-button${theme === 'dark' ? ' is-active' : ''}`}
+                      onClick={() => applyTheme('dark')}
+                      aria-pressed={theme === 'dark'}
+                      aria-label={text.themeDarkLabel}
+                    >
+                      <span
+                        className="theme-switcher-icon theme-switcher-icon--image"
+                        style={{ '--theme-icon-url': `url("${assetPrefix}assets/icons/moon.svg")` } as CSSProperties}
+                        aria-hidden="true"
+                      />
+                    </button>
+                  </div>
                   <LocaleSwitcher locale={locale} slug={currentSlug} />
                 </div>
                 <div className="wiki-mobile-menu__search">
@@ -833,9 +882,34 @@ export default function WikiPage(props: PageProps) {
               </nav>
             <div className="wiki-toolbar__controls">
               <SearchBox locale={locale} assetPrefix={assetPrefix} text={text.search} />
-              <button type="button" className="wiki-theme-toggle" onClick={toggleTheme} aria-pressed={theme === 'light'}>
-                {theme === 'light' ? text.themeLightLabel : text.themeDarkLabel}
-              </button>
+              <div className="theme-switcher" role="group" aria-label="Theme switcher">
+                <button
+                  type="button"
+                  className={`theme-switcher-button${theme === 'light' ? ' is-active' : ''}`}
+                  onClick={() => applyTheme('light')}
+                  aria-pressed={theme === 'light'}
+                  aria-label={text.themeLightLabel}
+                >
+                  <span
+                    className="theme-switcher-icon theme-switcher-icon--image"
+                    style={{ '--theme-icon-url': `url("${assetPrefix}assets/icons/sun.svg")` } as CSSProperties}
+                    aria-hidden="true"
+                  />
+                </button>
+                <button
+                  type="button"
+                  className={`theme-switcher-button${theme === 'dark' ? ' is-active' : ''}`}
+                  onClick={() => applyTheme('dark')}
+                  aria-pressed={theme === 'dark'}
+                  aria-label={text.themeDarkLabel}
+                >
+                  <span
+                    className="theme-switcher-icon theme-switcher-icon--image"
+                    style={{ '--theme-icon-url': `url("${assetPrefix}assets/icons/moon.svg")` } as CSSProperties}
+                    aria-hidden="true"
+                  />
+                </button>
+              </div>
               <LocaleSwitcher locale={locale} slug={currentSlug} />
             </div>
             <button
@@ -880,9 +954,34 @@ export default function WikiPage(props: PageProps) {
                 </button>
               </div>
               <div className="wiki-mobile-menu__controls">
-                <button type="button" className="wiki-theme-toggle" onClick={toggleTheme} aria-pressed={theme === 'light'}>
-                  {theme === 'light' ? text.themeLightLabel : text.themeDarkLabel}
-                </button>
+                <div className="theme-switcher" role="group" aria-label="Theme switcher">
+                  <button
+                    type="button"
+                    className={`theme-switcher-button${theme === 'light' ? ' is-active' : ''}`}
+                    onClick={() => applyTheme('light')}
+                    aria-pressed={theme === 'light'}
+                    aria-label={text.themeLightLabel}
+                  >
+                    <span
+                      className="theme-switcher-icon theme-switcher-icon--image"
+                      style={{ '--theme-icon-url': `url("${assetPrefix}assets/icons/sun.svg")` } as CSSProperties}
+                      aria-hidden="true"
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    className={`theme-switcher-button${theme === 'dark' ? ' is-active' : ''}`}
+                    onClick={() => applyTheme('dark')}
+                    aria-pressed={theme === 'dark'}
+                    aria-label={text.themeDarkLabel}
+                  >
+                    <span
+                      className="theme-switcher-icon theme-switcher-icon--image"
+                      style={{ '--theme-icon-url': `url("${assetPrefix}assets/icons/moon.svg")` } as CSSProperties}
+                      aria-hidden="true"
+                    />
+                  </button>
+                </div>
                 <LocaleSwitcher locale={locale} slug={currentSlug} />
               </div>
               <div className="wiki-mobile-menu__search">

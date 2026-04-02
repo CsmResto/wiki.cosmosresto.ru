@@ -209,7 +209,8 @@ a {
   background: var(--colors-bg-surface);
   color: var(--colors-text-primary);
   border-radius: 999px;
-  padding: 8px 12px 8px 8px;
+  height: 32px;
+  padding: 0 12px 0 8px;
   font-size: 12px;
   text-transform: uppercase;
   cursor: pointer;
@@ -481,7 +482,8 @@ a {
   background: var(--colors-bg-surface);
   color: var(--colors-text-primary);
   border-radius: 999px;
-  padding: 8px 10px;
+  height: 32px;
+  padding: 0 10px;
   display: none;
   align-items: center;
   justify-content: center;
@@ -824,34 +826,27 @@ a {
   font-size: 14px;
 }
 
-.locale-switcher {
+.locale-switcher,
+.theme-switcher {
   display: inline-flex;
   border: 1px solid var(--colors-border);
   border-radius: 999px;
   overflow: hidden;
+  height: 32px;
 }
 
-.wiki-theme-toggle {
-  border: 1px solid var(--colors-border);
-  background: var(--colors-bg-surface);
-  color: var(--colors-text-secondary);
-  border-radius: 999px;
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.wiki-theme-toggle:hover {
-  color: var(--colors-text-primary);
-}
-
-.locale-switcher-link {
-  padding: 6px 12px;
+.locale-switcher-link,
+.theme-switcher-button {
+  height: 32px;
+  padding: 0 12px;
   font-size: 12px;
   font-weight: 700;
   font-stretch: expanded;
+  line-height: 1;
   color: var(--colors-text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     text-decoration: none;
@@ -859,9 +854,43 @@ a {
   }
 }
 
+.theme-switcher-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
 .locale-switcher-link.is-active {
   color: var(--colors-text-primary);
   background: var(--colors-bg-surface);
+}
+
+.theme-switcher-button.is-active {
+  color: var(--colors-text-primary);
+  background: var(--colors-bg-surface);
+}
+
+.theme-switcher-icon {
+  display: inline-flex;
+  width: 14px;
+  height: 14px;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-switcher-icon--image {
+  background-color: currentColor;
+  mask-image: var(--theme-icon-url);
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  mask-position: center;
+  -webkit-mask-image: var(--theme-icon-url);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
 }
 
 .wiki-article {
