@@ -15,6 +15,7 @@ export interface WikiPageMeta {
   slug: string
   title: string
   description?: string
+  summary?: string
   icon?: string
   order?: number
   updatedAt?: string
@@ -28,6 +29,7 @@ export interface MarkdownData extends WikiPageMeta {
 export interface WikiTreeNode {
   name: string
   description: string | null
+  summary: string | null
   icon: string | null
   slug: string
   directories: WikiTreeNode[]
@@ -38,8 +40,9 @@ export interface WikiDirectoryData {
   slug: string
   name: string
   description: string | null
+  summary: string | null
   icon: string | null
-  directories: Array<{ name: string; description: string | null; slug: string; icon: string | null }>
+  directories: Array<{ name: string; description: string | null; summary: string | null; slug: string; icon: string | null }>
   pages: WikiPageMeta[]
 }
 
@@ -65,6 +68,7 @@ function parseWikiMeta(slug: string, fileContents: string): WikiPageMeta {
 
   const fmTitle = typeof data.title === 'string' ? data.title : undefined
   const fmDescription = typeof data.description === 'string' ? data.description : undefined
+  const fmSummary = typeof data.summary === 'string' ? data.summary : undefined
   const fmIcon = typeof data.icon === 'string' ? data.icon : undefined
   const fmOrder = typeof data.order === 'number' ? data.order : undefined
   const fmUpdatedAt = typeof data.updatedAt === 'string' ? data.updatedAt : undefined
@@ -76,6 +80,9 @@ function parseWikiMeta(slug: string, fileContents: string): WikiPageMeta {
 
   if (fmDescription !== undefined) {
     meta.description = fmDescription
+  }
+  if (fmSummary !== undefined) {
+    meta.summary = fmSummary
   }
   if (fmIcon !== undefined) {
     meta.icon = fmIcon
@@ -419,7 +426,7 @@ function ensureDirectoryNode(
   root: WikiTreeNode,
   directoryMap: Map<string, WikiTreeNode>,
   directorySlug: string,
-  directoryMetaMap: Map<string, { title: string; description?: string; icon?: string }>
+  directoryMetaMap: Map<string, { title: string; description?: string; summary?: string; icon?: string }>
 ): WikiTreeNode {
   if (directoryMap.has(directorySlug)) {
     return directoryMap.get(directorySlug) as WikiTreeNode
@@ -443,6 +450,7 @@ function ensureDirectoryNode(
     const nextNode: WikiTreeNode = {
       name: metaOverride?.title ?? toTitleFromSlug(currentSlug),
       description: metaOverride?.description ?? null,
+      summary: metaOverride?.summary ?? null,
       icon: metaOverride?.icon ?? null,
       slug: currentSlug,
       directories: [],
@@ -562,6 +570,7 @@ export function getWikiTree(locale: Locale): WikiTreeNode {
   const root: WikiTreeNode = {
     name: 'content',
     description: null,
+    summary: null,
     icon: null,
     slug: '',
     directories: [],
@@ -570,7 +579,7 @@ export function getWikiTree(locale: Locale): WikiTreeNode {
 
   const directoryMap = new Map<string, WikiTreeNode>([['', root]])
   const pages = getAllWikiPages(locale)
-  const directoryMetaMap = new Map<string, { title: string; description?: string; icon?: string }>()
+  const directoryMetaMap = new Map<string, { title: string; description?: string; summary?: string; icon?: string }>()
 
   for (const page of pages) {
     if (page.slug === 'index') {
@@ -583,6 +592,7 @@ export function getWikiTree(locale: Locale): WikiTreeNode {
         directoryMetaMap.set(directorySlug, {
           title: page.title,
           description: page.description,
+          summary: page.summary,
           icon: page.icon,
         })
       }
@@ -619,10 +629,12 @@ export function getWikiDirectoryData(locale: Locale, slug: string): WikiDirector
     slug: normalizedSlug,
     name: node.name,
     description: node.description ?? null,
+    summary: node.summary ?? null,
     icon: node.icon ?? null,
     directories: node.directories.map((directory) => ({
       name: directory.name,
       description: directory.description ?? null,
+      summary: directory.summary ?? null,
       slug: directory.slug,
       icon: directory.icon ?? null,
     })),

@@ -825,7 +825,7 @@ export default function WikiPage(props: PageProps) {
                       {renderIcon(folder.icon ?? null, basePath, 'wiki-page-icon')}
                       {folder.name}
                     </Link>
-                    {folder.description && <p className="wiki-page-meta">{folder.description}</p>}
+                    {folder.summary && <p className="wiki-page-meta">{folder.summary}</p>}
                   </li>
                 ))}
               </ul>
@@ -839,7 +839,7 @@ export default function WikiPage(props: PageProps) {
                       {renderIcon(page.icon ?? null, basePath, 'wiki-page-icon')}
                       {page.title}
                     </Link>
-                    {page.description && <p className="wiki-page-meta">{page.description}</p>}
+                    {page.summary && <p className="wiki-page-meta">{page.summary}</p>}
                   </li>
                 ))}
                 </ul>
