@@ -155,10 +155,18 @@ icon: summary
 [[/info]]
 ```
 
+Вариант с иконкой:
+
+```md
+[[info tip hasIcon]]
+Подсказка с иконкой.
+[[/info]]
+```
+
 Кастомный вариант с иконкой и цветом:
 
 ```md
-[[info type=custom icon=summary color=#ff5a3c]]
+[[info type=custom hasIcon icon=summary color=#ff5a3c]]
 Кастомный блок с иконкой и цветом.
 [[/info]]
 ```
@@ -168,10 +176,10 @@ icon: summary
 - `type`: `note` | `tip` | `warning` | `custom` (по умолчанию `note`).
 - `icon`: имя иконки или путь (правила такие же, как у `icon` во frontmatter).
 - `color`: hex‑цвет `#rgb` или `#rrggbb`.
+- `hasIcon`: если указан, иконка будет показана (по умолчанию иконки нет).
 
 Цвета и дефолтные иконки для `note/tip/warning` настраиваются в теме через CSS‑переменные:
-`--colors-info-note`, `--colors-info-tip`, `--colors-info-warning`,
-`--icons-info-note`, `--icons-info-tip`, `--icons-info-warning`.
+`--colors-info-note`, `--colors-info-tip`, `--colors-info-warning`.
 
 ## Локальный запуск
 

@@ -348,13 +348,14 @@ function renderMarkdown(contentHtml: string, basePath: string) {
           const infoIcon = element.attribs?.['data-info-icon']
           const infoColor = element.attribs?.['data-info-color']
           const infoType = element.attribs?.['data-info-type']
+          const hasIcon = element.attribs?.['data-info-has-icon'] === 'true'
           const style: CSSProperties & Record<string, string> = {}
 
           if (infoColor && isHexColor(infoColor)) {
             style['--info-color'] = infoColor
           }
 
-          if (infoIcon) {
+          if (hasIcon && infoIcon) {
             const trimmed = infoIcon.trim()
             if (trimmed) {
               const isNonAscii = /[^\x00-\x7F]/.test(trimmed)
@@ -368,7 +369,7 @@ function renderMarkdown(contentHtml: string, basePath: string) {
                 style['--info-icon-url'] = `url("${resolvedPath}")`
               }
             }
-          } else {
+          } else if (hasIcon) {
             const fallbackName = infoType ? INFO_ICON_DEFAULTS[infoType] : undefined
             if (fallbackName) {
               const iconPath = `${ICONS_BASE_PATH}/${fallbackName}.svg`
@@ -383,6 +384,7 @@ function renderMarkdown(contentHtml: string, basePath: string) {
               data-info-type={infoType}
               data-info-icon={infoIcon}
               data-info-color={infoColor}
+              data-info-has-icon={hasIcon ? 'true' : undefined}
               style={style}
             >
               {domToReact(
@@ -491,6 +493,11 @@ export default function WikiPage(props: PageProps) {
   }
 
   useEffect(() => {
+    const attrTheme = document.documentElement.getAttribute('data-theme')
+    if (attrTheme === 'light' || attrTheme === 'dark') {
+      setTheme(attrTheme)
+      return
+    }
     const stored = window.localStorage.getItem('wiki-theme')
     const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches
     const initialTheme = stored === 'light' || stored === 'dark' ? stored : prefersLight ? 'light' : 'dark'

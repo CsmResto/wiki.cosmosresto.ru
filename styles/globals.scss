@@ -82,7 +82,8 @@ a {
 }
 
 .wiki-shell {
-  max-width: min(1200px, 100%);
+  max-width: min(1440px, 100%);
+  padding: 0 64px;
   width: 100%;
   margin: 0 auto;
   display: grid;
@@ -521,17 +522,21 @@ a {
 .wiki-sidebar__logo {
   display: inline-flex;
   align-items: center;
+  width: 100%;
+  padding: 6px 10px;
+  box-sizing: border-box;
 }
 
 .wiki-logo__full,
 .wiki-logo__compact {
   display: block;
-  height: 26px;
-  width: auto;
+  width: 100%;
 }
 
 .wiki-logo__full {
-  width: 144px;
+  width: 100%;
+  height: var(--sidebar-logo-height, 20px);
+  object-fit: contain;
 }
 
 .wiki-logo__compact {

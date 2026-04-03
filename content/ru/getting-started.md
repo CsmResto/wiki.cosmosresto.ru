@@ -125,10 +125,10 @@ export function greet(user: User): string {
 Это подсказка.
 [[/info]]
 
-[[info warning]]
+[[info warning hasIcon]]
 Это предупреждение.
 [[/info]]
 
-[[info type=custom icon=lambda color=#FE89ED]]
+[[info type=custom hasIcon icon=lambda color=#FE89ED]]
 Кастомный блок с иконкой и цветом.
 [[/info]]

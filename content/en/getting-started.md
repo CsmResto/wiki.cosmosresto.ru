@@ -125,10 +125,10 @@ This is a basic note.
 This is a tip.
 [[/info]]
 
-[[info warning]]
+[[info warning hasIcon]]
 This is a warning.
 [[/info]]
 
-[[info type=custom icon=lambda color=#FE89ED]]
+[[info type=custom hasIcon icon=lambda color=#FE89ED]]
 Custom block with icon and color.
 [[/info]]

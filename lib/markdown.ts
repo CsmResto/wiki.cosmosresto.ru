@@ -363,8 +363,14 @@ function applyInfoBlocks(contentHtml: string): string {
         continue
       }
 
+      const normalizedToken = token.toLowerCase()
+      if (normalizedToken === 'hasicon' || normalizedToken === 'has-icon') {
+        params.hasicon = 'true'
+        continue
+      }
+
       if (!params.type) {
-        params.type = token.toLowerCase()
+        params.type = normalizedToken
       }
     }
 
@@ -385,6 +391,8 @@ function applyInfoBlocks(contentHtml: string): string {
     const params = parseParams(paramsRaw)
     const rawType = (params.type ?? 'note').toLowerCase()
     const type = rawType === 'tip' || rawType === 'warning' || rawType === 'custom' ? rawType : 'note'
+    const hasIcon =
+      params.hasicon === 'true' || params.hasicon === '1' || params.hasicon === 'yes' || params.hasicon === 'on'
     const dataAttrs = [`data-info-type="${type}"`]
 
     if (params.icon) {
@@ -395,7 +403,13 @@ function applyInfoBlocks(contentHtml: string): string {
       dataAttrs.push(`data-info-color="${escapeAttr(params.color)}"`)
     }
 
-    return `<div class="wiki-info" ${dataAttrs.join(' ')}><div class="wiki-info__icon" aria-hidden="true"></div><div class="wiki-info__body">${inner}</div></div>`
+    if (hasIcon) {
+      dataAttrs.push('data-info-has-icon="true"')
+    }
+
+    const iconHtml = hasIcon ? `<div class="wiki-info__icon" aria-hidden="true"></div>` : ''
+
+    return `<div class="wiki-info" ${dataAttrs.join(' ')}>${iconHtml}<div class="wiki-info__body">${inner}</div></div>`
   }
 
   const sameParagraphRe = /<p>\s*\[\[info([^\]]*)\]\]\s*([\s\S]*?)\s*\[\[\/info\]\]\s*<\/p>/gi
