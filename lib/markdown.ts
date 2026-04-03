@@ -307,8 +307,9 @@ function enhanceMarkdownHtml(contentHtml: string): string {
   })
 
   const withTables = wrapMarkdownTables(withPlainCodeBlocks)
+  const withInfoBlocks = applyInfoBlocks(withTables)
 
-  return applyGalleryBlocks(withTables)
+  return applyGalleryBlocks(withInfoBlocks)
 }
 
 function wrapMarkdownTables(contentHtml: string): string {
@@ -336,6 +337,104 @@ function wrapMarkdownTables(contentHtml: string): string {
   return withClasses.replace(/<table[\s\S]*?<\/table>/g, (tableHtml) => {
     return `<div class="table-wrap">${tableHtml}</div>`
   })
+}
+
+function applyInfoBlocks(contentHtml: string): string {
+  const parseParams = (paramsRaw: string) => {
+    const params: Record<string, string> = {}
+    const raw = paramsRaw.trim()
+
+    if (!raw) {
+      return params
+    }
+
+    const tokens = raw.split(/\s+/).filter(Boolean)
+    for (const token of tokens) {
+      const eqIndex = token.indexOf('=')
+      if (eqIndex !== -1) {
+        const key = token.slice(0, eqIndex).trim().toLowerCase()
+        let value = token.slice(eqIndex + 1).trim()
+        if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+          value = value.slice(1, -1)
+        }
+        if (key) {
+          params[key] = value
+        }
+        continue
+      }
+
+      if (!params.type) {
+        params.type = token.toLowerCase()
+      }
+    }
+
+    return params
+  }
+
+  const escapeAttr = (value: string) =>
+    value
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/'/g, '&#39;')
+
+  const isHexColor = (value: string) => /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(value)
+
+  const buildInfoWrapper = (paramsRaw: string, inner: string) => {
+    const params = parseParams(paramsRaw)
+    const rawType = (params.type ?? 'note').toLowerCase()
+    const type = rawType === 'tip' || rawType === 'warning' || rawType === 'custom' ? rawType : 'note'
+    const dataAttrs = [`data-info-type="${type}"`]
+
+    if (params.icon) {
+      dataAttrs.push(`data-info-icon="${escapeAttr(params.icon)}"`)
+    }
+
+    if (params.color && isHexColor(params.color)) {
+      dataAttrs.push(`data-info-color="${escapeAttr(params.color)}"`)
+    }
+
+    return `<div class="wiki-info" ${dataAttrs.join(' ')}><div class="wiki-info__icon" aria-hidden="true"></div><div class="wiki-info__body">${inner}</div></div>`
+  }
+
+  const sameParagraphRe = /<p>\s*\[\[info([^\]]*)\]\]\s*([\s\S]*?)\s*\[\[\/info\]\]\s*<\/p>/gi
+  let normalizedHtml = contentHtml.replace(sameParagraphRe, (_match, paramsRaw, innerHtml) => {
+    return buildInfoWrapper(paramsRaw ?? '', innerHtml)
+  })
+
+  const openRe = /<p>\s*\[\[info([^\]]*)\]\]\s*<\/p>/i
+  const closeRe = /<p>\s*\[\[\/info\]\]\s*<\/p>/i
+
+  let remaining = normalizedHtml
+  let result = ''
+
+  while (true) {
+    const openMatch = remaining.match(openRe)
+    if (!openMatch || openMatch.index === undefined) {
+      result += remaining
+      break
+    }
+
+    const openIndex = openMatch.index
+    const afterOpen = remaining.slice(openIndex + openMatch[0].length)
+    const closeMatch = afterOpen.match(closeRe)
+
+    if (!closeMatch || closeMatch.index === undefined) {
+      result += remaining
+      break
+    }
+
+    const closeIndex = closeMatch.index
+    const inner = afterOpen.slice(0, closeIndex)
+
+    result += remaining.slice(0, openIndex)
+    result += buildInfoWrapper(openMatch[1] ?? '', inner)
+
+    remaining = afterOpen.slice(closeIndex + closeMatch[0].length)
+  }
+
+  return result
 }
 
 function applyGalleryBlocks(contentHtml: string): string {

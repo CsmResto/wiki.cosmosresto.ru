@@ -137,6 +137,42 @@ icon: summary
 
 Внутри галереи можно использовать обычный markdown для изображений, включая `alt`‑тексты.
 
+## Инфо-блоки (note / tip / warning / custom)
+
+Базовые варианты:
+
+```md
+[[info note]]
+Это заметка.
+[[/info]]
+
+[[info tip]]
+Это подсказка.
+[[/info]]
+
+[[info warning]]
+Это предупреждение.
+[[/info]]
+```
+
+Кастомный вариант с иконкой и цветом:
+
+```md
+[[info type=custom icon=summary color=#ff5a3c]]
+Кастомный блок с иконкой и цветом.
+[[/info]]
+```
+
+Параметры:
+
+- `type`: `note` | `tip` | `warning` | `custom` (по умолчанию `note`).
+- `icon`: имя иконки или путь (правила такие же, как у `icon` во frontmatter).
+- `color`: hex‑цвет `#rgb` или `#rrggbb`.
+
+Цвета и дефолтные иконки для `note/tip/warning` настраиваются в теме через CSS‑переменные:
+`--colors-info-note`, `--colors-info-tip`, `--colors-info-warning`,
+`--icons-info-note`, `--icons-info-tip`, `--icons-info-warning`.
+
 ## Локальный запуск
 
 ```bash

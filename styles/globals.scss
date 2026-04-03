@@ -16,6 +16,12 @@
   --colors-code-button-bg-active: #1f5f36;
   --colors-code-button-bg-failed: #6a2b2b;
   --colors-zoom-overlay: rgba(13, 12, 13, 0.72);
+  --colors-info-note: #4b83f5;
+  --colors-info-tip: #2bb673;
+  --colors-info-warning: #f0b429;
+  --icons-info-note: url("/assets/icons/info.svg");
+  --icons-info-tip: url("/assets/icons/tip.svg");
+  --icons-info-warning: url("/assets/icons/warning.svg");
   --wiki-sticky-top: 24px;
   --wiki-shell-gutter: 20px;
 }
@@ -38,6 +44,9 @@
   --colors-code-button-bg-active: #d8e8dd;
   --colors-code-button-bg-failed: #f1d6d6;
   --colors-zoom-overlay: rgba(245, 244, 242, 0.72);
+  --colors-info-note: #2563eb;
+  --colors-info-tip: #16a34a;
+  --colors-info-warning: #d97706;
 }
 
 * {
@@ -734,6 +743,9 @@ a {
   justify-content: center;
   width: 16px;
   height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  flex: 0 0 16px;
   font-size: 12px;
   color: inherit;
 }
@@ -904,6 +916,9 @@ a {
   justify-content: center;
   width: 16px;
   height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  flex: 0 0 16px;
   font-size: 12px;
   color: inherit;
 }
@@ -1120,6 +1135,49 @@ a {
     color: var(--colors-text-secondary);
   }
 
+  .wiki-info {
+    --info-color: var(--colors-info-note);
+    --info-icon-url: var(--icons-info-note);
+    display: flex;
+    gap: 12px;
+    padding: 14px 16px;
+    margin: 0 0 18px;
+    border-radius: 12px;
+    border: 1px solid color-mix(in srgb, var(--info-color), transparent 70%);
+    background: color-mix(in srgb, var(--info-color), transparent 92%);
+  }
+
+  .wiki-info[data-info-type="tip"] {
+    --info-color: var(--colors-info-tip);
+    --info-icon-url: var(--icons-info-tip);
+  }
+
+  .wiki-info[data-info-type="warning"] {
+    --info-color: var(--colors-info-warning);
+    --info-icon-url: var(--icons-info-warning);
+  }
+
+  .wiki-info__icon {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    min-height: 18px;
+    flex: 0 0 18px;
+    background: var(--info-color);
+    mask-image: var(--info-icon-url);
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+    -webkit-mask-image: var(--info-icon-url);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+  }
+
+  .wiki-info__body > :last-child {
+    margin-bottom: 0;
+  }
+
   ul,
   ol {
     padding-left: 22px;
@@ -1203,12 +1261,30 @@ a {
 
   .task-list {
     list-style: none;
-    padding-left: 0;
+    padding-left: 0 !important;
+    padding-inline-start: 0 !important;
+    margin-left: 0 !important;
+    margin-inline-start: 0 !important;
+  }
+
+  ul.task-list,
+  ol.task-list,
+  ul.contains-task-list,
+  ol.contains-task-list {
+    padding-left: 0 !important;
+    padding-inline-start: 0 !important;
+    margin-left: 0 !important;
+    margin-inline-start: 0 !important;
+    list-style: none !important;
   }
 
   .task-list-item {
+    list-style: none;
+    padding-left: 0;
+    padding-inline-start: 0;
     margin-bottom: 10px;
-
+    margin-left: 0;
+    margin-inline-start: 0;
     label {
       display: inline-flex;
       align-items: center;
@@ -1228,6 +1304,10 @@ a {
       text-decoration: line-through;
       text-decoration-thickness: 1px;
     }
+  }
+
+  .task-list-item::marker {
+    content: none;
   }
 
   .code-block {

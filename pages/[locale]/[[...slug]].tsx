@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { CSSProperties, ImgHTMLAttributes, ReactNode } from 'react'
-import parse, { DOMNode, HTMLReactParserOptions } from 'html-react-parser'
+import parse, { DOMNode, HTMLReactParserOptions, domToReact } from 'html-react-parser'
 import Zoom from 'react-medium-image-zoom'
 import { GalleryZoomImage } from '@/components/GalleryZoom'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
@@ -227,7 +227,11 @@ function buildSlugPath(slug: string): string[] {
   return path
 }
 
-function renderMarkdown(contentHtml: string) {
+function isHexColor(value: string): boolean {
+  return /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(value)
+}
+
+function renderMarkdown(contentHtml: string, basePath: string) {
   const galleryCache = new WeakMap<
     DOMNode,
     {
@@ -333,6 +337,51 @@ function renderMarkdown(contentHtml: string) {
       }
 
       const element = domNode as { name?: string; attribs?: Record<string, string> }
+      if (element.name === 'div') {
+        const className = element.attribs?.class ?? ''
+        if (className.split(' ').includes('wiki-info')) {
+          const infoIcon = element.attribs?.['data-info-icon']
+          const infoColor = element.attribs?.['data-info-color']
+          const infoType = element.attribs?.['data-info-type']
+          const style: CSSProperties & Record<string, string> = {}
+
+          if (infoColor && isHexColor(infoColor)) {
+            style['--info-color'] = infoColor
+          }
+
+          if (infoIcon) {
+            const trimmed = infoIcon.trim()
+            if (trimmed) {
+              const isNonAscii = /[^\x00-\x7F]/.test(trimmed)
+              const isExplicitPath = trimmed.startsWith('/') || trimmed.startsWith('http') || trimmed.includes('/')
+              const isFileLike = trimmed.includes('.')
+              const isSimpleName = /^[a-z0-9_-]+$/i.test(trimmed)
+
+              if (!isNonAscii && (isExplicitPath || isFileLike || isSimpleName)) {
+                const iconPath = isSimpleName ? `${ICONS_BASE_PATH}/${trimmed}.svg` : trimmed
+                const resolvedPath = resolveIconPath(iconPath, basePath)
+                style['--info-icon-url'] = `url("${resolvedPath}")`
+              }
+            }
+          }
+
+          return (
+            <div
+              className={className}
+              data-info-type={infoType}
+              data-info-icon={infoIcon}
+              data-info-color={infoColor}
+              style={style}
+            >
+              {domToReact(
+                (domNode as unknown as { children?: DOMNode[] }).children ?? [],
+                options
+              )}
+            </div>
+          )
+        }
+      }
+
       if (element.name === 'p') {
         const paragraph = domNode as unknown as {
           children?: Array<{ type: string; name?: string; attribs?: Record<string, string>; data?: string }>
@@ -406,8 +455,8 @@ export default function WikiPage(props: PageProps) {
     if (!contentHtml) {
       return null
     }
-    return renderMarkdown(contentHtml)
-  }, [contentHtml])
+    return renderMarkdown(contentHtml, assetPrefix)
+  }, [contentHtml, assetPrefix])
 
   useEffect(() => {
     setOpenSlugs(buildOpenSlugs(currentSlug, props.kind))

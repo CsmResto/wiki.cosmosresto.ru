@@ -114,3 +114,21 @@ When finished, mark the task as done.
 | Starter | $9 | Drafts and quick notes |
 | Team | $29 | Collaboration space |
 | Enterprise | Custom | Dedicated support |
+
+## 9. Info Blocks
+
+[[info note]]
+This is a basic note.
+[[/info]]
+
+[[info tip]]
+This is a tip.
+[[/info]]
+
+[[info warning]]
+This is a warning.
+[[/info]]
+
+[[info type=custom icon=lambda color=#FE89ED]]
+Custom block with icon and color.
+[[/info]]
