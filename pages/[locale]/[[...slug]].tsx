@@ -897,10 +897,12 @@ export default function WikiPage(props: PageProps) {
                 {directory.directories.map((folder) => (
                   <li key={folder.slug} className="wiki-page-list-item is-folder">
                     <Link href={buildWikiHref(locale, folder.slug)} className="wiki-page-link">
-                      {renderIcon(folder.icon ?? null, basePath, 'wiki-page-icon')}
-                      {folder.name}
+                      <span className="wiki-page-title">
+                        {renderIcon(folder.icon ?? null, basePath, 'wiki-page-icon')}
+                        {folder.name}
+                      </span>
+                      {folder.summary && <p className="wiki-page-meta">{folder.summary}</p>}
                     </Link>
-                    {folder.summary && <p className="wiki-page-meta">{folder.summary}</p>}
                   </li>
                 ))}
               </ul>
@@ -911,10 +913,12 @@ export default function WikiPage(props: PageProps) {
                 {directory.pages.map((page) => (
                   <li key={page.slug} className="wiki-page-list-item is-page">
                     <Link href={buildWikiHref(locale, page.slug)} className="wiki-page-link">
-                      {renderIcon(page.icon ?? null, basePath, 'wiki-page-icon')}
-                      {page.title}
+                      <span className="wiki-page-title">
+                        {renderIcon(page.icon ?? null, basePath, 'wiki-page-icon')}
+                        {page.title}
+                      </span>
+                      {page.summary && <p className="wiki-page-meta">{page.summary}</p>}
                     </Link>
-                    {page.summary && <p className="wiki-page-meta">{page.summary}</p>}
                   </li>
                 ))}
                 </ul>
