@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import type { CSSProperties, ImgHTMLAttributes, ReactNode } from 'react'
 import parse, { DOMNode, HTMLReactParserOptions } from 'html-react-parser'
 import Zoom from 'react-medium-image-zoom'
+import { GalleryZoomImage } from '@/components/GalleryZoom'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
 import SearchBox, { SearchText } from '@/components/SearchBox'
 import { isLocale, Locale, locales } from '@/lib/i18n/locales'
@@ -227,6 +228,14 @@ function buildSlugPath(slug: string): string[] {
 }
 
 function renderMarkdown(contentHtml: string) {
+  const galleryCache = new WeakMap<
+    DOMNode,
+    {
+      images: ImgHTMLAttributes<HTMLImageElement>[]
+      indexMap: WeakMap<DOMNode, number>
+    }
+  >()
+
   const buildImgProps = (attribs: Record<string, string> | undefined) => {
     const safeAttribs = attribs ?? {}
     const imgProps: ImgHTMLAttributes<HTMLImageElement> = {
@@ -247,6 +256,64 @@ function renderMarkdown(contentHtml: string) {
     if (safeAttribs.class) imgProps.className = safeAttribs.class
 
     return imgProps
+  }
+
+  const findGalleryNode = (node: DOMNode) => {
+    let current = (node as DOMNode & { parent?: DOMNode }).parent
+    while (current) {
+      if (current.type === 'tag') {
+        const element = current as { name?: string; attribs?: Record<string, string> }
+        const className = element.attribs?.class ?? ''
+        if (element.name === 'div' && className.split(' ').includes('wiki-gallery')) {
+          return current
+        }
+      }
+      current = (current as DOMNode & { parent?: DOMNode }).parent
+    }
+    return null
+  }
+
+  const buildGalleryContext = (galleryNode: DOMNode) => {
+    const cached = galleryCache.get(galleryNode)
+    if (cached) {
+      return cached
+    }
+
+    const images: ImgHTMLAttributes<HTMLImageElement>[] = []
+    const indexMap = new WeakMap<DOMNode, number>()
+
+    const walk = (node: DOMNode) => {
+      if (node.type === 'tag') {
+        const element = node as { name?: string; attribs?: Record<string, string>; children?: DOMNode[] }
+        if (element.name === 'img') {
+          indexMap.set(node, images.length)
+          images.push(buildImgProps(element.attribs))
+        }
+        if (element.children?.length) {
+          element.children.forEach(walk)
+        }
+      }
+    }
+
+    walk(galleryNode)
+    const context = { images, indexMap }
+    galleryCache.set(galleryNode, context)
+    return context
+  }
+
+  const getGalleryContext = (node: DOMNode) => {
+    const galleryNode = findGalleryNode(node)
+    if (!galleryNode) {
+      return null
+    }
+
+    const { images, indexMap } = buildGalleryContext(galleryNode)
+    const index = indexMap.get(node)
+    if (index === undefined) {
+      return null
+    }
+
+    return { images, index }
   }
 
   const getMeaningfulChildren = (
@@ -276,13 +343,16 @@ function renderMarkdown(contentHtml: string) {
         if (meaningfulChildren.length === 1 && meaningfulChildren[0]?.type === 'tag' && meaningfulChildren[0].name === 'img') {
           const imgChild = meaningfulChildren[0]
           const imgProps = buildImgProps(imgChild.attribs)
-          return (
-            <div className="wiki-image">
-              <Zoom>
-                <img {...imgProps} />
-              </Zoom>
-            </div>
+          const gallery = getGalleryContext(imgChild as unknown as DOMNode)
+          const zoomedImage = gallery ? (
+            <GalleryZoomImage images={gallery.images} index={gallery.index} imgProps={imgProps} />
+          ) : (
+            <Zoom>
+              <img {...imgProps} />
+            </Zoom>
           )
+
+          return <div className="wiki-image">{zoomedImage}</div>
         }
       }
 
@@ -301,6 +371,11 @@ function renderMarkdown(contentHtml: string) {
       }
 
       const imgProps = buildImgProps(element.attribs)
+      const gallery = getGalleryContext(domNode)
+
+      if (gallery) {
+        return <GalleryZoomImage images={gallery.images} index={gallery.index} imgProps={imgProps} />
+      }
 
       return (
         <Zoom>

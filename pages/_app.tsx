@@ -31,6 +31,18 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }, [])
 
+  useEffect(() => {
+    const handleWheelCapture = (event: WheelEvent) => {
+      const modal = document.querySelector('[data-rmiz-modal][open]')
+      if (!modal) return
+      event.preventDefault()
+      event.stopImmediatePropagation()
+    }
+
+    window.addEventListener('wheel', handleWheelCapture, { capture: true, passive: false })
+    return () => window.removeEventListener('wheel', handleWheelCapture, { capture: true } as AddEventListenerOptions)
+  }, [])
+
   return (
     <>
       <Head>
