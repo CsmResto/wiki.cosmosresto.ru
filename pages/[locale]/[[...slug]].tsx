@@ -103,6 +103,11 @@ function buildWikiHref(locale: Locale, slug: string): string {
 }
 
 const ICONS_BASE_PATH = '/assets/icons'
+const INFO_ICON_DEFAULTS: Record<string, string> = {
+  note: 'info',
+  tip: 'tip',
+  warning: 'warning',
+}
 
 function resolveIconPath(raw: string, basePath: string): string {
   const trimmed = raw.trim()
@@ -362,6 +367,13 @@ function renderMarkdown(contentHtml: string, basePath: string) {
                 const resolvedPath = resolveIconPath(iconPath, basePath)
                 style['--info-icon-url'] = `url("${resolvedPath}")`
               }
+            }
+          } else {
+            const fallbackName = infoType ? INFO_ICON_DEFAULTS[infoType] : undefined
+            if (fallbackName) {
+              const iconPath = `${ICONS_BASE_PATH}/${fallbackName}.svg`
+              const resolvedPath = resolveIconPath(iconPath, basePath)
+              style['--info-icon-url'] = `url("${resolvedPath}")`
             }
           }
 

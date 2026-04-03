@@ -19,9 +19,6 @@
   --colors-info-note: #4b83f5;
   --colors-info-tip: #2bb673;
   --colors-info-warning: #f0b429;
-  --icons-info-note: url("/assets/icons/info.svg");
-  --icons-info-tip: url("/assets/icons/tip.svg");
-  --icons-info-warning: url("/assets/icons/warning.svg");
   --wiki-sticky-top: 24px;
   --wiki-shell-gutter: 20px;
 }
@@ -1137,7 +1134,6 @@ a {
 
   .wiki-info {
     --info-color: var(--colors-info-note);
-    --info-icon-url: var(--icons-info-note);
     display: flex;
     gap: 12px;
     padding: 14px 16px;
@@ -1149,12 +1145,10 @@ a {
 
   .wiki-info[data-info-type="tip"] {
     --info-color: var(--colors-info-tip);
-    --info-icon-url: var(--icons-info-tip);
   }
 
   .wiki-info[data-info-type="warning"] {
     --info-color: var(--colors-info-warning);
-    --info-icon-url: var(--icons-info-warning);
   }
 
   .wiki-info__icon {
