@@ -31,6 +31,7 @@ export interface WikiTreeNode {
   description: string | null
   summary: string | null
   icon: string | null
+  order?: number
   slug: string
   directories: WikiTreeNode[]
   pages: WikiPageMeta[]
@@ -42,7 +43,14 @@ export interface WikiDirectoryData {
   description: string | null
   summary: string | null
   icon: string | null
-  directories: Array<{ name: string; description: string | null; summary: string | null; slug: string; icon: string | null }>
+  directories: Array<{
+    name: string
+    description: string | null
+    summary: string | null
+    slug: string
+    icon: string | null
+    order?: number
+  }>
   pages: WikiPageMeta[]
 }
 
@@ -539,7 +547,7 @@ function ensureDirectoryNode(
   root: WikiTreeNode,
   directoryMap: Map<string, WikiTreeNode>,
   directorySlug: string,
-  directoryMetaMap: Map<string, { title: string; description?: string; summary?: string; icon?: string }>
+  directoryMetaMap: Map<string, { title: string; description?: string; summary?: string; icon?: string; order?: number }>
 ): WikiTreeNode {
   if (directoryMap.has(directorySlug)) {
     return directoryMap.get(directorySlug) as WikiTreeNode
@@ -565,6 +573,7 @@ function ensureDirectoryNode(
       description: metaOverride?.description ?? null,
       summary: metaOverride?.summary ?? null,
       icon: metaOverride?.icon ?? null,
+      order: metaOverride?.order,
       slug: currentSlug,
       directories: [],
       pages: [],
@@ -580,7 +589,16 @@ function ensureDirectoryNode(
 }
 
 function sortWikiTree(node: WikiTreeNode, locale: Locale): WikiTreeNode {
-  node.directories.sort((left, right) => left.name.localeCompare(right.name, locale))
+  node.directories.sort((left, right) => {
+    const leftOrder = left.order ?? Number.MAX_SAFE_INTEGER
+    const rightOrder = right.order ?? Number.MAX_SAFE_INTEGER
+
+    if (leftOrder !== rightOrder) {
+      return leftOrder - rightOrder
+    }
+
+    return left.name.localeCompare(right.name, locale)
+  })
   sortPages(node.pages, locale)
   node.directories.forEach((child) => sortWikiTree(child, locale))
   return node
@@ -692,7 +710,10 @@ export function getWikiTree(locale: Locale): WikiTreeNode {
 
   const directoryMap = new Map<string, WikiTreeNode>([['', root]])
   const pages = getAllWikiPages(locale)
-  const directoryMetaMap = new Map<string, { title: string; description?: string; summary?: string; icon?: string }>()
+  const directoryMetaMap = new Map<
+    string,
+    { title: string; description?: string; summary?: string; icon?: string; order?: number }
+  >()
 
   for (const page of pages) {
     if (page.slug === 'index') {
@@ -707,6 +728,7 @@ export function getWikiTree(locale: Locale): WikiTreeNode {
           description: page.description,
           summary: page.summary,
           icon: page.icon,
+          order: page.order,
         })
       }
     }
@@ -750,6 +772,7 @@ export function getWikiDirectoryData(locale: Locale, slug: string): WikiDirector
       summary: directory.summary ?? null,
       slug: directory.slug,
       icon: directory.icon ?? null,
+      order: directory.order,
     })),
     pages: node.pages,
   }
