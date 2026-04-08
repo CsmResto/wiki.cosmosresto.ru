@@ -868,7 +868,7 @@ export default function WikiPage(props: PageProps) {
                     />
                   </button>
                 </div>
-                <LocaleSwitcher locale={locale} slug={currentSlug} />
+                {/* <LocaleSwitcher locale={locale} slug={currentSlug} /> */}
               </div>
               <button
                 type="button"
@@ -940,7 +940,7 @@ export default function WikiPage(props: PageProps) {
                       />
                     </button>
                   </div>
-                  <LocaleSwitcher locale={locale} slug={currentSlug} />
+                  {/* <LocaleSwitcher locale={locale} slug={currentSlug} /> */}
                 </div>
                 <div className="wiki-mobile-menu__search">
                   <SearchBox
@@ -1090,7 +1090,7 @@ export default function WikiPage(props: PageProps) {
                   />
                 </button>
               </div>
-              <LocaleSwitcher locale={locale} slug={currentSlug} />
+              {/* <LocaleSwitcher locale={locale} slug={currentSlug} /> */}
             </div>
             <button
               type="button"
@@ -1162,7 +1162,7 @@ export default function WikiPage(props: PageProps) {
                     />
                   </button>
                 </div>
-                <LocaleSwitcher locale={locale} slug={currentSlug} />
+                {/* <LocaleSwitcher locale={locale} slug={currentSlug} /> */}
               </div>
               <div className="wiki-mobile-menu__search">
                 <SearchBox
