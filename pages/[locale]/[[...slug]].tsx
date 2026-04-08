@@ -794,10 +794,20 @@ export default function WikiPage(props: PageProps) {
     if (isExportingPdf) {
       return
     }
-    const root = articleRef.current
+    const root = document.querySelector<HTMLElement>('.wiki-content')
     if (!root) {
       return
     }
+    const themeAttr = document.documentElement.getAttribute('data-theme')
+    const rootStyles = getComputedStyle(document.documentElement)
+    const bodyStyles = getComputedStyle(document.body)
+    const backgroundColor = rootStyles.getPropertyValue('--colors-bg').trim() || bodyStyles.backgroundColor || '#ffffff'
+    const rootColor = rootStyles.color || '#000000'
+    const bodyColor = bodyStyles.color || rootColor
+    const cssVars = Array.from(rootStyles)
+      .filter((name) => name.startsWith('--'))
+      .map((name) => [name, rootStyles.getPropertyValue(name)])
+    const articleBackground = rootStyles.getPropertyValue('--colors-bg').trim() || backgroundColor
     const fileSafeTitle = props.page.title
       .trim()
       .replace(/[\\/?%*:|"<>]+/g, '-')
@@ -807,17 +817,86 @@ export default function WikiPage(props: PageProps) {
     setIsExportingPdf(true)
     void (async () => {
       try {
-        const { default: html2pdf } = await import('html2pdf.js')
-        await html2pdf()
-          .set({
-            margin: 10,
-            filename,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-          })
-          .from(root)
-          .save()
+        const [{ default: html2canvas }, { jsPDF }] = await Promise.all([import('html2canvas'), import('jspdf')])
+        await new Promise((resolve) => requestAnimationFrame(resolve))
+        const canvas = await html2canvas(root, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor,
+          onclone: (doc: Document) => {
+            if (themeAttr) {
+              doc.documentElement.setAttribute('data-theme', themeAttr)
+            }
+            cssVars.forEach(([name, value]) => {
+              doc.documentElement.style.setProperty(name, value)
+            })
+            doc.documentElement.style.color = rootColor
+            doc.body.style.color = bodyColor
+            doc.documentElement.style.background = backgroundColor
+            doc.body.style.background = backgroundColor
+            const clonedContent = doc.querySelector<HTMLElement>('.wiki-content')
+            if (clonedContent) {
+              clonedContent.style.boxSizing = 'border-box'
+              clonedContent.style.padding = '24px'
+              clonedContent.style.margin = '0'
+              clonedContent.style.background = backgroundColor
+              clonedContent.style.color = bodyColor
+                  const originalBreadcrumbs = doc.querySelector('.wiki-breadcrumbs')
+                  if (originalBreadcrumbs) {
+                    const breadcrumbsClone = originalBreadcrumbs.cloneNode(true) as HTMLElement
+                    breadcrumbsClone.setAttribute('data-pdf-breadcrumbs', 'true')
+                    breadcrumbsClone.style.margin = '0 0 12px'
+                    breadcrumbsClone.style.fontSize = '13px'
+                    breadcrumbsClone.style.fontWeight = '600'
+                    breadcrumbsClone.style.color = rootStyles.getPropertyValue('--colors-text-secondary').trim() || bodyColor
+                    breadcrumbsClone.querySelectorAll('a').forEach((link) => {
+                      ;(link as HTMLElement).style.color =
+                        rootStyles.getPropertyValue('--colors-link').trim() || rootStyles.getPropertyValue('--colors-text-primary').trim() || bodyColor
+                      ;(link as HTMLElement).style.textDecoration = 'none'
+                    })
+                    clonedContent.insertBefore(breadcrumbsClone, clonedContent.firstChild)
+                  }
+                }
+                const style = doc.createElement('style')
+                style.textContent = `
+                  .wiki-toolbar,
+                  .wiki-breadcrumbs:not([data-pdf-breadcrumbs]),
+                  [data-rmiz-btn-zoom],
+                  [data-rmiz-btn-unzoom],
+                  [data-rmiz-ghost],
+              [data-rmiz-modal],
+              [data-rmiz-portal],
+              [data-rmiz-modal-overlay],
+              [data-rmiz-modal-content],
+              .zoom-gallery__nav,
+              .zoom-gallery__counter,
+              .zoom-gallery__backdrop {
+                display: none !important;
+              }
+            `
+            doc.head.appendChild(style)
+          },
+        })
+        const pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: 'a4' })
+        const pageWidth = pdf.internal.pageSize.getWidth()
+        const pageHeight = pdf.internal.pageSize.getHeight()
+        const imgWidth = pageWidth
+        const imgHeight = (canvas.height * imgWidth) / canvas.width
+        const imgData = canvas.toDataURL('image/jpeg', 0.98)
+        const rgbMatch = backgroundColor.match(/\d+/g)
+        if (rgbMatch && rgbMatch.length >= 3) {
+          pdf.setFillColor(Number(rgbMatch[0]), Number(rgbMatch[1]), Number(rgbMatch[2]))
+        }
+        let position = 0
+        while (position < imgHeight) {
+          pdf.rect(0, 0, pageWidth, pageHeight, 'F')
+          pdf.addImage(imgData, 'JPEG', 0, -position, imgWidth, imgHeight)
+          position += pageHeight
+          if (position < imgHeight) {
+            pdf.addPage()
+          }
+        }
+        pdf.save(filename)
       } catch (error) {
         console.error('PDF export failed', error)
       } finally {
@@ -925,7 +1004,12 @@ export default function WikiPage(props: PageProps) {
                     aria-busy={isExportingPdf}
                     disabled={isExportingPdf}
                   >
-                    {text.exportPdfLabel}
+                    <span
+                      className="wiki-toolbar__button-icon"
+                      style={{ '--pdf-icon-url': `url("${assetPrefix}assets/icons/download.svg")` } as CSSProperties}
+                      aria-hidden="true"
+                    />
+                    <span className="wiki-toolbar__button-label">{text.exportPdfLabel}</span>
                   </button>
                 )}
               </div>
@@ -1012,7 +1096,12 @@ export default function WikiPage(props: PageProps) {
                       aria-busy={isExportingPdf}
                       disabled={isExportingPdf}
                     >
-                      {text.exportPdfLabel}
+                      <span
+                        className="wiki-toolbar__button-icon"
+                        style={{ '--pdf-icon-url': `url("${assetPrefix}assets/icons/download.svg")` } as CSSProperties}
+                        aria-hidden="true"
+                      />
+                      <span className="wiki-toolbar__button-label">{text.exportPdfLabel}</span>
                     </button>
                   )}
                 </div>
@@ -1174,7 +1263,12 @@ export default function WikiPage(props: PageProps) {
                   aria-busy={isExportingPdf}
                   disabled={isExportingPdf}
                 >
-                  {text.exportPdfLabel}
+                  <span
+                    className="wiki-toolbar__button-icon"
+                    style={{ '--pdf-icon-url': `url("${assetPrefix}assets/icons/download.svg")` } as CSSProperties}
+                    aria-hidden="true"
+                  />
+                  <span className="wiki-toolbar__button-label">{text.exportPdfLabel}</span>
                 </button>
               )}
             </div>
@@ -1261,7 +1355,12 @@ export default function WikiPage(props: PageProps) {
                     aria-busy={isExportingPdf}
                     disabled={isExportingPdf}
                   >
-                    {text.exportPdfLabel}
+                    <span
+                      className="wiki-toolbar__button-icon"
+                      style={{ '--pdf-icon-url': `url("${assetPrefix}assets/icons/download.svg")` } as CSSProperties}
+                      aria-hidden="true"
+                    />
+                    <span className="wiki-toolbar__button-label">{text.exportPdfLabel}</span>
                   </button>
                 )}
               </div>

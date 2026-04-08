@@ -16,8 +16,9 @@
   "dependencies": {
     "fuse.js": "^7.1.0",
     "gray-matter": "^4.0.3",
-    "html2pdf.js": "^0.10.3",
     "html-react-parser": "^5.2.17",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.2",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",

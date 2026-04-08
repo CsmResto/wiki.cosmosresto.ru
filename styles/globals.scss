@@ -1006,6 +1006,7 @@ a {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  gap: 8px;
 
   &:hover {
     text-decoration: none;
@@ -1014,6 +1015,68 @@ a {
   &:disabled {
     cursor: not-allowed;
     opacity: 0.6;
+  }
+}
+
+.wiki-toolbar__button--pdf {
+  width: 32px;
+  padding: 0;
+  transition: width 0.35s ease, padding 0.35s ease;
+  overflow: hidden;
+  gap: 0;
+}
+
+.wiki-toolbar__button-icon {
+  display: inline-flex;
+  width: 14px;
+  height: 14px;
+  background-color: currentColor;
+  mask-image: var(--pdf-icon-url);
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  mask-position: center;
+  -webkit-mask-image: var(--pdf-icon-url);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
+  flex: 0 0 14px;
+}
+
+.wiki-toolbar__button-label {
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.wiki-toolbar__button--pdf:hover,
+.wiki-toolbar__button--pdf:focus-visible {
+  width: auto;
+  padding: 0 12px;
+  gap: 8px;
+}
+
+.wiki-toolbar__button--pdf:hover .wiki-toolbar__button-label,
+.wiki-toolbar__button--pdf:focus-visible .wiki-toolbar__button-label {
+  max-width: 200px;
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .wiki-toolbar__button--pdf {
+    width: auto;
+    padding: 0 12px;
+  }
+
+  .wiki-toolbar__button--pdf .wiki-toolbar__button-label {
+    max-width: 200px;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wiki-toolbar__button--pdf,
+  .wiki-toolbar__button-label {
+    transition: none;
   }
 }
 
