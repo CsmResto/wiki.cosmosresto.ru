@@ -679,7 +679,7 @@ export default function WikiPage(props: PageProps) {
 
     const buttons = root.querySelectorAll<HTMLButtonElement>('[data-copy-code]')
     buttons.forEach((button) => {
-      button.textContent = text.copyLabel
+      button.setAttribute('aria-label', text.copyLabel)
     })
 
     const findAnchorTarget = (rawId: string): HTMLElement | null => {
@@ -740,19 +740,19 @@ export default function WikiPage(props: PageProps) {
 
       try {
         await navigator.clipboard.writeText(codeText)
-        button.textContent = text.copiedLabel
+        button.setAttribute('aria-label', text.copiedLabel)
         button.classList.add('is-copied')
 
         window.setTimeout(() => {
-          button.textContent = text.copyLabel
+          button.setAttribute('aria-label', text.copyLabel)
           button.classList.remove('is-copied')
         }, 1400)
       } catch {
-        button.textContent = text.copyFailedLabel
+        button.setAttribute('aria-label', text.copyFailedLabel)
         button.classList.add('is-copy-failed')
 
         window.setTimeout(() => {
-          button.textContent = text.copyLabel
+          button.setAttribute('aria-label', text.copyLabel)
           button.classList.remove('is-copy-failed')
         }, 1700)
       }
@@ -1125,7 +1125,14 @@ export default function WikiPage(props: PageProps) {
                 <h1>{directoryTitle}</h1>
                 {directoryDescription && <p className="wiki-subtitle">{directoryDescription}</p>}
                 {markdownContent && (
-                  <div ref={markdownContentRef} className="wiki-markdown">
+                  <div
+                    ref={markdownContentRef}
+                    className="wiki-markdown"
+                    style={{
+                      '--code-copy-icon-url': `url("${assetPrefix}assets/icons/copy.svg")`,
+                      '--code-copied-icon-url': `url("${assetPrefix}assets/icons/check.svg")`,
+                    } as CSSProperties}
+                  >
                     {markdownContent}
                   </div>
                 )}
@@ -1382,7 +1389,14 @@ export default function WikiPage(props: PageProps) {
           <article ref={articleRef} className="wiki-article">
             <h1>{page.title}</h1>
             {page.description && <p className="wiki-subtitle">{page.description}</p>}
-            <div ref={markdownContentRef} className="wiki-markdown">
+            <div
+              ref={markdownContentRef}
+              className="wiki-markdown"
+              style={{
+                '--code-copy-icon-url': `url("${assetPrefix}assets/icons/copy.svg")`,
+                '--code-copied-icon-url': `url("${assetPrefix}assets/icons/check.svg")`,
+              } as CSSProperties}
+            >
               {markdownContent}
             </div>
           </article>

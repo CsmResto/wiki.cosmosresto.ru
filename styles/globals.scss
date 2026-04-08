@@ -32,7 +32,7 @@
   --colors-bg-surface: #ffffff;
   --colors-bg-surface-hover: #F1F1F1;
   --colors-border: #e2e1de;
-  --colors-bg-inline-code: #f0f0ee;
+  --colors-bg-inline-code: #e4e4e4;
   --colors-bg-code-block: #f3f3f1;
   --colors-text-code-block: #1b5f37;
   --colors-heading-marker: #d1541f;
@@ -1478,19 +1478,41 @@ a {
     background: var(--colors-code-button-bg);
     color: var(--colors-text-primary);
     border-radius: 8px;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 4px 9px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 28px;
+    padding: 0;
     cursor: pointer;
+  }
+
+  .code-block__copy-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-image: var(--code-copy-icon-url);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
   }
 
   .code-block__copy.is-copied {
     background: var(--colors-code-button-bg-active);
   }
 
-  .code-block__copy.is-copy-failed {
-    background: var(--colors-code-button-bg-failed);
+  .code-block__copy.is-copied .code-block__copy-icon {
+    background-image: var(--code-copied-icon-url);
   }
+
+
+.code-block__copy.is-copy-failed {
+  background: var(--colors-code-button-bg-failed);
+}
+}
+
+:root:not([data-theme="light"]) .code-block__copy.is-copied .code-block__copy-icon {
+  filter: invert(1) brightness(2);
 }
 
 .wiki-markdown {

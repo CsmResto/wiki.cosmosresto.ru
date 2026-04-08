@@ -306,12 +306,12 @@ function enhanceMarkdownHtml(contentHtml: string): string {
     (_match, language, codeHtml) => {
       const safeLanguage = toSafeLanguageId(language)
       const languageLabel = toLanguageLabel(safeLanguage)
-      return `<figure class="code-block" data-language="${safeLanguage}"><figcaption class="code-block__header"><span class="code-block__lang">${languageLabel}</span><button type="button" class="code-block__copy" data-copy-code>Copy</button></figcaption><pre><code class="language-${safeLanguage}">${codeHtml}</code></pre></figure>`
+      return `<figure class="code-block" data-language="${safeLanguage}"><figcaption class="code-block__header"><span class="code-block__lang">${languageLabel}</span><button type="button" class="code-block__copy" data-copy-code aria-label="Copy"><span class="code-block__copy-icon" aria-hidden="true"></span></button></figcaption><pre><code class="language-${safeLanguage}">${codeHtml}</code></pre></figure>`
     }
   )
 
   const withPlainCodeBlocks = withTypedCodeBlocks.replace(/<pre><code>([\s\S]*?)<\/code><\/pre>/g, (_match, codeHtml) => {
-    return `<figure class="code-block" data-language="text"><figcaption class="code-block__header"><span class="code-block__lang">Text</span><button type="button" class="code-block__copy" data-copy-code>Copy</button></figcaption><pre><code>${codeHtml}</code></pre></figure>`
+    return `<figure class="code-block" data-language="text"><figcaption class="code-block__header"><span class="code-block__lang">Text</span><button type="button" class="code-block__copy" data-copy-code aria-label="Copy"><span class="code-block__copy-icon" aria-hidden="true"></span></button></figcaption><pre><code>${codeHtml}</code></pre></figure>`
   })
 
   const withTables = wrapMarkdownTables(withPlainCodeBlocks)
