@@ -915,7 +915,7 @@ export default function WikiPage(props: PageProps) {
                     />
                   </button>
                 </div>
-                <LocaleSwitcher locale={locale} slug={currentSlug} />
+                {/* <LocaleSwitcher locale={locale} slug={currentSlug} /> */}
                 {canExportPdf && (
                   <button
                     type="button"
@@ -999,7 +999,7 @@ export default function WikiPage(props: PageProps) {
                       />
                     </button>
                   </div>
-                  <LocaleSwitcher locale={locale} slug={currentSlug} />
+                  {/* <LocaleSwitcher locale={locale} slug={currentSlug} /> */}
                   {canExportPdf && (
                     <button
                       type="button"
@@ -1164,7 +1164,7 @@ export default function WikiPage(props: PageProps) {
                   />
                 </button>
               </div>
-              <LocaleSwitcher locale={locale} slug={currentSlug} />
+              {/* <LocaleSwitcher locale={locale} slug={currentSlug} /> */}
               {canExportPdf && (
                 <button
                   type="button"
@@ -1248,7 +1248,7 @@ export default function WikiPage(props: PageProps) {
                     />
                   </button>
                 </div>
-                <LocaleSwitcher locale={locale} slug={currentSlug} />
+                {/* <LocaleSwitcher locale={locale} slug={currentSlug} /> */}
                 {canExportPdf && (
                   <button
                     type="button"
