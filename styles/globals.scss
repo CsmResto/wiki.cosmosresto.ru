@@ -1361,6 +1361,11 @@ a {
     display: block;
   }
 
+  .wiki-delimiter {
+    margin: 0;
+    line-height: inherit;
+  }
+
   :root[data-theme="light"] & {
     .empty-state__icon--light {
       display: block;

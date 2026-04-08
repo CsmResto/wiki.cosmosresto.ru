@@ -288,7 +288,49 @@ function enhanceMarkdownHtml(contentHtml: string): string {
     }
   )
 
-  const withTaskItems = withEmptyState.replace(/<li>\s*\[( |x|X)\]\s+([\s\S]*?)<\/li>/g, (_match, marker, itemHtml) => {
+  const parseDelimiterRows = (rawParams: string | undefined): number => {
+    const params = typeof rawParams === 'string' ? rawParams.trim() : ''
+    let rows = 1
+
+    if (params) {
+      const tokens = params.split(/\s+/).filter(Boolean)
+      for (const token of tokens) {
+        const eqIndex = token.indexOf('=')
+        if (eqIndex === -1) continue
+        const key = token.slice(0, eqIndex).trim().toLowerCase()
+        const value = token.slice(eqIndex + 1).trim()
+        if (key !== 'rows') continue
+        const parsed = Number(value)
+        if (Number.isFinite(parsed) && parsed > 0) {
+          rows = Math.floor(parsed)
+        }
+      }
+    }
+
+    return rows
+  }
+
+  const withDelimiter = withEmptyState.replace(
+    /<p>\s*((?:\[\[delimiter[^\]]*\]\]\s*)+)<\/p>/gi,
+    (_match, inner) => {
+      const tokenRe = /\[\[delimiter([^\]]*)\]\]/gi
+      let totalRows = 0
+      let tokenMatch: RegExpExecArray | null
+
+      while ((tokenMatch = tokenRe.exec(inner))) {
+        totalRows += parseDelimiterRows(tokenMatch[1])
+      }
+
+      if (totalRows <= 0) {
+        totalRows = 1
+      }
+
+      const breaks = '<br />'.repeat(totalRows)
+      return `<div class="wiki-delimiter" data-rows="${totalRows}">${breaks}</div>`
+    }
+  )
+
+  const withTaskItems = withDelimiter.replace(/<li>\s*\[( |x|X)\]\s+([\s\S]*?)<\/li>/g, (_match, marker, itemHtml) => {
     const isChecked = marker.toLowerCase() === 'x'
     const checkedAttribute = isChecked ? ' checked' : ''
     return `<li class="task-list-item"><label><input type="checkbox" disabled${checkedAttribute} /><span>${itemHtml}</span></label></li>`
