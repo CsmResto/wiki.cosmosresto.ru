@@ -245,10 +245,24 @@ function renderMarkdown(contentHtml: string, basePath: string) {
     }
   >()
 
+  const assetPrefix = basePath
+    ? basePath.endsWith('/') ? basePath : `${basePath}/`
+    : ''
+
+  const resolveImageSrc = (raw: string): string => {
+    if (!raw) return ''
+    if (/^(https?:)?\/\//.test(raw)) return raw
+    if (/^(data:|mailto:|tel:|#)/.test(raw)) return raw
+    if (!assetPrefix || assetPrefix === '/') return raw
+    if (raw.startsWith(assetPrefix)) return raw
+    if (raw.startsWith('/')) return `${assetPrefix}${raw.replace(/^\/+/, '')}`
+    return `${assetPrefix}${raw}`
+  }
+
   const buildImgProps = (attribs: Record<string, string> | undefined) => {
     const safeAttribs = attribs ?? {}
     const imgProps: ImgHTMLAttributes<HTMLImageElement> = {
-      src: safeAttribs.src ?? '',
+      src: resolveImageSrc(safeAttribs.src ?? ''),
       alt: safeAttribs.alt ?? '',
     }
 
