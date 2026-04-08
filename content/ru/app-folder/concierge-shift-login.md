@@ -9,9 +9,9 @@ updatedAt: 2026-04-08
 За час до запланированного начала смены появится кнопка **Start Shift** и будет отображаться до запланированного окончания смены.
 
 [[gallery gap=12]]
-![](../images/app/shift1.png)
-![](../images/app/shift2.png)
-![](../images/app/shift3.png)
+![](/ru/images/app/shift1.png)
+![](/ru/images/app/shift2.png)
+![](/ru/images/app/shift3.png)
 [[/gallery]]
 
 ## Геопозиция и фотографии
@@ -31,15 +31,15 @@ updatedAt: 2026-04-08
 - Не должно быть обработки и фильтров.
 
 [[gallery gap=12]]
-![](../images/app/shift4.png)
-![](../images/app/shift5.png)
-![](../images/app/shift6.png)
+![](/ru/images/app/shift4.png)
+![](/ru/images/app/shift5.png)
+![](/ru/images/app/shift6.png)
 [[/gallery]]
 
 ## Завершение смены
 Для завершения смены нажмите кнопку End Shift.
 
 [[gallery gap=12]]
-![](../images/app/shift7.png)
-![](../images/app/shift8.png)
+![](/ru/images/app/shift7.png)
+![](/ru/images/app/shift8.png)
 [[/gallery]]
