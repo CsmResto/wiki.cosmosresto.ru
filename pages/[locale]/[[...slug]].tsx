@@ -51,6 +51,7 @@ type UiText = {
   copyFailedLabel: string
   themeLightLabel: string
   themeDarkLabel: string
+  exportPdfLabel: string
   search: SearchText
 }
 
@@ -63,6 +64,7 @@ const uiTextByLocale: Record<Locale, UiText> = {
     copyFailedLabel: 'Ошибка',
     themeLightLabel: 'Светлая',
     themeDarkLabel: 'Темная',
+    exportPdfLabel: 'Экспорт в PDF',
     search: {
       openLabel: 'Поиск',
       label: 'Поиск',
@@ -83,6 +85,7 @@ const uiTextByLocale: Record<Locale, UiText> = {
     copyFailedLabel: 'Failed',
     themeLightLabel: 'Light',
     themeDarkLabel: 'Dark',
+    exportPdfLabel: 'Export to PDF',
     search: {
       openLabel: 'Search',
       label: 'Search',
@@ -459,9 +462,11 @@ export default function WikiPage(props: PageProps) {
   const breadcrumbs = props.breadcrumbs
   const tree = props.tree
   const markdownContentRef = useRef<HTMLDivElement | null>(null)
+  const articleRef = useRef<HTMLElement | null>(null)
   const [theme, setTheme] = useState<'light' | 'dark'>('dark')
   const [isHeaderHidden, setIsHeaderHidden] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isExportingPdf, setIsExportingPdf] = useState(false)
   const [openSlugs, setOpenSlugs] = useState<Set<string>>(() => buildOpenSlugs(currentSlug, props.kind))
   const indexPage = props.kind === 'directory' ? props.indexPage ?? null : null
   const contentHtml = props.kind === 'page' ? props.page.contentHtml : indexPage?.contentHtml
@@ -765,6 +770,48 @@ export default function WikiPage(props: PageProps) {
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false)
   }
+  const handleExportPdf = () => {
+    if (props.kind !== 'page') {
+      return
+    }
+    if (typeof window === 'undefined') {
+      return
+    }
+    if (isExportingPdf) {
+      return
+    }
+    const root = articleRef.current
+    if (!root) {
+      return
+    }
+    const fileSafeTitle = props.page.title
+      .trim()
+      .replace(/[\\/?%*:|"<>]+/g, '-')
+      .replace(/\s+/g, ' ')
+      .trim()
+    const filename = `${fileSafeTitle || 'csm-wiki'}.pdf`
+    setIsExportingPdf(true)
+    void (async () => {
+      try {
+        const { default: html2pdf } = await import('html2pdf.js')
+        await html2pdf()
+          .set({
+            margin: 10,
+            filename,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+          })
+          .from(root)
+          .save()
+      } catch (error) {
+        console.error('PDF export failed', error)
+      } finally {
+        setIsExportingPdf(false)
+      }
+    })()
+  }
+  const canExportPdf = props.kind === 'page'
 
   if (props.kind === 'directory') {
     const { directory, locale } = props
@@ -855,6 +902,18 @@ export default function WikiPage(props: PageProps) {
                   </button>
                 </div>
                 <LocaleSwitcher locale={locale} slug={currentSlug} />
+                {canExportPdf && (
+                  <button
+                    type="button"
+                    className="wiki-toolbar__button wiki-toolbar__button--pdf"
+                    onClick={handleExportPdf}
+                    aria-label={text.exportPdfLabel}
+                    aria-busy={isExportingPdf}
+                    disabled={isExportingPdf}
+                  >
+                    {text.exportPdfLabel}
+                  </button>
+                )}
               </div>
               <button
                 type="button"
@@ -927,6 +986,21 @@ export default function WikiPage(props: PageProps) {
                     </button>
                   </div>
                   <LocaleSwitcher locale={locale} slug={currentSlug} />
+                  {canExportPdf && (
+                    <button
+                      type="button"
+                      className="wiki-toolbar__button wiki-toolbar__button--pdf"
+                      onClick={() => {
+                        closeMobileMenu()
+                        handleExportPdf()
+                      }}
+                      aria-label={text.exportPdfLabel}
+                      aria-busy={isExportingPdf}
+                      disabled={isExportingPdf}
+                    >
+                      {text.exportPdfLabel}
+                    </button>
+                  )}
                 </div>
                 <div className="wiki-mobile-menu__search">
                   <SearchBox
@@ -1077,6 +1151,18 @@ export default function WikiPage(props: PageProps) {
                 </button>
               </div>
               <LocaleSwitcher locale={locale} slug={currentSlug} />
+              {canExportPdf && (
+                <button
+                  type="button"
+                  className="wiki-toolbar__button wiki-toolbar__button--pdf"
+                  onClick={handleExportPdf}
+                  aria-label={text.exportPdfLabel}
+                  aria-busy={isExportingPdf}
+                  disabled={isExportingPdf}
+                >
+                  {text.exportPdfLabel}
+                </button>
+              )}
             </div>
             <button
               type="button"
@@ -1149,6 +1235,21 @@ export default function WikiPage(props: PageProps) {
                   </button>
                 </div>
                 <LocaleSwitcher locale={locale} slug={currentSlug} />
+                {canExportPdf && (
+                  <button
+                    type="button"
+                    className="wiki-toolbar__button wiki-toolbar__button--pdf"
+                    onClick={() => {
+                      closeMobileMenu()
+                      handleExportPdf()
+                    }}
+                    aria-label={text.exportPdfLabel}
+                    aria-busy={isExportingPdf}
+                    disabled={isExportingPdf}
+                  >
+                    {text.exportPdfLabel}
+                  </button>
+                )}
               </div>
               <div className="wiki-mobile-menu__search">
                 <SearchBox
@@ -1165,7 +1266,7 @@ export default function WikiPage(props: PageProps) {
             </div>
           </div>
 
-          <article className="wiki-article">
+          <article ref={articleRef} className="wiki-article">
             <h1>{page.title}</h1>
             {page.description && <p className="wiki-subtitle">{page.description}</p>}
             <div ref={markdownContentRef} className="wiki-markdown">
