@@ -1,5 +1,5 @@
 ---
-title: "Команда"
+title: "Пользователи"
 description: "Еще один пример описания раздела"
-icon: team
+icon: users
 ---
