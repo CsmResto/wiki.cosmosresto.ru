@@ -703,6 +703,24 @@ export default function WikiPage(props: PageProps) {
       return true
     }
 
+    const scrollToAnchorWithRetry = (rawId: string) => {
+      if (!rawId) {
+        return
+      }
+      let attempts = 0
+      const maxAttempts = 12
+      const tick = () => {
+        if (scrollToAnchor(rawId)) {
+          return
+        }
+        attempts += 1
+        if (attempts < maxAttempts) {
+          window.requestAnimationFrame(tick)
+        }
+      }
+      tick()
+    }
+
     const onClick = async (event: MouseEvent) => {
       const target = event.target as HTMLElement | null
       const headingLink = target?.closest<HTMLAnchorElement>('h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a, .heading-anchor')
@@ -721,9 +739,8 @@ export default function WikiPage(props: PageProps) {
         const id = decodeURIComponent(href.slice(1))
         if (id) {
           event.preventDefault()
-          if (scrollToAnchor(id)) {
-            return
-          }
+          scrollToAnchorWithRetry(id)
+          return
         }
       }
 
@@ -759,16 +776,46 @@ export default function WikiPage(props: PageProps) {
     }
 
     root.addEventListener('click', onClick)
-    if (window.location.hash) {
+    const handleHashChange = () => {
       const rawId = decodeURIComponent(window.location.hash.slice(1))
       if (rawId) {
-        window.setTimeout(() => scrollToAnchor(rawId), 0)
+        scrollToAnchorWithRetry(rawId)
       }
     }
+    if (window.location.hash) {
+      window.setTimeout(handleHashChange, 0)
+    }
+    window.addEventListener('hashchange', handleHashChange)
     return () => {
       root.removeEventListener('click', onClick)
+      window.removeEventListener('hashchange', handleHashChange)
     }
   }, [props.kind, text.copyFailedLabel, text.copiedLabel, text.copyLabel])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+    const header = document.querySelector<HTMLElement>('.wiki-toolbar--sticky')
+    if (!header) {
+      return
+    }
+    const updateOffset = () => {
+      const height = Math.max(0, Math.round(header.getBoundingClientRect().height))
+      document.documentElement.style.setProperty('--wiki-toolbar-offset', `${height}px`)
+    }
+    updateOffset()
+    let resizeObserver: ResizeObserver | null = null
+    if (typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(updateOffset)
+      resizeObserver.observe(header)
+    }
+    window.addEventListener('resize', updateOffset)
+    return () => {
+      resizeObserver?.disconnect()
+      window.removeEventListener('resize', updateOffset)
+    }
+  }, [])
 
   useEffect(() => {
     if (!isMobileMenuOpen) {

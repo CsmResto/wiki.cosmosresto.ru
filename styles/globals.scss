@@ -21,6 +21,8 @@
   --colors-info-warning: #f0b429;
   --wiki-sticky-top: 24px;
   --wiki-shell-gutter: 20px;
+  --wiki-toolbar-offset: 0px;
+  --wiki-anchor-offset: max(0px, calc(var(--wiki-toolbar-offset) - 8px));
 }
 
 :root[data-theme="light"] {
@@ -58,6 +60,7 @@ html {
   background: var(--colors-bg);
   overflow-x: visible;
   overflow-y: auto;
+  scroll-padding-top: var(--wiki-anchor-offset);
 }
 
 body {
@@ -1142,6 +1145,16 @@ a {
   min-width: 0;
   max-width: 100%;
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  [id] {
+    scroll-margin-top: var(--wiki-anchor-offset);
+  }
+
   h1 {
     margin-top: 0;
     margin-bottom: 12px;
@@ -1545,10 +1558,12 @@ a {
     --wiki-sticky-top: 16px;
     --wiki-shell-gutter: 12px;
     --wiki-toolbar-fixed-offset: 40px;
+    --wiki-toolbar-offset: var(--wiki-toolbar-fixed-offset);
+    --wiki-anchor-offset: max(0px, calc(var(--wiki-toolbar-offset) - 8px));
   }
 
   body {
-    scroll-padding-top: var(--wiki-toolbar-fixed-offset);
+    scroll-padding-top: var(--wiki-anchor-offset);
   }
 
   .wiki-article {
@@ -1566,7 +1581,7 @@ a {
   .wiki-article h5,
   .wiki-article h6,
   .wiki-article [id] {
-    scroll-margin-top: calc(var(--wiki-toolbar-fixed-offset) + 40px);
+    scroll-margin-top: var(--wiki-anchor-offset);
   }
 
   .wiki-toolbar {
