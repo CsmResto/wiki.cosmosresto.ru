@@ -1,13 +1,9 @@
 import type { NextConfig } from "next";
 
-const isProduction = process.env.NODE_ENV === "production";
-const repositoryName = process.env.GITHUB_REPOSITORY?.split("/")[1];
-const envBasePath = process.env.NEXT_PUBLIC_BASE_PATH;
-const basePath = envBasePath
-  ? `/${envBasePath.replace(/^\/+|\/+$/g, "")}`
-  : isProduction && repositoryName
-    ? `/${repositoryName}`
-    : "";
+// const isProduction = process.env.NODE_ENV === "production";
+// const repositoryName = process.env.GITHUB_REPOSITORY?.split("/")[1];
+// const envBasePath = process.env.NEXT_PUBLIC_BASE_PATH;
+// const basePath = envBasePath
 
 const nextConfig: NextConfig = {
   output: 'export',
@@ -17,8 +13,8 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath,
-  assetPrefix: basePath ? `${basePath}/` : '',
+  // basePath,
+  // assetPrefix: basePath ? `${basePath}/` : '',
   trailingSlash: true,
 };
 
