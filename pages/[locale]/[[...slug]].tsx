@@ -239,6 +239,23 @@ function isHexColor(value: string): boolean {
   return /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(value)
 }
 
+function hexToRgba(value: string, alpha: number): string | null {
+  if (!isHexColor(value)) {
+    return null
+  }
+
+  const hex = value.slice(1)
+  const normalized = hex.length === 3
+    ? hex.split('').map((char) => `${char}${char}`).join('')
+    : hex
+
+  const red = Number.parseInt(normalized.slice(0, 2), 16)
+  const green = Number.parseInt(normalized.slice(2, 4), 16)
+  const blue = Number.parseInt(normalized.slice(4, 6), 16)
+
+  return `rgba(${red}, ${green}, ${blue}, ${alpha})`
+}
+
 function renderMarkdown(contentHtml: string, basePath: string) {
   const galleryCache = new WeakMap<
     DOMNode,
@@ -370,6 +387,8 @@ function renderMarkdown(contentHtml: string, basePath: string) {
 
           if (infoColor && isHexColor(infoColor)) {
             style['--info-color'] = infoColor
+            style['--info-border-color'] = hexToRgba(infoColor, 0.3) ?? infoColor
+            style['--info-bg-color'] = hexToRgba(infoColor, 0.08) ?? infoColor
           }
 
           if (hasIcon && infoIcon) {
