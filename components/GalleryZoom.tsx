@@ -1,6 +1,6 @@
-import { cloneElement, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import type { ImgHTMLAttributes, MouseEvent, ReactElement, SyntheticEvent } from 'react'
-import Zoom from 'react-medium-image-zoom'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { createPortal } from 'react-dom'
+import type { ImgHTMLAttributes, KeyboardEvent as ReactKeyboardEvent, MouseEvent } from 'react'
 
 type GalleryImage = ImgHTMLAttributes<HTMLImageElement>
 
@@ -13,23 +13,29 @@ type GalleryZoomImageProps = {
 export function GalleryZoomImage({ images, index, imgProps }: GalleryZoomImageProps) {
   const [currentIndex, setCurrentIndex] = useState(index)
   const [isZoomed, setIsZoomed] = useState(false)
-  const [isImageLoaded, setIsImageLoaded] = useState(false)
+  const [loadedSrc, setLoadedSrc] = useState<string | undefined>()
 
   const total = images.length
   const currentImage = useMemo(() => images[currentIndex] ?? images[index], [currentIndex, images, index])
 
-  useEffect(() => {
-    setIsImageLoaded(false)
-  }, [currentIndex])
+  const openZoom = useCallback(() => {
+    setLoadedSrc(undefined)
+    setCurrentIndex(index)
+    setIsZoomed(true)
+  }, [index])
 
-  const handleZoomChange = useCallback(
-    (value: boolean) => {
-      setIsZoomed(value)
-      if (value) {
-        setCurrentIndex(index)
+  const closeZoom = useCallback(() => {
+    setIsZoomed(false)
+  }, [])
+
+  const handlePreviewKeyDown = useCallback(
+    (event: ReactKeyboardEvent<HTMLImageElement>) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault()
+        openZoom()
       }
     },
-    [index]
+    [openZoom]
   )
 
   const goPrev = useCallback(
@@ -53,9 +59,14 @@ export function GalleryZoomImage({ images, index, imgProps }: GalleryZoomImagePr
   )
 
   useEffect(() => {
-    if (!isZoomed || total < 2) return
+    if (!isZoomed) return
 
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeZoom()
+        return
+      }
+      if (total < 2) return
       if (event.key === 'ArrowLeft') {
         goPrev(event)
       }
@@ -66,55 +77,39 @@ export function GalleryZoomImage({ images, index, imgProps }: GalleryZoomImagePr
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [goNext, goPrev, isZoomed, total])
+  }, [closeZoom, goNext, goPrev, isZoomed, total])
 
-  const ZoomContent = useCallback(
-    ({
-      buttonUnzoom,
-      img,
-      onUnzoom,
-    }: {
-      buttonUnzoom: ReactElement<HTMLButtonElement>
-      img: ReactElement | null
-      onUnzoom: (event: Event) => void
-    }) => {
-      if (!currentImage?.src || !img) {
-        return <>{buttonUnzoom}</>
-      }
+  useEffect(() => {
+    if (!isZoomed) return
 
-      const imgProps = img.props as ImgHTMLAttributes<HTMLImageElement>
-      const className = [imgProps.className, 'zoom-gallery__image'].filter(Boolean).join(' ')
-      const handleLoad = (event: SyntheticEvent<HTMLImageElement>) => {
-        imgProps.onLoad?.(event)
-        setIsImageLoaded(true)
-      }
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
 
-      const safeSrc = typeof currentImage.src === 'string' ? currentImage.src : imgProps.src
-      const safeSrcSet = typeof currentImage.srcSet === 'string' ? currentImage.srcSet : imgProps.srcSet
-      const safeSizes = typeof currentImage.sizes === 'string' ? currentImage.sizes : imgProps.sizes
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [isZoomed])
 
-      const modalImg = img.type === 'img'
-        ? cloneElement(img as ReactElement<any>, {
-            alt: currentImage.alt ?? imgProps.alt,
-            sizes: safeSizes,
-            src: safeSrc,
-            srcSet: safeSrcSet,
-            className,
-            'data-loaded': isImageLoaded ? 'true' : 'false',
-            onLoad: handleLoad,
-            draggable: false,
-          })
-        : img
+  if (!currentImage?.src) {
+    return <img {...imgProps} alt={imgProps.alt ?? ''} />
+  }
 
-      return (
-        <div className="zoom-gallery">
+  const safeSrc = typeof currentImage.src === 'string' ? currentImage.src : undefined
+  const safeSrcSet = typeof currentImage.srcSet === 'string' ? currentImage.srcSet : undefined
+  const safeSizes = typeof currentImage.sizes === 'string' ? currentImage.sizes : undefined
+  const isImageLoaded = loadedSrc === safeSrc
+  const modal = isZoomed && safeSrc && typeof document !== 'undefined'
+    ? createPortal(
+        <div className="zoom-gallery" role="dialog" aria-modal="true">
           <button
             type="button"
             className="zoom-gallery__backdrop"
             aria-label="Close image"
-            onClick={(event) => onUnzoom(event.nativeEvent)}
+            onClick={closeZoom}
           />
-          {buttonUnzoom}
+          <button className="zoom-gallery__close" onClick={closeZoom} type="button" aria-label="Close image">
+            <span aria-hidden="true">x</span>
+          </button>
           {total > 1 ? (
             <>
               <button className="zoom-gallery__nav zoom-gallery__nav--prev" onClick={goPrev} type="button" aria-label="Previous image">
@@ -128,16 +123,40 @@ export function GalleryZoomImage({ images, index, imgProps }: GalleryZoomImagePr
               </div>
             </>
           ) : null}
-          {modalImg}
-        </div>
+          <img
+            key={safeSrc}
+            alt={currentImage.alt ?? imgProps.alt ?? ''}
+            className="zoom-gallery__image"
+            data-loaded={isImageLoaded ? 'true' : 'false'}
+            decoding={currentImage.decoding ?? imgProps.decoding}
+            draggable={false}
+            height={currentImage.height}
+            loading="eager"
+            onClick={closeZoom}
+            onLoad={() => setLoadedSrc(safeSrc)}
+            referrerPolicy={currentImage.referrerPolicy ?? imgProps.referrerPolicy}
+            sizes={safeSizes}
+            src={safeSrc}
+            srcSet={safeSrcSet}
+            title={currentImage.title ?? imgProps.title}
+            width={currentImage.width}
+          />
+        </div>,
+        document.body
       )
-    },
-    [currentImage, currentIndex, goNext, goPrev, isImageLoaded, total]
-  )
+    : null
 
   return (
-    <Zoom ZoomContent={ZoomContent} onZoomChange={handleZoomChange}>
-      <img {...imgProps} />
-    </Zoom>
+    <>
+      <img
+        {...imgProps}
+        alt={imgProps.alt ?? ''}
+        onClick={openZoom}
+        onKeyDown={handlePreviewKeyDown}
+        role="button"
+        tabIndex={0}
+      />
+      {modal}
+    </>
   )
 }
