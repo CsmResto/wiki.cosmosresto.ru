@@ -8,9 +8,10 @@ type GalleryZoomImageProps = {
   images: GalleryImage[]
   index: number
   imgProps: ImgHTMLAttributes<HTMLImageElement>
+  disableZoom?: boolean
 }
 
-export function GalleryZoomImage({ images, index, imgProps }: GalleryZoomImageProps) {
+export function GalleryZoomImage({ images, index, imgProps, disableZoom = false }: GalleryZoomImageProps) {
   const [currentIndex, setCurrentIndex] = useState(index)
   const [isZoomed, setIsZoomed] = useState(false)
   const [loadedSrc, setLoadedSrc] = useState<string | undefined>()
@@ -91,6 +92,10 @@ export function GalleryZoomImage({ images, index, imgProps }: GalleryZoomImagePr
   }, [isZoomed])
 
   if (!currentImage?.src) {
+    return <img {...imgProps} alt={imgProps.alt ?? ''} />
+  }
+
+  if (disableZoom) {
     return <img {...imgProps} alt={imgProps.alt ?? ''} />
   }
 

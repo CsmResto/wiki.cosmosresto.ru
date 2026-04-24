@@ -7,7 +7,6 @@ import type { CSSProperties, ImgHTMLAttributes, ReactNode } from 'react'
 import parse, { DOMNode, HTMLReactParserOptions, domToReact } from 'html-react-parser'
 import Zoom from 'react-medium-image-zoom'
 import { GalleryZoomImage } from '@/components/GalleryZoom'
-import LocaleSwitcher from '@/components/LocaleSwitcher'
 import SearchBox, { SearchText } from '@/components/SearchBox'
 import { isLocale, Locale, locales } from '@/lib/i18n/locales'
 import {
@@ -64,7 +63,7 @@ const uiTextByLocale: Record<Locale, UiText> = {
     copyFailedLabel: 'Ошибка',
     themeLightLabel: 'Светлая',
     themeDarkLabel: 'Темная',
-    exportPdfLabel: 'Экспорт в PDF',
+    exportPdfLabel: 'Печать → PDF',
     search: {
       openLabel: 'Поиск',
       label: 'Поиск',
@@ -85,7 +84,7 @@ const uiTextByLocale: Record<Locale, UiText> = {
     copyFailedLabel: 'Failed',
     themeLightLabel: 'Light',
     themeDarkLabel: 'Dark',
-    exportPdfLabel: 'Export to PDF',
+    exportPdfLabel: 'Print / PDF',
     search: {
       openLabel: 'Search',
       label: 'Search',
@@ -239,24 +238,7 @@ function isHexColor(value: string): boolean {
   return /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(value)
 }
 
-function hexToRgba(value: string, alpha: number): string | null {
-  if (!isHexColor(value)) {
-    return null
-  }
-
-  const hex = value.slice(1)
-  const normalized = hex.length === 3
-    ? hex.split('').map((char) => `${char}${char}`).join('')
-    : hex
-
-  const red = Number.parseInt(normalized.slice(0, 2), 16)
-  const green = Number.parseInt(normalized.slice(2, 4), 16)
-  const blue = Number.parseInt(normalized.slice(4, 6), 16)
-
-  return `rgba(${red}, ${green}, ${blue}, ${alpha})`
-}
-
-function renderMarkdown(contentHtml: string, basePath: string) {
+function renderMarkdown(contentHtml: string, basePath: string, disableImageZoom = false) {
   const galleryCache = new WeakMap<
     DOMNode,
     {
@@ -443,8 +425,13 @@ function renderMarkdown(contentHtml: string, basePath: string) {
           const imgChild = meaningfulChildren[0]
           const imgProps = buildImgProps(imgChild.attribs)
           const gallery = getGalleryContext(imgChild as unknown as DOMNode)
+
+          if (disableImageZoom) {
+            return <div className="wiki-image"><img {...imgProps} /></div>
+          }
+
           const zoomedImage = gallery ? (
-            <GalleryZoomImage images={gallery.images} index={gallery.index} imgProps={imgProps} />
+            <GalleryZoomImage images={gallery.images} index={gallery.index} imgProps={imgProps} disableZoom={disableImageZoom} />
           ) : (
             <Zoom>
               <img {...imgProps} />
@@ -473,7 +460,11 @@ function renderMarkdown(contentHtml: string, basePath: string) {
       const gallery = getGalleryContext(domNode)
 
       if (gallery) {
-        return <GalleryZoomImage images={gallery.images} index={gallery.index} imgProps={imgProps} />
+        return <GalleryZoomImage images={gallery.images} index={gallery.index} imgProps={imgProps} disableZoom={disableImageZoom} />
+      }
+
+      if (disableImageZoom) {
+        return <img {...imgProps} />
       }
 
       return (
@@ -500,6 +491,8 @@ export default function WikiPage(props: PageProps) {
   const [isHeaderHidden, setIsHeaderHidden] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isExportingPdf, setIsExportingPdf] = useState(false)
+  const [isPrintMode, setIsPrintMode] = useState(false)
+  const printTitleRef = useRef<string | null>(null)
   const [openSlugs, setOpenSlugs] = useState<Set<string>>(() => buildOpenSlugs(currentSlug, props.kind))
   const indexPage = props.kind === 'directory' ? props.indexPage ?? null : null
   const contentHtml = props.kind === 'page' ? props.page.contentHtml : indexPage?.contentHtml
@@ -507,8 +500,8 @@ export default function WikiPage(props: PageProps) {
     if (!contentHtml) {
       return null
     }
-    return renderMarkdown(contentHtml, assetPrefix)
-  }, [contentHtml, assetPrefix])
+    return renderMarkdown(contentHtml, assetPrefix, isPrintMode)
+  }, [contentHtml, assetPrefix, isPrintMode])
 
   useEffect(() => {
     setOpenSlugs(buildOpenSlugs(currentSlug, props.kind))
@@ -847,9 +840,54 @@ export default function WikiPage(props: PageProps) {
     }
   }, [isMobileMenuOpen])
 
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    const restoreAfterPrint = () => {
+      setIsPrintMode(false)
+      if (printTitleRef.current !== null) {
+        document.title = printTitleRef.current
+        printTitleRef.current = null
+      }
+      setIsExportingPdf(false)
+    }
+
+    const handleAfterPrint = () => {
+      restoreAfterPrint()
+    }
+
+    const handleBeforePrint = () => {
+      setIsPrintMode(true)
+    }
+
+    const mediaQuery = typeof window.matchMedia === 'function' ? window.matchMedia('print') : null
+    const handleMediaQueryChange = (event: MediaQueryListEvent) => {
+      if (event.matches) {
+        setIsPrintMode(true)
+        return
+      }
+      if (!event.matches) {
+        restoreAfterPrint()
+      }
+    }
+
+    window.addEventListener('beforeprint', handleBeforePrint)
+    window.addEventListener('afterprint', handleAfterPrint)
+    mediaQuery?.addEventListener?.('change', handleMediaQueryChange)
+
+    return () => {
+      window.removeEventListener('beforeprint', handleBeforePrint)
+      window.removeEventListener('afterprint', handleAfterPrint)
+      mediaQuery?.removeEventListener?.('change', handleMediaQueryChange)
+    }
+  }, [])
+
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false)
   }
+
   const handleExportPdf = () => {
     if (props.kind !== 'page') {
       return
@@ -860,115 +898,24 @@ export default function WikiPage(props: PageProps) {
     if (isExportingPdf) {
       return
     }
-    const root = document.querySelector<HTMLElement>('.wiki-content')
-    if (!root) {
-      return
-    }
-    const themeAttr = document.documentElement.getAttribute('data-theme')
-    const rootStyles = getComputedStyle(document.documentElement)
-    const bodyStyles = getComputedStyle(document.body)
-    const backgroundColor = rootStyles.getPropertyValue('--colors-bg').trim() || bodyStyles.backgroundColor || '#ffffff'
-    const rootColor = rootStyles.color || '#000000'
-    const bodyColor = bodyStyles.color || rootColor
-    const cssVars = Array.from(rootStyles)
-      .filter((name) => name.startsWith('--'))
-      .map((name) => [name, rootStyles.getPropertyValue(name)])
-    const articleBackground = rootStyles.getPropertyValue('--colors-bg').trim() || backgroundColor
-    const fileSafeTitle = props.page.title
+    closeMobileMenu()
+
+    const printTitle = props.page.title
       .trim()
       .replace(/[\\/?%*:|"<>]+/g, '-')
       .replace(/\s+/g, ' ')
       .trim()
-    const filename = `${fileSafeTitle || 'csm-wiki'}.pdf`
     setIsExportingPdf(true)
-    void (async () => {
-      try {
-        const [{ default: html2canvas }, { jsPDF }] = await Promise.all([import('html2canvas'), import('jspdf')])
-        await new Promise((resolve) => requestAnimationFrame(resolve))
-        const canvas = await html2canvas(root, {
-          scale: 2,
-          useCORS: true,
-          backgroundColor,
-          onclone: (doc: Document) => {
-            if (themeAttr) {
-              doc.documentElement.setAttribute('data-theme', themeAttr)
-            }
-            cssVars.forEach(([name, value]) => {
-              doc.documentElement.style.setProperty(name, value)
-            })
-            doc.documentElement.style.color = rootColor
-            doc.body.style.color = bodyColor
-            doc.documentElement.style.background = backgroundColor
-            doc.body.style.background = backgroundColor
-            const clonedContent = doc.querySelector<HTMLElement>('.wiki-content')
-            if (clonedContent) {
-              clonedContent.style.boxSizing = 'border-box'
-              clonedContent.style.padding = '24px'
-              clonedContent.style.margin = '0'
-              clonedContent.style.background = backgroundColor
-              clonedContent.style.color = bodyColor
-                  const originalBreadcrumbs = doc.querySelector('.wiki-breadcrumbs')
-                  if (originalBreadcrumbs) {
-                    const breadcrumbsClone = originalBreadcrumbs.cloneNode(true) as HTMLElement
-                    breadcrumbsClone.setAttribute('data-pdf-breadcrumbs', 'true')
-                    breadcrumbsClone.style.margin = '0 0 12px'
-                    breadcrumbsClone.style.fontSize = '13px'
-                    breadcrumbsClone.style.fontWeight = '600'
-                    breadcrumbsClone.style.color = rootStyles.getPropertyValue('--colors-text-secondary').trim() || bodyColor
-                    breadcrumbsClone.querySelectorAll('a').forEach((link) => {
-                      ;(link as HTMLElement).style.color =
-                        rootStyles.getPropertyValue('--colors-link').trim() || rootStyles.getPropertyValue('--colors-text-primary').trim() || bodyColor
-                      ;(link as HTMLElement).style.textDecoration = 'none'
-                    })
-                    clonedContent.insertBefore(breadcrumbsClone, clonedContent.firstChild)
-                  }
-                }
-                const style = doc.createElement('style')
-                style.textContent = `
-                  .wiki-toolbar,
-                  .wiki-breadcrumbs:not([data-pdf-breadcrumbs]),
-                  [data-rmiz-btn-zoom],
-                  [data-rmiz-btn-unzoom],
-                  [data-rmiz-ghost],
-              [data-rmiz-modal],
-              [data-rmiz-portal],
-              [data-rmiz-modal-overlay],
-              [data-rmiz-modal-content],
-              .zoom-gallery__nav,
-              .zoom-gallery__counter,
-              .zoom-gallery__backdrop {
-                display: none !important;
-              }
-            `
-            doc.head.appendChild(style)
-          },
-        })
-        const pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: 'a4' })
-        const pageWidth = pdf.internal.pageSize.getWidth()
-        const pageHeight = pdf.internal.pageSize.getHeight()
-        const imgWidth = pageWidth
-        const imgHeight = (canvas.height * imgWidth) / canvas.width
-        const imgData = canvas.toDataURL('image/jpeg', 0.98)
-        const rgbMatch = backgroundColor.match(/\d+/g)
-        if (rgbMatch && rgbMatch.length >= 3) {
-          pdf.setFillColor(Number(rgbMatch[0]), Number(rgbMatch[1]), Number(rgbMatch[2]))
-        }
-        let position = 0
-        while (position < imgHeight) {
-          pdf.rect(0, 0, pageWidth, pageHeight, 'F')
-          pdf.addImage(imgData, 'JPEG', 0, -position, imgWidth, imgHeight)
-          position += pageHeight
-          if (position < imgHeight) {
-            pdf.addPage()
-          }
-        }
-        pdf.save(filename)
-      } catch (error) {
-        console.error('PDF export failed', error)
-      } finally {
-        setIsExportingPdf(false)
-      }
-    })()
+    setIsPrintMode(true)
+    if (printTitleRef.current === null) {
+      printTitleRef.current = document.title
+    }
+    document.title = printTitle || 'csm-wiki'
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        window.print()
+      })
+    })
   }
   const canExportPdf = props.kind === 'page'
 
