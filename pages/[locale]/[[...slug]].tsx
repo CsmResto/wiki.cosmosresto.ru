@@ -369,6 +369,8 @@ function renderMarkdown(contentHtml: string, basePath: string, disableImageZoom 
 
           if (infoColor && isHexColor(infoColor)) {
             style['--info-color'] = infoColor
+            style['--info-border-color'] = hexToRgba(infoColor, 0.3) ?? infoColor
+            style['--info-bg-color'] = hexToRgba(infoColor, 0.08) ?? infoColor
           }
 
           if (hasIcon && infoIcon) {

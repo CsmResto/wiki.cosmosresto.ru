@@ -19,6 +19,14 @@
   --colors-info-note: #4b83f5;
   --colors-info-tip: #2bb673;
   --colors-info-warning: #f0b429;
+  --colors-link-focus-outline: rgba(224, 104, 35, 0.3);
+  --colors-table-row-alt: #161515;
+  --colors-info-note-border: rgba(75, 131, 245, 0.3);
+  --colors-info-note-bg: rgba(75, 131, 245, 0.08);
+  --colors-info-tip-border: rgba(43, 182, 115, 0.3);
+  --colors-info-tip-bg: rgba(43, 182, 115, 0.08);
+  --colors-info-warning-border: rgba(240, 180, 41, 0.3);
+  --colors-info-warning-bg: rgba(240, 180, 41, 0.08);
   --wiki-sticky-top: 24px;
   --wiki-shell-gutter: 20px;
   --wiki-toolbar-offset: 0px;
@@ -46,6 +54,14 @@
   --colors-info-note: #2563eb;
   --colors-info-tip: #16a34a;
   --colors-info-warning: #d97706;
+  --colors-link-focus-outline: rgba(209, 84, 31, 0.3);
+  --colors-table-row-alt: #f4f3f0;
+  --colors-info-note-border: rgba(37, 99, 235, 0.3);
+  --colors-info-note-bg: rgba(37, 99, 235, 0.08);
+  --colors-info-tip-border: rgba(22, 163, 74, 0.3);
+  --colors-info-tip-bg: rgba(22, 163, 74, 0.08);
+  --colors-info-warning-border: rgba(217, 119, 6, 0.3);
+  --colors-info-warning-bg: rgba(217, 119, 6, 0.08);
 }
 
 * {
@@ -412,7 +428,7 @@ a {
 }
 
 .wiki-search__input:focus {
-  outline: 2px solid color-mix(in srgb, var(--colors-link), transparent 70%);
+  outline: 2px solid var(--colors-link-focus-outline);
   outline-offset: 2px;
 }
 
@@ -1307,21 +1323,27 @@ a {
 
   .wiki-info {
     --info-color: var(--colors-info-note);
+    --info-border-color: var(--colors-info-note-border);
+    --info-bg-color: var(--colors-info-note-bg);
     display: flex;
     gap: 12px;
     padding: 14px 16px;
     margin: 0 0 18px;
     border-radius: 12px;
-    border: 1px solid color-mix(in srgb, var(--info-color), transparent 70%);
-    background: color-mix(in srgb, var(--info-color), transparent 92%);
+    border: 1px solid var(--info-border-color);
+    background: var(--info-bg-color);
   }
 
   .wiki-info[data-info-type="tip"] {
     --info-color: var(--colors-info-tip);
+    --info-border-color: var(--colors-info-tip-border);
+    --info-bg-color: var(--colors-info-tip-bg);
   }
 
   .wiki-info[data-info-type="warning"] {
     --info-color: var(--colors-info-warning);
+    --info-border-color: var(--colors-info-warning-border);
+    --info-bg-color: var(--colors-info-warning-bg);
   }
 
   .wiki-info__icon {
@@ -1379,7 +1401,7 @@ a {
   }
 
   .wiki-table tbody tr:nth-child(even) {
-    background: color-mix(in srgb, var(--colors-bg-surface) 85%, var(--colors-bg) 15%);
+    background: var(--colors-table-row-alt);
   }
 
   .wiki-table tbody tr:last-child td {
