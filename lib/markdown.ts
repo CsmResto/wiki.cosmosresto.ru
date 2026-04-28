@@ -585,6 +585,15 @@ function sortPages(pages: WikiPageMeta[], locale: Locale): WikiPageMeta[] {
   })
 }
 
+function withOptionalOrder<T extends { order?: number }>(value: T): T | Omit<T, 'order'> {
+  if (value.order === undefined) {
+    const { order: _order, ...rest } = value
+    return rest
+  }
+
+  return value
+}
+
 function ensureDirectoryNode(
   root: WikiTreeNode,
   directoryMap: Map<string, WikiTreeNode>,
@@ -610,7 +619,7 @@ function ensureDirectoryNode(
     }
 
     const metaOverride = directoryMetaMap.get(currentSlug)
-    const nextNode: WikiTreeNode = {
+    const nextNode = withOptionalOrder({
       name: metaOverride?.title ?? toTitleFromSlug(currentSlug),
       description: metaOverride?.description ?? null,
       summary: metaOverride?.summary ?? null,
@@ -619,7 +628,7 @@ function ensureDirectoryNode(
       slug: currentSlug,
       directories: [],
       pages: [],
-    }
+    }) as WikiTreeNode
 
     parentNode.directories.push(nextNode)
     directoryMap.set(currentSlug, nextNode)
@@ -808,7 +817,7 @@ export function getWikiDirectoryData(locale: Locale, slug: string): WikiDirector
     description: node.description ?? null,
     summary: node.summary ?? null,
     icon: node.icon ?? null,
-    directories: node.directories.map((directory) => ({
+    directories: node.directories.map((directory) => withOptionalOrder({
       name: directory.name,
       description: directory.description ?? null,
       summary: directory.summary ?? null,

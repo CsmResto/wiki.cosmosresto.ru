@@ -238,6 +238,26 @@ function isHexColor(value: string): boolean {
   return /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(value)
 }
 
+function hexToRgba(value: string, alpha: number): string | null {
+  if (!isHexColor(value)) {
+    return null
+  }
+
+  const normalized = value.length === 4
+    ? `#${value
+        .slice(1)
+        .split('')
+        .map((char) => `${char}${char}`)
+        .join('')}`
+    : value
+
+  const red = Number.parseInt(normalized.slice(1, 3), 16)
+  const green = Number.parseInt(normalized.slice(3, 5), 16)
+  const blue = Number.parseInt(normalized.slice(5, 7), 16)
+
+  return `rgba(${red}, ${green}, ${blue}, ${alpha})`
+}
+
 function renderMarkdown(contentHtml: string, basePath: string, disableImageZoom = false) {
   const galleryCache = new WeakMap<
     DOMNode,
