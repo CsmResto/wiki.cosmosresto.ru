@@ -3,5 +3,5 @@ title: "Аналитика"
 description: ""
 summary: ""
 icon: analytics
-order: 7
+order: 10
 ---
