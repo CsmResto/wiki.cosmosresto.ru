@@ -29,7 +29,7 @@ When creating a group, keep in mind that a user who has access to at least one l
 
 ### View Guest Data by Location Groups
 
-In **Marketing → Guests**, the **Locations and Groups** selector allows you to view guest data for the entire chain, a specific Location Group, or a specific location.
+In **Marketing → [Guests](/en/marketing/guests/)**, the **Locations and Groups** selector allows you to view guest data for the entire chain, a specific Location Group, or a specific location.
 
 The example below shows how the same guest's data is displayed when viewing different Location Groups.
 
