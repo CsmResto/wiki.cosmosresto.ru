@@ -42,15 +42,28 @@ The example below shows how the same guest's data is displayed when viewing diff
 
 To change the displayed columns, click the table settings button in the upper-right corner.
 
-![Column Wizard](/en/images/location-groups/group-column-en.png)
-
-[[delimiter rows=1]]
-
 In the panel that opens, you can:
 
 ✔ select the columns to display  
 ✔ pin the required columns  
 ✔ restore the default settings using **Reset to Default**
+
+![Column Wizard](/en/images/location-groups/group-column-en.png)
+
+[[delimiter rows=1]]
+
+By default, the following columns are displayed in the table:
+
+- **Name** — the name of the location group
+- **Description** — the description of the location group
+- **Locations** — the locations included in the group
+- **Group Access Type** — the group's access type for the guest database: **Full Base** or **Group Base**
+
+You can also enable the following columns:
+
+- **Created At** — the date and time when the group was created
+- **Author** — the employee who created the group, including their name, role, and grade
+- **Last Update** — the employee who last updated the group and the date and time of the update
 
 > **Note.** Table settings are saved after the page is refreshed. The settings are reset after you log out.
 
