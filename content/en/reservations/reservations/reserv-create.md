@@ -3,7 +3,7 @@ title: Creating a Reservation
 description: How to create a reservation. Description of fields
 summary: How to create a reservation. Description of fields
 order: 3
-updatedAt: 2026-04-24
+updatedAt: 2026-09-22
 ---
 ## Methods of Creating a Reservation
 You can create a reservation in two main ways. This helps you choose the most convenient option depending on the situation and speeds up work with the functionality.
@@ -14,7 +14,7 @@ You can create a reservation in two main ways. This helps you choose the most co
 
 1. Click the `+Add Reservation` button in the upper right corner of the screen.
 2. In the opened sidebar specify the guest.
-3. Select one or more tables.
+3. If necessary, select one or more tables.
 4. If necessary, edit the interval or reservation date.
 5. Fill in the remaining fields — number of guests, comment, reservation source, tags.
 6. Disable or keep SMS notification about the reservation.
@@ -42,7 +42,7 @@ When you select any of the methods, a sidebar opens. It is here that all informa
 
 
 [[info type=custom color=#E06823]]
-To create a reservation, it is enough to specify **a guest** and **a table**, the remaining fields will be filled in by default.
+To create a reservation, it is enough to specify **a guest**, the remaining fields will be filled in by default.
 [[/info]]
 
 
@@ -66,23 +66,27 @@ To create a new guest, you need to specify the following data:
 
 
 [[info type=custom color=#E06823]]
-More about creating a guest can be read in this [article](/en/marketing/guests/guests-create).
+More about creating a guest can be read in the article **[Create Guest](/en/marketing/guests/guests-create)**.
 [[/info]]
 
 
 ### 2. Table Selection {#multireserve}
-Allows you to select one or more tables. 
+You can select one or more tables for a reservation. Assigning a table right away is optional — a reservation can be saved without a table and the table can be selected later.
 
-A reservation with 2 or more tables is called **multi-reservation**. This type of reservation has a limitation: time gaps between reservations on different tables are not allowed. 
+If several tables are selected for one reservation, it is considered a multi-reservation. In a multi-reservation, tables must be occupied continuously: there must be no gaps between the reservation times of different tables.
 
-**More about multi-reservations can be read in [article](https://wiki.cosmosresto.ru/en/reservations/reservations/mass-reservations/)**.
+[[info type=custom color=#E06823]]
+More about multi-reservations can be read in the article **[Multi-Table Reservation](https://wiki.cosmosresto.ru/en/reservations/reservations/mass-reservations/)**.
+[[/info]]
 
-To specify multiple tables, in the opened sidebar:
-1. Enable `Select multiple tables`.
-2. Find suitable tables in the list, you can also search for tables by name, filter tables by needed criteria and sort the list.
-3. Select the required tables, then click `Apply`.
+To select multiple tables:
+1. In the sidebar, enable `Select multiple tables`.
+2. Find the required tables in the list. You can use search by name, filters and sorting.
+3. Select the tables and click `Apply`.
 
 <!-- ![reserv-multitable](/ru/images/reserve/reserv-table-multiselect.jpg) -->
+
+**Reservation without a table.** If it is not yet clear at the time of creating the reservation which table to seat the guest at, the table can be selected later. A reservation without an assigned table is displayed in a separate **No Table** sidebar until a table is assigned.
 
 ### 3. Reservation Date and Start Time
 Start time is a multiple of 15-minute intervals. By default, when creating a reservation by button, the *nearest time that is a multiple of 15 minutes* is specified.
@@ -116,7 +120,9 @@ Available reservation sources:
 ### 7. Reservation Tags
 Reservation tags help you manually mark reservations. With their help you can visually highlight important records, quickly understand the context of a reservation, group reservations and find them using filters.
 
-More about creating and using tags can be read in this [article](https://wiki.cosmosresto.ru/en/reservations/reservations-tags/).
+[[info type=custom color=#E06823]]
+More about creating and using tags can be read in the article **[Reservation Tags](https://wiki.cosmosresto.ru/en/reservations/reservations-tags/)**.
+[[/info]]
 
 <!-- ![Tags](/ru/images/reserve/reservations-tags/reservations-tags7.jpg) -->
 
@@ -132,10 +138,10 @@ Three statuses are available when creating a reservation:
 - In progress
 
 [[info type=custom color=#E06823]]
-There are a total of **five statuses** for reservations. More about statuses can be read in this [article](/en/reservations/reservations/reserv-status).
+There are a total of **five statuses** for reservations. More about statuses can be read in the article **[Reservation Statuses](/en/reservations/reservations/reserv-status)**.
 [[/info]]
 
-### 9. SMS Notification
+### 10. SMS Notification
 If a reservation is created for the future, after selecting a guest you can choose to send an SMS notification. The SMS template is configured separately in the **Reservations - Settings** section. By default, this option is active.
 
 <!-- [[info type=custom color=#E06823]]
