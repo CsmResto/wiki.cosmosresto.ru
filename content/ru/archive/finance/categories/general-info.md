@@ -1,7 +1,7 @@
 ---
 title: Общая информация 
 description: 
-summary: 
+summary: "Дерево категорий, их типы и дефолтные категории"
 order: 1
 updatedAt: 2026-08-25
 ---

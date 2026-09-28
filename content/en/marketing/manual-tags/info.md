@@ -1,7 +1,7 @@
 ---
 title: General Information
 description:
-summary:
+summary: "What manual tags are for and the group list"
 order: 1
 updatedAt: 2026-09-09
 ---

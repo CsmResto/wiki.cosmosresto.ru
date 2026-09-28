@@ -1,7 +1,7 @@
 ---
 title: Survey Completion by Respondent
 description: How the survey is displayed to the respondent, how navigation, validation, progress saving and response submission work.
-summary: Survey completion
+summary: "How a respondent completes and submits a survey"
 order: 3
 updatedAt: 2026-08-24
 ---

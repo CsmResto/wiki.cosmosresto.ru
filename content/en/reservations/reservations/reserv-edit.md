@@ -1,7 +1,7 @@
 ---
 title: Editing and Canceling a Reservation
 description: Capabilities when editing a reservation.
-summary: How to edit and cancel a reservation
+summary: "Changing a reservation in different views and canceling"
 order: 4
 updatedAt: 2026-05-27
 ---

@@ -1,7 +1,7 @@
 ---
 title: Информация
 description: 
-summary: 
+summary: "Доступ к базе гостей по группам локаций"
 order: 1
 updatedAt: 2026-08-14
 ---
