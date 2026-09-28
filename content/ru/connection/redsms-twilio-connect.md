@@ -1,7 +1,7 @@
 ---
 title: Подключение REDSMS & Twilio
 description: Подключение и настройка REDSMS & Twilio для информирования гостей через Cosmos. 
-summary: Подключение SMS сервисов
+summary: "Подключение SMS-шлюзов REDSMS и Twilio"
 order: 2
 updatedAt: 2026-06-01
 ---

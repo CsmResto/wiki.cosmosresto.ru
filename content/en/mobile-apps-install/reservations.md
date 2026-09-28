@@ -1,5 +1,6 @@
 ---
 title: Reservations
+summary: "Installing and logging into the tablet app"
 order: 3
 updatedAt: 2026-06-23
 ---

@@ -1,7 +1,7 @@
 ---
 title: Reservation Statuses
 description: Description of reservation statuses
-summary: All about reservation statuses and additional time indicators
+summary: "Reservation statuses, color indicators, and alerts"
 order: 6
 updatedAt: 2026-05-19
 ---

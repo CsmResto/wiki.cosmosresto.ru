@@ -1,5 +1,6 @@
 ---
 title: Team
+summary: "Installing the app for shifts and salaries"
 order: 1
 updatedAt: 2026-06-23
 ---

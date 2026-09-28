@@ -1,7 +1,7 @@
 ---
 title: "Сегменты"
 description: 
-summary: 
+summary: "Создание сегментов гостей и настройка условий"
 icon: segments
 order: 2
 ---

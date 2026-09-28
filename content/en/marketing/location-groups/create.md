@@ -1,7 +1,7 @@
 ---
 title: Create Location Group
 description:
-summary:
+summary: "Creating, editing, and deleting a group"
 order: 2
 updatedAt: 2026-08-14
 ---

@@ -1,5 +1,6 @@
 ---
 title: Reservations
+summary: "Установка и вход в приложение для планшетов"
 order: 3
 updatedAt: 2026-06-23
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Location Groups"
 description: 
-summary: 
+summary: "Grouping locations to share a guest base"
 icon: locationgroups
 order: 6
 ---
