@@ -1,7 +1,7 @@
 ---
 title: "Ручные теги"
 description: 
-summary: 
+summary: "Ручные отметки гостей: VIP, предпочтения, ограничения"
 icon: tags
 order: 5
 ---

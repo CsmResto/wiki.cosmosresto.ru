@@ -1,7 +1,7 @@
 ---
 title: Создание группы локаций
 description: 
-summary: 
+summary: "Создание, редактирование и удаление группы"
 order: 2
 updatedAt: 2026-08-14
 ---

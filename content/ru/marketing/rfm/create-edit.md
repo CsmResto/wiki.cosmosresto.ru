@@ -1,7 +1,7 @@
 ---
 title: Создание и редактирование
 description: 
-summary: 
+summary: "Создание, редактирование и удаление RFM-статусов"
 order: 2
 updatedAt: 2026-08-18
 ---

@@ -1,7 +1,7 @@
 ---
 title: Create and Edit
 description:
-summary:
+summary: "Creating, editing, and deleting RFM statuses"
 order: 2
 updatedAt: 2026-09-10
 ---

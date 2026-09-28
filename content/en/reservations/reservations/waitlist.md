@@ -1,5 +1,6 @@
 ---
 title: Waitlist
+summary: "Saving a guest when a reservation can't be confirmed yet"
 description: Working with guests for whom it is impossible to confirm a reservation at the current moment
 order: 11
 updatedAt: 2026-07-23

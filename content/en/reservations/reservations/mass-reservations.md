@@ -1,7 +1,7 @@
 ---
 title: Multi-Table Reservation
 description: Reservation for multiple tables
-summary: Reservation for multiple tables
+summary: "One reservation for several tables and its limits"
 order: 5
 updatedAt: 2026-05-27
 ---

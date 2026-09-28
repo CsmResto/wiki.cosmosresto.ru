@@ -1,7 +1,7 @@
 ---
 title: Создание COSMOS пользователя в IIKO / Syrve
 description: Какие доступы необходимы пользователю COSMOS в IIKO / Syrve. Что необходимо для дальнейшего подключения.
-summary: Необходимые доступы и настройка
+summary: "Должность и права пользователя COSMOS в iiko Office"
 order: 1
 updatedAt: 2026-06-01
 ---

@@ -1,5 +1,6 @@
 ---
 title: Настройка IIKO Cloud API
+summary: "Создание интеграции iiko Cloud API для COSMOS"
 description: Создание интеграции IIKO Cloud API для подключения COSMOS.
 order: 2
 updatedAt: 2026-06-01

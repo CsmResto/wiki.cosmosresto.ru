@@ -1,7 +1,7 @@
 ---
 title: Floor Plan
 description: Navigation and functionality of the Floor Plan
-summary: Description of the Floor Plan section
+summary: "Table states, reservations on the plan, object setup"
 order: 2
 updatedAt: 2026-07-15
 ---

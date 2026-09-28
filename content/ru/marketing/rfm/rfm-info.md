@@ -1,7 +1,7 @@
 ---
 title: Общая информация
 description: 
-summary: 
+summary: "Показатели RFM, системные статусы и где они видны"
 order: 1
 updatedAt: 2026-08-18
 ---
