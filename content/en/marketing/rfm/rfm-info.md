@@ -1,7 +1,7 @@
 ---
 title: General Information
 description:
-summary:
+summary: "RFM metrics, system statuses, and where they appear"
 order: 1
 updatedAt: 2026-09-04
 ---

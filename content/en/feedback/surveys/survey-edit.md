@@ -1,7 +1,7 @@
 ---
 title: Editing and Managing a Survey
 description: Editing, deactivating, deleting and duplicating a survey.
-summary: Modifying a survey
+summary: "Editing, duplicating, deactivating, and deleting"
 order: 2
 updatedAt: 2026-08-24
 ---

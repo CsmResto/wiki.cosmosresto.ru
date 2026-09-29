@@ -1,7 +1,7 @@
 ---
 title: Reservation Timeline
 description: Navigation and functionality of the Timeline
-summary: Navigation and functionality of the timeline
+summary: "Reservations on a time scale, table list, and table view"
 order: 1
 updatedAt: 2026-09-24
 ---

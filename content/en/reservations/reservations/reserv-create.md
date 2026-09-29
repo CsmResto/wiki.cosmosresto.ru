@@ -1,7 +1,7 @@
 ---
 title: Creating a Reservation
 description: How to create a reservation. Description of fields
-summary: How to create a reservation. Description of fields
+summary: "Ways to create a reservation and sidebar fields"
 order: 3
 updatedAt: 2026-09-22
 ---

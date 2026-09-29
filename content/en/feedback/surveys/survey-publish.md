@@ -1,7 +1,7 @@
 ---
 title: Publishing and Distributing a Survey
 description: Publishing a survey, public and personal links, mailings, unpublishing and deactivation.
-summary: Distributing a survey
+summary: "Public and personal links, sending via mailings"
 order: 3
 updatedAt: 2026-08-24
 ---

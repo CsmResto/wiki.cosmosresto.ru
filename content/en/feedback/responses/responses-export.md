@@ -1,7 +1,7 @@
 ---
 title: Exporting Responses
 description: Rules for exporting responses for a single survey and from the general Responses table.
-summary: Exporting responses
+summary: "Exporting responses for a survey or the full table"
 order: 2
 updatedAt: 2026-08-24
 ---

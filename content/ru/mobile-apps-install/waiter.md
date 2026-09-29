@@ -1,5 +1,6 @@
 ---
 title: Waiter
+summary: "Установка приложения для официантов"
 order: 2
 updatedAt: 2026-06-23
 ---

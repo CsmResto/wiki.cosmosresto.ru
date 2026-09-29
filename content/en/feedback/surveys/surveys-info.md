@@ -1,7 +1,7 @@
 ---
 title: Surveys
 description: A tool for creating surveys, collecting feedback from guests and analyzing the received responses.
-summary: Overview of the Surveys module
+summary: "Survey list, statuses, and lifecycle"
 order: 1
 updatedAt: 2026-08-24
 ---

@@ -1,5 +1,6 @@
 ---
 title: "Reservation Tags"
+summary: "Creating tags and using them in reservations"
 description: "In this section you will learn everything about reservation tags. Creation, editing, application."
 icon: tags
 order: 2

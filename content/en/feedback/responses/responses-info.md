@@ -1,7 +1,7 @@
 ---
 title: Responses and Working with Responses
 description: Viewing, filtering, manually adding and deleting survey responses.
-summary: Working with responses
+summary: "Viewing, filtering, adding, and deleting responses"
 order: 1
 updatedAt: 2026-08-24
 ---

@@ -1,7 +1,7 @@
 ---
 title: Creating and Configuring a Survey
 description: Creating a survey, configuring questions, screens, transition conditions and appearance.
-summary: Survey builder
+summary: "Survey details, page types, and question types"
 order: 2
 updatedAt: 2026-08-24
 ---

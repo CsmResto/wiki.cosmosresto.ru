@@ -1,7 +1,7 @@
 ---
 title: Общая информация
 description: 
-summary: 
+summary: "Назначение ручных тегов и список групп"
 order: 1
 updatedAt: 2026-08-11
 ---
