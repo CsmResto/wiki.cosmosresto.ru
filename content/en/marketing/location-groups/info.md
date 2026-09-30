@@ -54,15 +54,15 @@ In the panel that opens, you can:
 
 By default, the following columns are displayed in the table:
 
-- **Name** — the name of the location group
-- **Description** — the description of the location group
+- **Name**
+- **Description**
 - **Locations** — the locations included in the group
 - **Group Access Type** — the group's access type for the guest database: **Full Base** or **Group Base**
 
 You can also enable the following columns:
 
 - **Created At** — the date and time when the group was created
-- **Author** — the employee who created the group, including their name, role, and grade
+- **Author** — the employee who created the group, including their role and grade
 - **Last Update** — the employee who last updated the group and the date and time of the update
 
 > **Note.** Table settings are saved after the page is refreshed. The settings are reset after you log out.
