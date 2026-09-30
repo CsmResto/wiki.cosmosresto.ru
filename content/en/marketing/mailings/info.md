@@ -1,7 +1,7 @@
 ---
 title: Mailings
 description:
-summary:
+summary: "Mailing types, channels, limits, and table"
 order: 1
 updatedAt: 2026-09-29
 ---

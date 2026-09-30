@@ -1,7 +1,7 @@
 ---
 title: Журнал рассылок
 description: 
-summary: 
+summary: "Колонки, фильтры и экспорт журнала"
 order: 1
 updatedAt: 2026-08-28
 ---

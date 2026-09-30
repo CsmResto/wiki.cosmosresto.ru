@@ -1,7 +1,7 @@
 ---
 title: "Mailings"
 description: 
-summary: 
+summary: "Auto and manual mailings to guests"
 icon: mailings
 order: 3
 ---

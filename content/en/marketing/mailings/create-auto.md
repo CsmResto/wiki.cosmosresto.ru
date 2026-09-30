@@ -1,7 +1,7 @@
 ---
 title: Create Auto Mailing
 description:
-summary:
+summary: "Creating, starting, and pausing an auto mailing"
 order: 2
 updatedAt: 2026-09-29
 ---

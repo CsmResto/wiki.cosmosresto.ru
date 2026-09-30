@@ -1,7 +1,7 @@
 ---
 title: Mailing Log
 description:
-summary:
+summary: "Columns, filters, and log export"
 order: 1
 updatedAt: 2026-09-29
 ---
