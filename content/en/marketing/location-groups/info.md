@@ -61,9 +61,9 @@ By default, the following columns are displayed in the table:
 
 You can also enable the following columns:
 
-- **Created At** — the date and time when the group was created
-- **Author** — the employee who created the group, including their role and grade
-- **Last Update** — the employee who last updated the group and the date and time of the update
+- **Created At**
+- **Author**
+- **Last Update**
 
 > **Note.** Table settings are saved after the page is refreshed. The settings are reset after you log out.
 
