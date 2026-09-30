@@ -1,7 +1,7 @@
 ---
 title: Create Manual Mailing
 description:
-summary:
+summary: "Creating and starting a manual mailing"
 order: 3
 updatedAt: 2026-09-29
 ---

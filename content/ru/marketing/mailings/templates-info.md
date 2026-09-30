@@ -1,7 +1,7 @@
 ---
 title: Шаблоны
 description: 
-summary: 
+summary: "Страница в разработке"
 order: 4
 updatedAt: 2026-09-29
 ---

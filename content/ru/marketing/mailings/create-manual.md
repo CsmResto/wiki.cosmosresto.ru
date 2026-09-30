@@ -1,7 +1,7 @@
 ---
 title: Создание ручной рассылки
 description: 
-summary: 
+summary: "Создание и запуск ручной рассылки"
 order: 3
 updatedAt: 2026-08-28
 ---

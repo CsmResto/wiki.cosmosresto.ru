@@ -1,7 +1,7 @@
 ---
 title: "Mailing Logs"
 description: 
-summary: 
+summary: "History of messages sent to guests"
 icon: mailinglogs
 order: 4
 ---

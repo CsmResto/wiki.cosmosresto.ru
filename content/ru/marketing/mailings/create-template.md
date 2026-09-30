@@ -1,7 +1,7 @@
 ---
 title: Создание шаблона
 description: 
-summary: 
+summary: "Страница в разработке"
 order: 5
 updatedAt: 2026-09-29
 ---

@@ -1,7 +1,7 @@
 ---
 title: Информация о рассылках
 description: 
-summary: 
+summary: "Виды рассылок, каналы, ограничения и таблица"
 order: 1
 updatedAt: 2026-08-28
 ---

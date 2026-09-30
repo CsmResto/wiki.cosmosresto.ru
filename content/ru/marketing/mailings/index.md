@@ -1,7 +1,7 @@
 ---
 title: "Рассылки"
 description: 
-summary: 
+summary: "Автоматические и ручные рассылки гостям"
 icon: mailings
 order: 3
 ---
