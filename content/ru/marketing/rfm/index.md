@@ -1,7 +1,7 @@
 ---
 title: "RFM"
 description: 
-summary: 
+summary: "Сегментация гостей по давности, частоте и сумме трат"
 icon: rfm
 order: 8
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Manual Tags"
 description: 
-summary: 
+summary: "Manual guest labels: VIP, preferences, restrictions"
 icon: tags
 order: 5
 ---

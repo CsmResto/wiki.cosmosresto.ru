@@ -1,5 +1,6 @@
 ---
 title: Waiter
+summary: "Installing the waiter app"
 order: 2
 updatedAt: 2026-06-23
 ---

@@ -1,7 +1,7 @@
 ---
 title: Экспорт категорий 
 description: 
-summary: 
+summary: "Выгрузка списка категорий с ID в CSV"
 order: 3
 updatedAt: 2026-08-26
 ---

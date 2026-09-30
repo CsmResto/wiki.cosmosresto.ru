@@ -1,5 +1,6 @@
 ---
 title: Processing Reservation Request
+summary: "Converting a request to a reservation or rejecting it"
 description: Description of reservation request processing functionality via external services
 order: 10
 updatedAt: 2026-07-23

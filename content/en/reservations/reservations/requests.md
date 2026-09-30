@@ -1,5 +1,6 @@
 ---
 title: Reservation Requests
+summary: "Requests from the widget and external services, statuses"
 description: Description of reservation request functionality via external services
 order: 10
 updatedAt: 2026-07-23

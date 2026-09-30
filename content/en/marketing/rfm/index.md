@@ -1,7 +1,7 @@
 ---
 title: "RFM"
 description: 
-summary: 
+summary: "Guest segmentation by recency, frequency, and spend"
 icon: rfm
 order: 8
 ---

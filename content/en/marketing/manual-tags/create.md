@@ -1,7 +1,7 @@
 ---
 title: Create and Edit Manual Tags
 description:
-summary:
+summary: "Creating, editing, and deleting tags and groups"
 order: 2
 updatedAt: 2026-08-17
 ---

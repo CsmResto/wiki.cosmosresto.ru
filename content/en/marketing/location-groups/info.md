@@ -1,7 +1,7 @@
 ---
 title: Information
 description:
-summary:
+summary: "Guest database access by location groups"
 order: 1
 updatedAt: 2026-09-10
 ---

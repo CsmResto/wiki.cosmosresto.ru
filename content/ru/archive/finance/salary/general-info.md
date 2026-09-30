@@ -1,7 +1,7 @@
 ---
 title: Общая информация 
 description: 
-summary: 
+summary: "Роли, грейды, наследование и версии настроек"
 order: 1
 updatedAt: 2026-07-09
 ---
