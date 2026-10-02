@@ -9,7 +9,7 @@ updatedAt: 2026-09-04
 
 На странице **Отчеты** отображаются сохраненные отчеты Мастер-графика.
 
-![добавить метрику](/ru/images/analytics/reports.png)
+![отчеты](/ru/images/analytics/reports.png)
 
 [[delimiter rows=1]]
 
