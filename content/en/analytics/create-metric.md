@@ -1,6 +1,7 @@
 ---
 title: Create Metric
 description: "How to add a metric to the Master Chart: categories, metrics, display settings, and filters."
+summary: "Categories, metrics, display settings, and filters"
 order: 2
 updatedAt: 2026-10-02
 ---

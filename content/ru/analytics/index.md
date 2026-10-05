@@ -1,7 +1,7 @@
 ---
 title: "Аналитика"
 description: ""
-summary: ""
+summary: "Мастер-график, метрики и сохраненные отчеты"
 icon: analytics
 order: 10
 ---

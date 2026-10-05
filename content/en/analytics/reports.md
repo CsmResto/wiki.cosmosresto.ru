@@ -1,6 +1,7 @@
 ---
 title: Reports
 description:
+summary: "Shared and private reports, report actions, and filters"
 order: 3
 updatedAt: 2026-10-02
 ---

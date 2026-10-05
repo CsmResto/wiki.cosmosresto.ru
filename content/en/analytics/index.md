@@ -1,7 +1,7 @@
 ---
 title: "Analytics"
 description: ""
-summary: ""
+summary: "Master Chart, metrics, and saved reports"
 icon: analytics
 order: 10
 ---
