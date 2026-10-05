@@ -1,6 +1,7 @@
 ---
 title: Master Chart
 description:
+summary: "Chart settings, table view, export, and saving reports"
 order: 1
 updatedAt: 2026-10-02
 ---
