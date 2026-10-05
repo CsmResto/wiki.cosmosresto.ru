@@ -46,7 +46,7 @@ When a new request arrives, the counter of the **Requests** button increases. It
 
 ### Requests in Table
 
-<!-- ![Requests](/ru/images/reserve/requests/requests4.png) -->
+![Requests](/en/images/reserve/requests/requests-table-en.png)
 
 [[delimiter rows=1]]
 
@@ -54,21 +54,13 @@ When a new request arrives, the counter of the **Requests** button increases. It
 2. Go to the **Requests** tab.
 3. Click on the row to open the request sidebar.
 
-**The table displays:**
-- Desired visit date and time;
-- Guest or name specified in the form;
-- Tags selected in the widget;
-- Phone number;
-- Number of guests;
-- Status;
-- Comment;
-- Time the request has been in `New` status.
+The table columns are described in the **[Table Settings](#table-settings)** section.
 
 **Search, filtering and sorting:**
 
 - In the table you can **search** requests by first name, last name and phone number.
 
-- **Filtering** is available by visit date, guest, request status and comment text.
+- **Filtering** is available by visit date, guest, request status, source and comment text. The source filter shows only the sources connected in the venue.
 
 By default, requests are sorted:
 1. By date and time of desired visit — from closest to later ones.
@@ -82,7 +74,43 @@ In the requests table you can also create a reservation by clicking the `+` butt
 [[/info]]
 
 **Statistics:**
-At the bottom of the table, statistics on requests are displayed. Total count and by all statuses for the selected day.
+Request statistics are displayed in the lower-right corner of the table. They have two tabs:
+- **Requests** — the total number of requests and the number of new and converted requests;
+- **Rejected** — the number of rejected requests for each rejection reason.
+
+#### Table Settings {#table-settings}
+
+To change the displayed columns, click the table settings button in the upper-right corner.
+
+In the panel that opens, you can:
+
+✔ Select the columns to display  
+✔ Pin the required columns  
+✔ Restore the default settings using **Reset to Default**
+
+![Table settings](/en/images/reserve/requests/requests-columns-en.png)
+
+[[delimiter rows=1]]
+
+By default, the table displays the following columns:
+
+- **Guest** — the guest's name from the profile if the guest is found in the system, or the name entered in the form
+- **Phone**
+- **Date of Birth**
+- **Start Time** — the desired date and time the visit starts
+- **End Time** — the desired date and time the visit ends
+- **Party Size**
+- **Time in Request** — how long the request has been in **New** status
+- **Request Source** — the channel the request came from. Filled in automatically
+- **Email**
+- **Telegram**
+- **Tags** — tags selected by the guest in the widget
+- **Status**
+
+The following columns can be enabled additionally. When enabled, they appear in the table according to the column order in the settings:
+
+- **Note**
+- **Rejection reason** — filled in only for rejected requests
 
 [[delimiter rows=1]]
 
