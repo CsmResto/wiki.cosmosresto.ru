@@ -195,6 +195,8 @@ The system can save multiple reservations for one table at overlapping times. Su
 
 When creating or changing a reservation, the system warns of an overlap, but does not block saving. A collision is displayed on the table with a separate visual state.
 
+The number of overlapping reservations on one table is not limited. A reservation can also be saved over a table block.
+
 <!-- ![Floor Plan](/ru/images/reserve/floorplan/floorplan8.png) -->
 
 [[delimiter rows=1]]

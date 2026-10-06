@@ -107,10 +107,12 @@ You can quickly specify up to 10 guests, or manually specify a larger company. B
 To specify a company of more than 10 people, click 10+ and enter the required number manually.
 
 ### 6. Reservation Source
+The field is required; **Phone call** is selected by default.
+
 Specifying the reservation source will allow you to then analyze where guest reservations come from. This helps you understand which channels work better and which ones work worse, so you can evaluate their effectiveness and optimize guest acquisition.
 
 Available reservation sources:
-- Phone call *(Selected by default)*
+- Phone call
 - Walk-in guest
 - Messenger
 - Website
