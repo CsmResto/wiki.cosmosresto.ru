@@ -76,7 +76,7 @@ In the requests table you can also create a reservation by clicking the `+` butt
 **Statistics:**
 Request statistics are displayed in the lower-right corner of the table. They have two tabs:
 - **Requests** — the total number of requests and the number of new and converted requests;
-- **Rejected** — the number of rejected requests for each rejection reason.
+- **Rejected** — the total number of rejected requests (the **Summary** column) and the number for each rejection reason. Only the reasons that have rejected requests are displayed.
 
 #### Table Settings {#table-settings}
 
