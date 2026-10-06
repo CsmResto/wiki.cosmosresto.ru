@@ -157,6 +157,7 @@ Unlike other views, a system guest is immediately available here if linked to th
 - Desired visit date and time;
 - Number of guests;
 - Comment;
+- Source;
 - Time elapsed since the request was created.
 
 [[info type=custom color=#E06823]]

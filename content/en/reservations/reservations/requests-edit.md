@@ -43,6 +43,10 @@ After saving, the request receives the status `Converted to reservation`. The ne
 Before saving, check the availability of the selected time and tables. When submitting a request, the guest can select any 15-minute interval available in the widget without taking into account the current occupancy of the establishment. The set of available intervals is determined by the location's operating hours.
 [[/info]]
 
+[[info type=custom color=#E06823]]
+The reservation source is transferred from the request. It cannot be changed either when creating the reservation or when editing it later.
+[[/info]]
+
 ### Rejecting a Request
 
 Reject the request if the establishment cannot accept the request or the guest declined the visit.

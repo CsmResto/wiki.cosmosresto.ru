@@ -68,7 +68,7 @@ You can also create a reservation via the `Reservation creation button` in the l
 <!-- ![Timeline](/ru/images/reserve/timeline-view/timeline-view-4.jpg) -->
 
 [[info type=custom color=#E06823]]
-In this same window you can add a **block** on a table for the selected period. During a block the table will be unavailable for reservations.
+In this same window you can add a **block** on a table for the selected period. The block is displayed on the timeline and floor plan, but does not prevent creating a reservation on this table.
 [[/info]]
 
 **To block a table you need to specify:** 
