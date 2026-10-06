@@ -45,7 +45,8 @@ To change the displayed columns, click the table settings button in the upper-ri
 In the panel that opens, you can:
 
 ✔ select the columns to display  
-✔ pin the required columns  
+✔ change the column order — drag a column in the list by the icon to the left of its name  
+✔ pin the required columns — click the pin icon to the right of the column name. Pinned columns move to the beginning of the table  
 ✔ restore the default settings using **Reset to Default**
 
 ![Column Wizard](/en/images/location-groups/group-column-en.png)
