@@ -10,12 +10,12 @@ updatedAt: 2026-07-23
 
 A request captures the desired date, time and visit parameters, but does not automatically reserve a table. For the request to become a reservation, **an employee must check the data and confirm it manually**. 
 
-You can work with requests in all views of the **Reservations** section: on the timeline, floor plan and a separate requests table.
+You can work with requests in all views of the reservation module: on the timeline, floor plan and a separate requests table.
 
 ## Brief Work Scenario
 
 1. Guest submits a form in the widget on the website or external reservation service.
-2. The request appears in the **Reservations** section.
+2. The request appears in the reservation module.
 3. An employee opens the request, checks the data and contacts the guest if necessary. The request can be:
     1. Accepted and converted to a reservation
     2. Rejected
@@ -32,7 +32,7 @@ A request and a reservation are different entities. Until the request is convert
 1. A request is created manually by a guest through a reservations widget.
 2. The system links the request to an existing profile if the guest is found.
 4. Saves the data inside the request if the guest is not found.
-5. Passes the request to the **Reservations** section for manual processing by an employee.
+5. Passes the request to the reservation module for manual processing by an employee.
 
 **A new guest profile is not created automatically at this stage.**
 
@@ -40,7 +40,7 @@ A request and a reservation are different entities. Until the request is convert
 
 ## Displaying and Working with Requests
 
-You can work with requests in all views of the **Reservations** section. 
+You can work with requests in all views of the reservation module. 
 
 When a new request arrives, the counter of the **Requests** button increases. It shows the number of requests with `New` status or requests being processed.
 
@@ -50,7 +50,7 @@ When a new request arrives, the counter of the **Requests** button increases. It
 
 [[delimiter rows=1]]
 
-1. Go to the **Reservations** section.
+1. Go to the reservation module.
 2. Go to the **Requests** tab.
 3. Click on the row to open the request sidebar.
 
@@ -122,7 +122,7 @@ The following columns can be enabled additionally. When enabled, they appear in 
 ![Requests](/ru/images/reserve/requests/requests2.png)
 [[/gallery]] -->
 
-1. Go to the **Reservations** section.
+1. Go to the reservation module.
 2. Open the **Timeline** view.
 3. Click **Requests**.
 4. In the opened sidebar, select the required card.
@@ -133,7 +133,7 @@ The following columns can be enabled additionally. When enabled, they appear in 
 
 [[delimiter rows=1]]
 
-1. Go to the **Reservations** section.
+1. Go to the reservation module.
 2. Open the **Floor Plan** view.
 3. In the sidebar switch from the **Reservations** tab to **Requests**.
 4. Select a request.
@@ -185,7 +185,7 @@ After opening the card, processing actions become available. Original request da
 
 [[delimiter rows=1]]
 
-1. In the **Reservations** section click on your avatar to open the action menu.
+1. In the reservation module, click on your avatar to open the action menu.
 2. Select `Enable notifications`.
 3. Allow `Show notifications` in the popup window in the browser.
 4. Check that notifications are enabled in your browser's system settings.
