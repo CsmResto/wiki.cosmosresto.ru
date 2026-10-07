@@ -32,7 +32,7 @@ Waitlist does not guarantee the guest a visit to the establishment. Until the re
 ## How a Record Gets on Waitlist
 
 1. Converting from a request to a reservation with status `Waitlist`.
-2. Creating manually in the **Reservations** section by specifying status `Waitlist`.
+2. Creating manually in the reservation module by specifying status `Waitlist`.
 3. Changing the status of an existing reservation to `Waitlist`.
 
 
@@ -55,7 +55,7 @@ After saving, the request becomes inactive and a record appears on the waitlist.
 
 [[delimiter rows=1]]
 
-1. Go to **Reservations** section in any view.
+1. Open any view of the reservation module.
 2. Click **Add Reservation**.
 3. Fill in guest data.
 4. Specify date, time and number of guests.
