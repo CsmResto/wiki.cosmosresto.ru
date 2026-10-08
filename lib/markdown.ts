@@ -360,8 +360,61 @@ function enhanceMarkdownHtml(contentHtml: string): string {
   const withInfoBlocks = applyInfoBlocks(withTables)
   const withGalleryBlocks = applyGalleryBlocks(withInfoBlocks)
   const withDocumentCards = applyDocumentCards(withGalleryBlocks)
+  const withTabsBlocks = applyTabsBlocks(withDocumentCards)
 
-  return applyStoreLinks(withDocumentCards)
+  return applyStoreLinks(withTabsBlocks)
+}
+
+function applyTabsBlocks(contentHtml: string): string {
+  const openRe = /<p>\s*\[\[tabs(?:\s+style=([a-z-]+))?\]\]\s*<\/p>/i
+  const closeRe = /<p>\s*\[\[\/tabs\]\]\s*<\/p>/i
+  const tabRe = /<p>\s*\[\[tab\s+([^\]]+?)\]\]\s*<\/p>/gi
+
+  const buildTabsWrapper = (inner: string, style: string | undefined) => {
+    const panels: string[] = []
+    const markers = [...inner.matchAll(tabRe)]
+
+    markers.forEach((marker, index) => {
+      const start = (marker.index ?? 0) + marker[0].length
+      const end = index + 1 < markers.length ? markers[index + 1].index ?? inner.length : inner.length
+      const label = marker[1].trim().replace(/"/g, '&quot;')
+      panels.push(`<div class="wiki-tabs__panel" data-tab-label="${label}">${inner.slice(start, end)}</div>`)
+    })
+
+    if (panels.length === 0) {
+      return inner
+    }
+
+    const styleAttr = style ? ` data-tabs-style="${style}"` : ''
+    return `<div class="wiki-tabs"${styleAttr}>${panels.join('')}</div>`
+  }
+
+  let remaining = contentHtml
+  let result = ''
+
+  while (true) {
+    const openMatch = remaining.match(openRe)
+    if (!openMatch || openMatch.index === undefined) {
+      result += remaining
+      break
+    }
+
+    const openIndex = openMatch.index
+    const afterOpen = remaining.slice(openIndex + openMatch[0].length)
+    const closeMatch = afterOpen.match(closeRe)
+
+    if (!closeMatch || closeMatch.index === undefined) {
+      result += remaining
+      break
+    }
+
+    result += remaining.slice(0, openIndex)
+    result += buildTabsWrapper(afterOpen.slice(0, closeMatch.index), openMatch[1])
+
+    remaining = afterOpen.slice(closeMatch.index + closeMatch[0].length)
+  }
+
+  return result
 }
 
 function wrapMarkdownTables(contentHtml: string): string {

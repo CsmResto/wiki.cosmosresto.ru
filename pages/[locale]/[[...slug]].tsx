@@ -20,6 +20,7 @@ import {
   WikiTreeNode,
 } from '@/lib/markdown'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
+import WikiTabs from '@/components/WikiTabs'
 
 type BreadcrumbItem = {
   slug: string
@@ -393,6 +394,21 @@ function renderMarkdown(contentHtml: string, basePath: string, disableImageZoom 
       const element = domNode as { name?: string; attribs?: Record<string, string> }
       if (element.name === 'div') {
         const className = element.attribs?.class ?? ''
+        if (className === 'wiki-tabs') {
+          const panels = ((domNode as unknown as { children?: DOMNode[] }).children ?? []).filter(
+            (child) => child.type === 'tag'
+          ) as unknown as Array<{ attribs?: Record<string, string>; children?: DOMNode[] }>
+
+          return (
+            <WikiTabs
+              variant={element.attribs?.['data-tabs-style']}
+              tabs={panels.map((panel) => ({
+                label: panel.attribs?.['data-tab-label'] ?? '',
+                content: domToReact(panel.children ?? [], options),
+              }))}
+            />
+          )
+        }
         if (className.split(' ').includes('wiki-info')) {
           const infoIcon = element.attribs?.['data-info-icon']
           const infoColor = element.attribs?.['data-info-color']
