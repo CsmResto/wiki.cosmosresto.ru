@@ -11,43 +11,69 @@ The **Responses** section is used for viewing and analyzing survey results. Resp
 - Within a survey, only responses for that survey are displayed.
 - The general **Responses** table displays responses for all surveys available to you.
 
-<!-- ![responses](/ru/images/surveys/responses/response1.png) -->
+![responses](/en/images/surveys/responses/response1-en.png)
 
 [[delimiter rows=1]]
 
-## Basic Response Data
+## Table Settings
 
-**The table can display the following data:**
+To change the displayed columns, click the table settings button in the upper-right corner.
 
-- **Response number**
-- **Response date** — date and time the response was submitted by the respondent.
-- **Survey name**
+In the panel that opens, you can:
+
+✔ Select the columns to display  
+✔ Change the column order — drag a column in the list by the icon to the left of its name  
+✔ Pin the required columns — click the pin icon to the right of the column name. Pinned columns move to the beginning of the table  
+✔ Restore the default settings using **Reset to Default**
+
+![Table Settings](/en/images/surveys/responses/response-columns-en.png)
+
+[[delimiter rows=1]]
+
+By default, the table displays the following columns:
+
+- **Response At** — date and time the response was submitted by the respondent.
+- **Survey Name**
 - **Location** — the location associated with the response. Automatically determined for responses from an automatic mailing based on the `Closed check` trigger; in other cases it may be absent.
-- **Response source** — shows how the response entered the system: `Mailing`, `Public link` or `Entered manually`.
-- **Channel** — delivery channel, if the survey was sent via mailing. For a public link and manual entry, the field may be empty.
-- **Added by** — for a manual response, shows the employee who entered the data.
-- **Text responses** — the number of text comments in the response, including text in the `Custom option` field.
+- **Response Source** — shows how the response entered the system: `Mailing`, `Public link` or `Entered manually`.
+- **Added By** — for a manual response, shows the employee who entered the data.
+- **Guest**
+- **Phone**
+- **Text Responses** — the number of text comments in the response, including text in the `Custom option` field.
 - **Ratings** — ratings left in `Rating` type questions.
-- **Device** — `Mobile` or `Computer`, depending on the device from which the response was submitted.
 
-**For responses received after an automatic mailing, the following may be displayed:**
+The following columns can be enabled additionally. When enabled, they appear in the table according to the column order in the settings:
 
-- **Trigger** — the event after which the mailing was sent;
-- **Trigger date** — date and time of the event;
-- **Tables** — tables associated with the event;
-- **Served by** — employees who served the guest.
+- **Response**
+- **Channel** — delivery channel, if the survey was sent via mailing. For a public link and manual entry, the field may be empty.
+- **Trigger** — the event after which the mailing was sent.
+- **Triggered At** — date and time of the event.
+- **Tables** — tables associated with the event.
+- **Served By** — employees who served the guest.
+- **E-mail**
+- **Sex**
+- **Birthday**
+- **Favorite Location**
+- **Last Visit**
+- **Total Paid**
+- **Checks**
+- **Last Check**
+- **Avg Check**
+- **Avg Check Per Hour**
+- **Loyalty Number**
+- **Loyalty Discount**
+- **Loyalty Registration**
+- **Device** — **Mobile** or **Desktop**, depending on the device from which the response was submitted.
 
-**If the response is linked to a guest profile, the following may be displayed:**
-
-- **First and Last Name**;
-- **Phone**;
-- **Email**;
-- **Gender**;
-- **Date of birth**.
+[[info type=custom color=#E06823]]
+**Trigger**, **Triggered At**, **Tables** and **Served By** are filled in only for responses received after an automatic mailing. Guest data columns are filled in if the response is linked to a guest profile.
+[[/info]]
 
 ## Response Filters
 
-<!-- ![responses](/ru/images/surveys/responses/response2.png) -->
+![responses](/en/images/surveys/responses/response2-en.png)
+
+[[delimiter rows=1]]
 
 ### Period
 
@@ -74,7 +100,7 @@ The **Period** filter limits responses by the date they were received. The maxim
 
 To open detailed information, click on the response row.
 
-<!-- ![responses](/ru/images/surveys/responses/response3.png) -->
+![responses](/en/images/surveys/responses/response3-en.png)
 
 [[delimiter rows=1]]
 
@@ -97,7 +123,7 @@ The details window may display:
 
 Manual addition is used when an employee conducts a survey on behalf of a guest, for example over the phone.
 
-<!-- ![responses](/ru/images/surveys/responses/response4.png) -->
+![responses](/en/images/surveys/responses/response4-en.png)
 
 [[delimiter rows=1]]
 
@@ -118,15 +144,16 @@ If an active guest profile is not found by the specified phone number, the syste
 
 ## Deleting a Response
 
-<!-- ![responses](/ru/images/surveys/responses/response5.png) -->
+Responses can be deleted in two ways:
+
+- select one or more responses with the checkboxes on the left and click **Delete** in the bar that appears above the table on the right;
+- right-click the response row and select **Delete**.
+
+![responses](/en/images/surveys/responses/response5-en.png)
 
 [[delimiter rows=1]]
 
-To delete a response:
-
-1. Find and select the response in the table.
-2. Select the action `Delete`.
-3. Confirm the deletion.
+Confirm the deletion in the confirmation window.
 
 After deletion, the response receives the system status `Deleted` and is no longer used in working data.
 
@@ -135,3 +162,7 @@ The system also reduces the number of responses for the survey and recalculates 
 [[info type=custom color=#E06823]]
 Deleting a response does not make the personal link available for retaking. When this link is opened again, the respondent will still see a message that the survey has already been completed.
 [[/info]]
+
+[[delimiter rows=3]]
+
+---
