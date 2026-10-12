@@ -3,7 +3,7 @@ title: "Reservation Tags"
 summary: "Creating tags and using them in reservations"
 description: "In this section you will learn everything about reservation tags. Creation, editing, application."
 icon: tags
-order: 2
+order: 5
 ---
 
 **Reservation tags** help you manually mark reservations within the CRM. With their help you can visually highlight important records, quickly understand the context of a reservation, group reservations and find them using filters.
