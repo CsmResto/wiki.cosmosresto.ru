@@ -2,7 +2,7 @@
 title: "Reservation List"
 summary: "Reservations table, statistics and export"
 description: "In this section you will learn how to work with the reservation list: search and filter reservations, configure the table and export data."
-icon: reservations
+icon: reservationlist
 order: 3
 ---
 
