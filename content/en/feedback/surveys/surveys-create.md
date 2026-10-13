@@ -101,8 +101,8 @@ The following basic parameters are available for questions:
 
 - **Question type** — determines the answer format: `Rating`, `NPS`, `Choice` or `Input`.
 - **Required** — if enabled, the respondent will not be able to continue or submit the survey without an answer. This setting is enabled by default.
-- **Question text** — a required field of up to 250 characters.
-- **Explanation** — additional text under the question of up to 250 characters.
+- **Question text** — a required field.
+- **Explanation** — additional text under the question.
 
 #### Rating
 
@@ -115,7 +115,8 @@ The **Rating** type is used for a quantitative assessment of the visit, service 
 **Available settings:**
 
 - **Display type** — `Stars` or `Numbers`.
-- **Include in guest statistics** — allows the rating to be used in auto-tag conditions and is included in guest statistics.
+- **Scale** — `5-point scale` (default) or `10-point scale`.
+- **Include in guest statistics** — allows the rating to be used in auto-tag conditions and is included in guest statistics. The setting is available only for the 5-point scale.
 
 [[info type=custom color=#E06823]]
 If a response has several **Rating** type questions with the guest statistics setting enabled, the system uses the average value of these ratings for this response.
@@ -143,7 +144,7 @@ The **Choice** type allows you to offer the respondent ready-made answer options
 - **Answer options**
 - **Other answer** — adds an option, upon selection of which the respondent enters their own text. For the custom option, you can change the name and configure the requirement and length of the entered text.
 
-### Input
+#### Input
 
 The **Input** type is used for text responses and contact data. Within one question, **you can add several fields**, for example name, phone and comment. All filled-in fields are saved as one answer to the question.
 
@@ -155,7 +156,7 @@ The **Input** type is used for text responses and contact data. Within one quest
 
 - **Title**
 - **Required**
-- **Mask** — determines the format and validation rules for the entered value. Available masks: `Text`, `First name`, `Last name`, `Phone`, `Email`.
+- **Mask** — determines the format and validation rules for the entered value. Available masks: `Text`, `First name`, `Last name`, `Phone`, `Email`, `Number`, `Date` (in DD.MM.YYYY format).
 
 ## Step 3. Conditions
 
