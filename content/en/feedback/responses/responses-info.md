@@ -40,7 +40,7 @@ By default, the table displays the following columns:
 - **Guest**
 - **Phone**
 - **Text Responses** — the number of text comments in the response, including text in the `Custom option` field.
-- **Ratings** — ratings left in `Rating` type questions.
+- **Ratings** — ratings left in `Rating` (marked with a star) and `NPS` (marked with a smiley) type questions. The icon color depends on the rating value on the question's scale.
 
 The following columns can be enabled additionally. When enabled, they appear in the table according to the column order in the settings:
 
@@ -86,7 +86,7 @@ The **Period** filter limits responses by the date they were received. The maxim
 - **Channel**
 - **Who added** — the employee who added the manual response, or the system;
 - **Served by** — the employee associated with the event;
-- **Ratings** — a range of rating values; if a response has several ratings, a match on at least one is sufficient;
+- **Ratings** — a rating value, including `NPS`, with a comparison condition (`≥`, `>`, `≤`, `<`, `=`, `≠`) or a range of values; if a response has several ratings, a match on at least one is sufficient;
 - **Tables**
 - **Has text responses**
 - **Device**
