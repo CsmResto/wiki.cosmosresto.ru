@@ -100,6 +100,7 @@ Available channels:
 - **SMS** — enter the message text
 - **Push** — if necessary, specify a title and enter the push notification text
 - **E-mail** — specify the subject and message text. You can add HTML instead of text. If necessary, attach files. You can specify a name and comment for each attached file
+- **WhatsApp** - select a template in the **Template** field. Only templates approved by Meta are available. The message text is taken from the template and cannot be edited in the mailing
 
 Guest, location, and loyalty program data can be used to personalize the message. To add a variable, click the button in the message field and select the required value.
 
@@ -124,6 +125,8 @@ After it is started, the mailing moves from **Draft** to **Active** and begins w
 
 [[info type=custom color=#E06823]]
 An active Auto mailing can be opened and edited at any time. Any changes you make apply to subsequent mailing activity.
+
+For a **WhatsApp** mailing, the channel and the template cannot be changed.
 [[/info]]
 
 
