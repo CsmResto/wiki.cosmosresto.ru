@@ -18,6 +18,10 @@ To create a Manual mailing, go to **Marketing → Mailings**, select **Manual**,
 
 [[delimiter rows=1]]
 
+![Guests List](/en/images/mailings/manual-guests-en.png)
+
+[[delimiter rows=1]]
+
 In the first step, configure the main mailing settings:
 
 - **Type**
