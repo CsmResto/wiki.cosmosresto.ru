@@ -50,6 +50,7 @@ In the second step, select the sending channel and configure the message content
 - **SMS** — enter the message text
 - **Push** — if necessary, specify a title and enter the push notification text
 - **E-mail** — specify the subject and message text. You can add HTML instead of text. If necessary, attach documents
+- **WhatsApp** - select a template in the **Template** field. Only templates approved by Meta are available. The message text is taken from the template and cannot be edited in the mailing
 - **Variables** — if necessary, add guest, location, or loyalty program data to the message
 - **Preview** — check how the message will look for the recipient
 
