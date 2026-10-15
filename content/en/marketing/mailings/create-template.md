@@ -46,7 +46,7 @@ Button specifics:
 
 ## Sending for Approval
 
-Click **Create & Sent to approval**. The template is created and immediately sent for approval to Meta. In the template list, it gets the **On Approval** status.
+Click **Create & Send to approval**. The template is created and immediately sent for approval to Meta. In the template list, it gets the **On Approval** status.
 
 A template cannot be changed after it is created. If you need to adjust the text or buttons, create a copy of the template - for details, see **[Templates](/en/marketing/mailings/templates-info/)**.
 
