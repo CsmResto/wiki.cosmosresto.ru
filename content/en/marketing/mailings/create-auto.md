@@ -112,13 +112,34 @@ Available channels:
 - **E-mail** — specify the subject and message text. You can add HTML instead of text. If necessary, attach files. You can specify a name and comment for each attached file
 - **WhatsApp** - select a template in the **Template** field. Only templates approved by Meta are available. The message text is taken from the template and cannot be edited in the mailing
 
-Guest, location, and loyalty program data can be used to personalize the message. To add a variable, click the button in the message field and select the required value.
+To personalize the message, you can add variables to the text - see **[Variables](#variables)**.
 
 The result is displayed in the preview.
 
 After configuring the content, click **Create**. The mailing will be saved as a draft.
 
 You can start the draft immediately from the mailing page or open it later on the **Draft** tab.
+
+### Variables
+
+A variable inserts the data of a specific guest into the message, for example their name or discount size. To add a variable, click the button in the lower left corner of the message field and select the required value. In the **Preview** block, sample values are shown instead of the variables.
+
+![variables](/en/images/mailings/loyalty-variables-en.png)
+
+[[delimiter rows=1]]
+
+Variables are grouped into blocks:
+
+- **Guest** - Greetings, Greetings with name, First name, Last name
+- **Location** - Name, Address, Phone, Telegram link
+- **Loyalty** - Discount percent, Amount to next level, Next level discount percent, Bonuses
+- **Feedback** - Survey Link
+
+[[info type=custom color=#E06823]]
+If the guest is not a member of the loyalty program or is already at the highest level, the **Amount to next level** value is not inserted.
+
+Variable values are inserted when the mailing is triggered for the guest. With delayed sending, the guest may make a purchase before the message is sent, and then the **Amount to next level** in the message will be out of date.
+[[/info]]
 
 
 ## Start Mailing
