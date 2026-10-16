@@ -23,6 +23,19 @@ Fill in the fields:
 
 The **Preview** block shows a sample message with the variable values filled in.
 
+![variables](/en/images/mailings/template-variables-en.png)
+
+[[delimiter rows=1]]
+
+Variables are grouped into blocks:
+
+- **Guest** - Greetings, Greetings with name, First name, Last name
+- **Location** - Name, Address, Phone, Telegram link
+- **Loyalty** - Discount percent, Amount to next level, Next level discount percent
+- **Feedback** - Survey Link
+
+If the guest is not a member of the loyalty program or is already at the highest level, the **Amount to next level** value is not inserted.
+
 
 ## Buttons
 
