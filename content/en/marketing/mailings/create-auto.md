@@ -82,9 +82,19 @@ The recipient choice cannot be changed in an active mailing.
 
 [[delimiter rows=1]]
 
-**Loyalty Group Change** - the mailing is sent when a guest moves from one loyalty group to another. In the **From Loyalty Groups** field, select the groups the guest must move from, and in the **To Loyalty Groups** field, the groups the guest must move to. The mailing is sent for any move from the selected groups to the selected groups, so one mailing can cover, for example, all level upgrades. The first group a guest receives when registering in the loyalty program is not considered a group change.
+**Loyalty Group Change** - the mailing is sent when a guest moves from one loyalty group to another.
 
-See setup examples in **[Use Cases](#use-cases)**.
+In the **From Loyalty Groups** field, select the groups the guest must move from, and in the **To Loyalty Groups** field, the groups the guest must move to. The message is sent if the guest moves from any group in the first field to any group in the second one.
+
+The mailing can be set up for a level upgrade or downgrade. For example, to notify a guest about moving to a less favorable group, select the higher groups in the **From Loyalty Groups** field, for example 5%, 7%, and 10%, and the lower ones in the **To Loyalty Groups** field, for example 0% and 3%. The same group should not be selected in both fields, otherwise the mailing will be sent both on an upgrade and on a downgrade. The system does not distinguish between an upgrade and a downgrade on its own - it all depends on the selected groups.
+
+If a guest skips one or more groups, they receive only one message. For example, when moving straight from 0% to 5%, skipping 3%, the message is sent once - for the move from 0% to 5%.
+
+When a guest registers in the loyalty program and receives their first group, the mailing is not sent.
+
+[[info type=custom color=#E06823]]
+See setup examples for mailings with different triggers in **[Use Cases](#use-cases)**.
+[[/info]]
 
 
 ## Content
@@ -176,8 +186,19 @@ Segments are recalculated once a day. A guest who registered after the recalcula
 ### New Level Congratulations
 
 1. In **Conditions**, select the **Loyalty Group Change** trigger.
-2. In the **From Loyalty Groups** field, select the lower groups, for example 0% and 3%, and in the **To Loyalty Groups** field - the higher ones, for example 5%, 7%, and 10%. This way, the mailing is sent only when the level goes up.
-3. In **Content**, congratulate the guest and tell them about the new benefits.
+2. In the **To Loyalty Groups** field, select the new level, for example 7%, and in the **From Loyalty Groups** field - all groups below it: 0%, 3%, and 5%.
+3. In **Content**, congratulate the guest and tell them about the new benefits, for example "Your discount is now 7%".
+
+[[info type=custom color=#E06823]]
+One mailing cannot cover all level upgrades: if the same group is selected in both fields, the mailing is also sent on a downgrade. So create a separate mailing for each level. For example, for the groups 0%, 3%, 5%, 7%, and 10%, you need four mailings:
+
+- **New Level 3%**: from 0% to 3%
+- **New Level 5%**: from 0% and 3% to 5%
+- **New Level 7%**: from 0%, 3%, and 5% to 7%
+- **New Level 10%**: from 0%, 3%, 5%, and 7% to 10%
+
+This way, a guest who skips a level also receives one message - about the group they moved to.
+[[/info]]
 
 ### Thank You After a Visit
 
