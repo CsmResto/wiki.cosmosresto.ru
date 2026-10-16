@@ -99,6 +99,7 @@ The mailing table contains the following columns:
 - **Created At**
 - **Author**
 - **Last Update**
+- **Cost** — the total cost of all messages sent by the mailing: for an Auto mailing, for the whole time it has been running; for a Manual mailing, the sum of all messages sent. The cost is calculated only for SMS; for other channels, a dash is displayed. The mailing cost is also shown on the mailing page next to its name
 
 For Auto mailings only:
 
