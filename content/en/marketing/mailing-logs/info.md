@@ -16,7 +16,21 @@ The **Mailing Log** displays information about messages sent to guests. Each row
 
 To view messages for a specific period, select the required date range.
 
-Click a row in the table to open the settings of the corresponding mailing.
+## Message Details
+
+Click a row in the table to open the **Mailing Log Info** sidebar with detailed information about the message: dates, channel, mailing type, status, cost, sender, and the full message text.
+
+![Mailing Log Info sidebar](/en/images/mailing-logs/sidebar-en.png)
+
+[[delimiter rows=1]]
+
+The **Recipient** block shows the guest's name, phone number, loyalty card number, and autotags.
+
+If files are attached to the message, for example an HTML email template, they are displayed in the **Attachments** block. Click a file to download it.
+
+To open the mailing settings, right-click the row and select **Go To Mailing**. The mailing opens in a new browser tab. The **View Mailing Log** option in the same menu opens the sidebar.
+
+You can also open the mailing from the sidebar - click the ↗ icon next to the mailing name.
 
 ## Filters
 
