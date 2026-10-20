@@ -74,6 +74,7 @@ By default, the table displays the following columns:
 - **Deposit** — the deposit amount for the reservation
 - **Reservation Tags** — tags assigned to the reservation. For more information, read the article **[Reservation Tags](https://wiki.cosmosresto.ru/en/reservations/reservations-tags/)**
 - **Reservation Notes**
+- **Reservation Location** — the location where the reservation was created
 - **Served By** — the employee assigned to the reservation
 
 The following columns can be enabled additionally. When enabled, they appear in the table according to the column order in the settings:
