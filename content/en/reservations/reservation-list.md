@@ -24,8 +24,7 @@ This is a section of the main Cosmos system. The table view inside the reservati
 
 1. **Geo** — selection of locations whose reservations are displayed in the table.
 2. **Period** — the date and time range for which reservations are displayed.
-3. **Search**
-4. **Switch** — the left button opens the reservation list, the right one opens the request list.
+3. **Switch** — the left button opens the reservation list, the right one opens the request list. For more information about requests, read the article **[Reservation Requests](https://wiki.cosmosresto.ru/en/reservations/reservations/requests/)**.
 
 ## Statistics
 
@@ -65,6 +64,7 @@ By default, the table displays the following columns:
 - **Phone**
 - **Tags** — guest tags
 - **Loyalty Card**
+- **Order** — the number of the order opened at the reservation table
 - **Status**
 - **Tables**
 - **Party Size**
@@ -80,7 +80,7 @@ By default, the table displays the following columns:
 The following columns can be enabled additionally. When enabled, they appear in the table according to the column order in the settings:
 
 - **Guest Notes**
-- **Reservation**
+- **Reservation** — the reservation number
 - **Cancellation Reason** — filled in only for cancelled reservations
 - **Total** — the total amount of the orders linked to the reservation
 - **Reservation Source**
