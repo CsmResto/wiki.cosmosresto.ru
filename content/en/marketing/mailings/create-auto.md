@@ -24,6 +24,9 @@ Configure the main mailing settings:
   - **Mass** — for informational messages not related to sales or service events
   - **Marketing** — for promotional messages intended to encourage guests to make a purchase
   - **Service** — for messages related to guest service or a specific service event
+- **Mailing Format**
+  - **One Channel** - the message is sent through one selected channel
+  - **Cascade** - the message is sent through several channels one after another, see **[Cascade](#cascade)**
 - **Extra Priority** — enable this option if the mailing should be sent without taking the general limits into account
 - **Name**
 - **Segments**
@@ -94,6 +97,31 @@ When a guest registers in the loyalty program and receives their first group, th
 
 [[info type=custom color=#E06823]]
 See setup examples for mailings with different triggers in **[Use Cases](#use-cases)**.
+[[/info]]
+
+
+## Cascade
+
+![Cascade](/en/images/mailings/cascade-en.png)
+
+[[delimiter rows=1]]
+
+The **Cascade** step appears if **Cascade** is selected in the **Mailing Format** field.
+
+A cascade sends the message to a guest through several channels one after another: if the message could not be delivered through one channel, the system moves on to the next one. This way, you can start with cheaper channels and switch to more expensive ones only when needed, for example Push → E-mail → WhatsApp → SMS.
+
+- **Channels** - select at least two channels. While only one channel is selected, you cannot proceed to the **Content** step
+- **Delivery Order** - drag the channels into the required order. The channel in the top row is used first
+
+The cascade runs separately for each guest:
+
+- the message is sent through the first channel
+- if the message is delivered, the cascade ends for this guest and the next channels are not used
+- if the message is not delivered - for example, the guest has no contact for this channel or the provider rejected the message - the system sends the message through the next channel
+- if the message is not delivered through any channel, the cascade ends for this guest without delivery
+
+[[info type=custom color=#E06823]]
+Until the sending result for the current channel is known, the system does not move on to the next channel. Delivery attempts through the current channel continue for up to 24 hours.
 [[/info]]
 
 

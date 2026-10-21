@@ -28,6 +28,9 @@ In the first step, configure the main mailing settings:
   - **Mass** — for informational messages not related to sales or service events
   - **Marketing** — for promotional messages intended to encourage guests to make a purchase
   - **Service** — for messages related to guest service or a specific service event
+- **Mailing Format**
+  - **One Channel** - the message is sent through one selected channel
+  - **Cascade** - the message is sent through several channels one after another. If Cascade is selected, the **Cascade** step appears after the main details, where you select the channels and the delivery order. How a cascade works is described in **[Create Auto Mailing](https://wiki.cosmosresto.ru/en/marketing/mailings/create-auto/#cascade)**
 - **Extra Priority** — enable this option if the mailing should be sent without taking the general limits into account
 - **Name**
 - **Segments**
