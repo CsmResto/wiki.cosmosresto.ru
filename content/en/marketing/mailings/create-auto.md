@@ -124,6 +124,10 @@ The cascade runs separately for each guest:
 Until the sending result for the current channel is known, the system does not move on to the next channel. Delivery attempts through the current channel continue for up to 24 hours.
 [[/info]]
 
+[[info type=custom color=#E06823]]
+In a draft, the cascade can be configured freely. In an active mailing, the cascade cannot be changed: you cannot add or remove a channel, change the delivery order, or switch between **Cascade** and **One Channel**. To do this, pause the mailing, rebuild the cascade, and start it again. All other settings can be changed directly in the active mailing.
+[[/info]]
+
 
 ## Content
 

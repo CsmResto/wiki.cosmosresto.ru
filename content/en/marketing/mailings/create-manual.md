@@ -80,6 +80,37 @@ When all messages receive a final status, the mailing status changes to **Finish
 
 ![Create](/en/images/mailings/active-list-manual-en.png)
 
+[[delimiter rows=1]]
+
+![Recipients](/en/images/mailings/manual-recipients-en.png)
+
+[[delimiter rows=1]]
+
+The mailing page displays:
+
+- **Guests Amount** - how many guests receive the mailing
+- **Sent** - the total number of sending attempts through all channels. In a cascade, if the message was not delivered through the first channel, it is sent to the guest through the next channel, and each attempt is counted. That is why this value can be greater than the number of guests
+- **Delivered** - how many guests received the message
+
+In the screenshot, the mailing was sent as a cascade. The message was not delivered to either guest through the first channel, so the system sent it through the second one. That is why, with two guests, **Sent** is 4 and **Delivered** is 2.
+
+The **Delivery Status** column shows the final result for each guest, taking all cascade channels into account.
+
+
+## Stop Mailing
+
+If a mailing was started with an error, for example the wrong filters were selected, you can stop it. To do this, right-click the mailing row in the list and select **Stop**. You can also open the mailing itself and click **Stop** on its page.
+
+Only a mailing with the **In progress** status can be stopped. After it is stopped, the mailing receives the **Stopped** status:
+
+- messages that are still waiting to be sent are not sent. For such recipients, the **Delivery Status** column on the mailing page shows **Stopped**
+- messages that have already been passed for sending will be sent and may be delivered
+
+[[info type=custom color=#E06823]]
+A stopped mailing cannot be resumed or started again. To send it with corrected settings, duplicate the mailing - right-click the mailing row and select **Duplicate**, or click the duplicate button on the mailing page. A new mailing with the same settings opens. Make the changes and start it.
+[[/info]]
+
+Guests who have already been sent the original mailing will receive the message again if they are included in the audience of the new mailing. To avoid this, set up **[limits](/en/marketing/mailings/info/#setting-limits)**.
 
 [[delimiter rows=3]]
 
