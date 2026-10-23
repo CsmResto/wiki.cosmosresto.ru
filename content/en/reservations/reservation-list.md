@@ -26,7 +26,7 @@ This is a section of the main Cosmos system. The table view inside the reservati
 2. **Period** — the date and time range for which reservations are displayed.
 3. **Switch** — the left button opens the reservation list, the right one opens the request list. For more information about requests, read the article **[Reservation Requests](https://wiki.cosmosresto.ru/en/reservations/reservations/requests/)**.
 
-## Statistics
+## Reservation Statistics
 
 Reservation statistics for the selected period are displayed in the lower-right corner of the table. They have two tabs: **Active** and **Cancelled**.
 
@@ -42,6 +42,22 @@ On the **Active** tab, the total number and the number in each status are displa
 On the **Cancelled** tab, the data is grouped by cancellation reason. Only the reasons that have cancelled reservations are displayed. The **Summary** column shows the total number of cancelled reservations.
 
 The **Guests** row shows the number of guests in the reservations, while the **Reservations** row shows the number of reservations.
+
+## Reservation Details
+
+Click a row in the table to open the sidebar with the reservation details: guest, table, start and end time, party size, the employee assigned to the reservation, and status. The **Changelogs** button opens the list of all changes to this reservation.
+
+The **Linked Orders** block shows the numbers of the orders linked to the reservation.
+
+![Reservation Details](/en/images/reserve/reservation-list/reservation-list-sidebar-en.png)
+
+[[delimiter rows=1]]
+
+Click an order number to open the **Order Details** window over the sidebar. The window shows the order data, the order items, and the totals.
+
+![Order Details](/en/images/reserve/reservation-list/reservation-list-order-en.png)
+
+[[delimiter rows=1]]
 
 ## Table Settings
 
