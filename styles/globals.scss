@@ -130,6 +130,10 @@ a {
     max-height: 400px !important;
     width: auto !important;
   }
+
+  img[width] {
+    width: var(--img-w, auto) !important;
+  }
 }
 
 .wiki-gallery[data-gallery-layout="carousel"] {
