@@ -361,8 +361,17 @@ function enhanceMarkdownHtml(contentHtml: string): string {
   const withGalleryBlocks = applyGalleryBlocks(withInfoBlocks)
   const withDocumentCards = applyDocumentCards(withGalleryBlocks)
   const withTabsBlocks = applyTabsBlocks(withDocumentCards)
+  const withImageWidths = applyImageWidths(withTabsBlocks)
 
-  return applyStoreLinks(withTabsBlocks)
+  return applyStoreLinks(withImageWidths)
+}
+
+// ![alt](src "246") - a numeric title sets the displayed width in px; the zoom still opens the full-size file
+function applyImageWidths(contentHtml: string): string {
+  return contentHtml.replace(/<img([^>]*?)\s+title="(\d{2,4})"([^>]*)>/g, (_match, before, width, after) => {
+    const rest = String(after).replace(/\s*\/\s*$/, '')
+    return `<img${before}${rest} width="${width}" style="width: ${width}px">`
+  })
 }
 
 function applyTabsBlocks(contentHtml: string): string {

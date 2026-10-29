@@ -1,11 +1,11 @@
 ---
 title: Reservations
-summary: "Installing and logging into the tablet app"
+summary: "Installing and logging into the app for tablets and phones"
 order: 3
 updatedAt: 2026-06-23
 ---
 
-**Cosmos Reservations** - mobile application **for tablets** for working in the reservations system.
+**Cosmos Reservations** - mobile application **for tablets and phones** for working in the reservations system.
 
 iOS link: [App Store](https://apps.apple.com/uz/app/cosmos-reservations/id6780855394)
 
@@ -19,9 +19,13 @@ iOS link: [App Store](https://apps.apple.com/uz/app/cosmos-reservations/id678085
 
 3. Click **"Connect"**
 
-4. Enter employee login details
+4. Enter the employee's email and password
 
 5. Click **"Log in"**
+
+[[info type=custom color=#E06823]]
+The app supports login by email and password only, there is no PIN login. For an employee to be able to log in, the **Enable login without PIN** switch must be on in the settings of their role.
+[[/info]]
 
 [[info type=custom color=#E06823]]
 If you encounter a problem `"Server is temporarily unavailable"` when trying to log in, then most likely the value in the second step was entered incorrectly. For this you need to:
