@@ -5,7 +5,7 @@ order: 3
 updatedAt: 2026-06-23
 ---
 
-**Cosmos Reservations** - mobile application **for tablets and phones** for working in the reservations system.
+**CosmosResto Reservations** - mobile application **for tablets and phones** for working in the reservations system.
 
 Link to iOS: [App Store](https://apps.apple.com/uz/app/cosmos-reservations/id6780855394)
 
@@ -17,7 +17,7 @@ Link to Android: [Google Play](https://play.google.com/store/apps/details?id=ru.
 
 2. In the **"Connection"** field enter the value that indicates your establishment
 
-    **How to find out:** Take the part of the link where you open Cosmos in the browser. The required part of the link is indicated before csmresto.ru. For example, for https://demo.csmresto.ru/ the value is **demo**. If you are unsure, the value can be clarified from technical support.
+    **How to find out:** Take the part of the link where you open CosmosResto in the browser. The required part of the link is indicated before csmresto.ru. For example, for https://demo.csmresto.ru/ the value is **demo**. If you are unsure, the value can be clarified from technical support.
 
 3. Click **"Connect"**
 
