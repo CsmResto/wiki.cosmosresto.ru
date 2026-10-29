@@ -303,7 +303,11 @@ function renderMarkdown(contentHtml: string, basePath: string, disableImageZoom 
     }
 
     if (safeAttribs.title) imgProps.title = safeAttribs.title
-    if (safeAttribs.width) imgProps.width = Number(safeAttribs.width)
+    if (safeAttribs.width) {
+      imgProps.width = Number(safeAttribs.width)
+      // galleries force width:auto; the custom property lets a set width win there
+      imgProps.style = { '--img-w': `${safeAttribs.width}px` } as CSSProperties
+    }
     if (safeAttribs.height) imgProps.height = Number(safeAttribs.height)
     if (safeAttribs.loading) imgProps.loading = safeAttribs.loading as ImgHTMLAttributes<HTMLImageElement>['loading']
     if (safeAttribs.decoding) imgProps.decoding = safeAttribs.decoding as ImgHTMLAttributes<HTMLImageElement>['decoding']

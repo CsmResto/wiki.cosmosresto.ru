@@ -38,7 +38,7 @@ RFM is recalculated automatically once a day. It is also recalculated after an R
 
 [[gallery gap=12 layout=carousel]]
 ![Guest List](/en/images/rfm/rfm-guests-list-en.png)
-![Guest Profile](/en/images/rfm/rfm-guest-en.png)
+![Guest Profile](/en/images/rfm/rfm-guest-en.png "246")
 ![Reservation List](/en/images/rfm/rfm-reservations-list2-en.png)
 [[/gallery]]
 

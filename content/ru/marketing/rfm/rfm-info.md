@@ -44,7 +44,7 @@ updatedAt: 2026-08-18
 
 [[gallery gap=12 layout=carousel]]
 ![список гостей](/ru/images/rfm/rfm-guests-list.png)
-![карточка гостя](/ru/images/rfm/rfm-guest.png)
+![карточка гостя](/ru/images/rfm/rfm-guest.png "357")
 ![список бронирований](/ru/images/rfm/rfm-reservations-list2.png)
 
 [[/gallery]]
