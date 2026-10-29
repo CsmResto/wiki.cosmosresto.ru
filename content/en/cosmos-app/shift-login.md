@@ -1,5 +1,5 @@
 ---
-title: Shifts in COSMOS APP
+title: Shifts in CosmosResto APP
 summary: "Shift check-in, geolocation, photos, and check-out"
 order: 1
 updatedAt: 2026-04-08
