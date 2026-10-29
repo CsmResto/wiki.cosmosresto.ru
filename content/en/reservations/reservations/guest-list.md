@@ -111,7 +111,7 @@ To open the **Guest Info** sidebar, click the block with the guest's name. It ha
 - **Profile** — the guest's RFM segment, autotags and manual tags, loyalty number, loyalty bonuses, discount, sex and last visit. You can also add a manual tag to the guest here;
 - **Statistics** — the guest's visit statistics.
 
-The button with the guest icon in the upper-right corner of the **Guest Info** sidebar opens the guest card in the main Cosmos system.
+The button with the guest icon in the upper-right corner of the **Guest Info** sidebar opens the guest card in the main CosmosResto system.
 
 [[delimiter rows=3]]
 

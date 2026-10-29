@@ -9,7 +9,7 @@ order: 3
 Раздел **Бронирование → Список бронирований** показывает бронирования выбранных локаций за выбранный период в виде таблицы. Здесь можно найти нужную бронь, отфильтровать список, настроить отображаемые колонки и выгрузить данные.
 
 [[info type=custom color=#E06823]]
-Это раздел основной системы Cosmos. Табличный режим внутри модуля бронирования описан в статье **[Таймлайн бронирований](https://wiki.cosmosresto.ru/ru/reservations/reservations/timeline-view/)**.
+Это раздел основной системы CosmosResto. Табличный режим внутри модуля бронирования описан в статье **[Таймлайн бронирований](https://wiki.cosmosresto.ru/ru/reservations/reservations/timeline-view/)**.
 [[/info]]
 
 ![Список бронирований](/ru/images/reserve/reservation-list/reservation-list1.png)
