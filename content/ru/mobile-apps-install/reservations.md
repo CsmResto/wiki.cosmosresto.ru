@@ -7,13 +7,11 @@ updatedAt: 2026-06-23
 
 **Cosmos Reservations** - мобильное приложение **для планшетов и телефонов** для работы в системе бронирований.
 
-[[tabs]]
-
-[[tab iOS]]
-
 Ссылка на iOS: [App Store](https://apps.apple.com/uz/app/cosmos-reservations/id6780855394)
 
-### Инструкция для входа в приложение на iOS:
+Ссылка на Android: [Google Play](https://play.google.com/store/apps/details?id=ru.cosmosresto.reservations)
+
+### Инструкция для входа в приложение:
 
 1. Открыть приложение
 
@@ -44,39 +42,3 @@ updatedAt: 2026-06-23
 
 Если проблема повторяется, напишите в техническую поддержку, мы поможем разобраться
 [[/info]]
-
-[[tab Android]]
-
-### Инструкция по установке приложения на Android:
-
-Для того, чтобы пользоваться **Cosmos Reservations** на **Android-планшете**, требуется:
-
-1. Открыть в браузере модуль бронирований (ссылка формата `https://……reserv.csmresto.ru`)
-
-2. Перейти в действия со страницей - кликнуть на три точки
-
-![image1](/ru/images/mobile-apps-install/page-actions.jpg)
-
-[[delimiter rows=1]]
-
-3. Выбрать действие **"Добавить на гл. экран"**
-
-![image2](/ru/images/mobile-apps-install/add-reserv-app-to-main-screen.jpg)
-
-[[delimiter rows=1]]
-
-4. В появившемся окне выбрать **"Установить"**
-
-![image3](/ru/images/mobile-apps-install/install-reserv-app.jpg)
-
-[[delimiter rows=1]]
-
-5. Подтвердить установку
-
-![image4](/ru/images/mobile-apps-install/apply-reserv-app.jpg)
-
-[[delimiter rows=1]]
-
-После этого на главном экране появится значок приложения **Cosmos Reservations** - теперь открывать бронирования на планшете можно через него.
-
-[[/tabs]]
