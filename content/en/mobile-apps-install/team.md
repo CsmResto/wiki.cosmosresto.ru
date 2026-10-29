@@ -7,9 +7,9 @@ updatedAt: 2026-06-23
 
 **Cosmos Team** - mobile application for logging into shifts, viewing salaries, quests and modifiers.
 
-iOS link: [App Store](https://apps.apple.com/uz/app/cosmos-team/id6780405989)
+Link to iOS: [App Store](https://apps.apple.com/uz/app/cosmos-team/id6780405989)
 
-Android link: [Google Play](https://play.google.com/store/apps/details?id=ru.cosmosresto.team)
+Link to Android: [Google Play](https://play.google.com/store/apps/details?id=ru.cosmosresto.team)
 
 ### Login Instructions:
 

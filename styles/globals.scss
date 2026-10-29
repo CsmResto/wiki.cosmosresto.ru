@@ -1369,11 +1369,21 @@ a {
     margin-bottom: 0;
   }
 
+  // equal columns so all store badges take the width of the widest one
   .wiki-store-links {
-    display: flex;
-    flex-wrap: wrap;
+    display: inline-grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
     gap: 18px;
     margin: 0 0 24px;
+
+    .wiki-store-badge {
+      flex: 1 1 auto;
+    }
+
+    @media (max-width: 480px) {
+      grid-auto-flow: row;
+    }
   }
 
   .wiki-document-card {

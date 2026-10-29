@@ -7,9 +7,11 @@ updatedAt: 2026-06-23
 
 **Cosmos Reservations** - mobile application **for tablets and phones** for working in the reservations system.
 
-iOS link: [App Store](https://apps.apple.com/uz/app/cosmos-reservations/id6780855394)
+Link to iOS: [App Store](https://apps.apple.com/uz/app/cosmos-reservations/id6780855394)
 
-### Instructions for logging into the application on iOS:
+Link to Android: [Google Play](https://play.google.com/store/apps/details?id=ru.cosmosresto.reservations)
+
+### Instructions for logging into the application:
 
 1. Open the application
 
@@ -40,35 +42,3 @@ If you encounter a problem `"Server is temporarily unavailable"` when trying to 
 
 If the problem persists, contact technical support, we will help you figure it out
 [[/info]]
-
-### Instructions for installing the application on Android:
-
-To use **Cosmos Reservations** on an **Android tablet**, you need to:
-
-1. Open the reservations module in a browser (link format `https://……reserv.csmresto.ru`)
-
-2. Go to page actions - click on three dots
-
-![image1](/ru/images/mobile-apps-install/page-actions.jpg)
-
-[[delimiter rows=1]]
-
-3. Select the action **"Add to home screen"**
-
-![image2](/ru/images/mobile-apps-install/add-reserv-app-to-main-screen.jpg)
-
-[[delimiter rows=1]]
-
-4. In the appearing window select **"Install"**
-
-![image3](/ru/images/mobile-apps-install/install-reserv-app.jpg)
-
-[[delimiter rows=1]]
-
-5. Confirm the installation
-
-![image4](/ru/images/mobile-apps-install/apply-reserv-app.jpg)
-
-[[delimiter rows=1]]
-
-After this, the **Cosmos Reservations** application icon will appear on the home screen - now you can open reservations on the tablet through it.
