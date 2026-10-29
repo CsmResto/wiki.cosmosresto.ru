@@ -9,7 +9,7 @@ order: 3
 The **Reservations → Reservation List** section shows reservations of the selected locations for the selected period as a table. Here you can find a reservation, filter the list, configure the displayed columns and export data.
 
 [[info type=custom color=#E06823]]
-This is a section of the main Cosmos system. The table view inside the reservation module is described in the article **[Reservation Timeline](https://wiki.cosmosresto.ru/en/reservations/reservations/timeline-view/)**.
+This is a section of the main CosmosResto system. The table view inside the reservation module is described in the article **[Reservation Timeline](https://wiki.cosmosresto.ru/en/reservations/reservations/timeline-view/)**.
 [[/info]]
 
 ![Reservation List](/en/images/reserve/reservation-list/reservation-list1-en.png)
