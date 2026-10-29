@@ -1,5 +1,5 @@
 ---
-title: Смены в COSMOS APP
+title: Смены в CosmosResto APP
 summary: "Вход на смену, геопозиция, фото и завершение смены"
 order: 1
 updatedAt: 2026-04-08
