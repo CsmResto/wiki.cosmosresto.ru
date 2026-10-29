@@ -5,7 +5,7 @@ order: 2
 updatedAt: 2026-06-23
 ---
 
-**Cosmos Waiter** - mobile application for a waiter to register orders and view guest information.
+**CosmosResto Waiter** - mobile application for a waiter to register orders and view guest information.
 
 Link to iOS: [App Store](https://apps.apple.com/sg/app/cosmos-waiter/id6779239041)
 
