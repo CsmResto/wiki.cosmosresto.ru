@@ -9,7 +9,7 @@ updatedAt: 2026-10-15
 
 Templates are used for **WhatsApp** mailings. Messages are sent with the text of the selected template - entering custom text is not possible.
 
-After a template is created, Cosmos automatically sends it for approval to Meta via Twilio. Once Meta approves the template, it can be selected for a mailing.
+After a template is created, CosmosResto automatically sends it for approval to Meta via Twilio. Once Meta approves the template, it can be selected for a mailing.
 
 ## Template List
 
