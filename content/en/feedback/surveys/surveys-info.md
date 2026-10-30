@@ -6,7 +6,7 @@ order: 1
 updatedAt: 2026-08-24
 ---
 
-**Surveys** help you collect feedback from guests after a visit, obtain ratings and comments, and then analyze the responses in COSMOS.
+**Surveys** help you collect feedback from guests after a visit, obtain ratings and comments, and then analyze the responses in CosmosResto.
 
 A survey can be distributed via a public link or sent to specific guests through mailings. Received responses are saved in the **Responses** section and can be linked to the guest, the mailing, and the event after which the survey was sent.
 
