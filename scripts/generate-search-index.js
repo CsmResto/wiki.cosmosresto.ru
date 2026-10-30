@@ -58,9 +58,15 @@ async function getStripPlugin() {
   return cachedStrip
 }
 
+// Wiki block tags like [[gallery gap=12]], [[/info]], [[delimiter rows=1]] are not markdown,
+// so strip-markdown leaves them in the text (escaped as \[\[...]]).
+function removeWikiTags(content) {
+  return content.replace(/\[\[\/?[a-z][^\]]*\]\]/gi, ' ')
+}
+
 async function extractPlainText(content) {
   const strip = await getStripPlugin()
-  const file = await remark().use(strip).process(content)
+  const file = await remark().use(strip).process(removeWikiTags(content))
   return String(file).replace(/\s+/g, ' ').trim()
 }
 
