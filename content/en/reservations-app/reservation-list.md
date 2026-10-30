@@ -1,11 +1,11 @@
 ---
 title: Reservation List
 summary: "Reservations for the day grouped by status"
-description: The main screen of the Cosmos Reservations app on the phone - the list of reservations for the selected date.
+description: The main screen of the CosmosResto Reservations app on the phone - the list of reservations for the selected date.
 order: 1
 ---
 
-**Cosmos Reservations** on the phone is an app for working with reservations without a computer or tablet. Installation and login are described in the **[Reservations](https://wiki.cosmosresto.ru/en/mobile-apps-install/reservations/)** article.
+**CosmosResto Reservations** on the phone is an app for working with reservations without a computer or tablet. Installation and login are described in the **[Reservations](https://wiki.cosmosresto.ru/en/mobile-apps-install/reservations/)** article.
 
 After login, the list of reservations for the current date opens. Reservations are grouped by status in the following order: **Not Confirmed**, **Confirmed**, **Started**, **Ended**, **Cancelled**. The number of reservations in a group is shown next to its name.
 

@@ -1,7 +1,7 @@
 ---
 title: Requests
 summary: "Request list, confirming and rejecting requests"
-description: How to work with reservation requests in the Cosmos Reservations app on the phone.
+description: How to work with reservation requests in the CosmosResto Reservations app on the phone.
 order: 5
 ---
 

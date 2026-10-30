@@ -1,7 +1,7 @@
 ---
 title: Заявки
 summary: "Список заявок, подтверждение и отклонение"
-description: Как работать с заявками на бронирование в приложении Cosmos Reservations на телефоне.
+description: Как работать с заявками на бронирование в приложении CosmosResto Reservations на телефоне.
 order: 5
 ---
 

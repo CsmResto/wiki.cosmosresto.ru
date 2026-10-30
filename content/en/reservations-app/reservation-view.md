@@ -1,7 +1,7 @@
 ---
 title: Reservation View
 summary: "Reservation details, guest info and guest statistics"
-description: How to open a reservation and the guest info in the Cosmos Reservations app on the phone.
+description: How to open a reservation and the guest info in the CosmosResto Reservations app on the phone.
 order: 2
 ---
 

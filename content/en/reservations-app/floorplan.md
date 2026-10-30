@@ -1,7 +1,7 @@
 ---
 title: Floor Plan
 summary: "Tables of the floor, their state and info next to the tables"
-description: The floor plan in the Cosmos Reservations app on the phone.
+description: The floor plan in the CosmosResto Reservations app on the phone.
 order: 4
 ---
 
