@@ -1,7 +1,7 @@
 ---
 title: Creating a Reservation
 summary: "New reservation form: guest, table, time, source and status"
-description: How to create a reservation in the Cosmos Reservations app on the phone.
+description: How to create a reservation in the CosmosResto Reservations app on the phone.
 order: 3
 ---
 

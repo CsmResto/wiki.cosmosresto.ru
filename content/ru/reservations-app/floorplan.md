@@ -1,7 +1,7 @@
 ---
 title: План зала
 summary: "Столы этажа, их состояние и информация возле столов"
-description: План зала в приложении Cosmos Reservations на телефоне.
+description: План зала в приложении CosmosResto Reservations на телефоне.
 order: 4
 ---
 

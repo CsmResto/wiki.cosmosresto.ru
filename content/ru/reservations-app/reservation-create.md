@@ -1,7 +1,7 @@
 ---
 title: Создание бронирования
 summary: "Форма новой брони: гость, стол, время, источник и статус"
-description: Как создать бронирование в приложении Cosmos Reservations на телефоне.
+description: Как создать бронирование в приложении CosmosResto Reservations на телефоне.
 order: 3
 ---
 
