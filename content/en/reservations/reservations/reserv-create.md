@@ -6,30 +6,36 @@ order: 3
 updatedAt: 2026-09-22
 ---
 ## Methods of Creating a Reservation
-You can create a reservation in two main ways. This helps you choose the most convenient option depending on the situation and speeds up work with the functionality.
+You can create a reservation in three ways. This helps you choose the most convenient option depending on the situation and speeds up work with the functionality.
 
-<!-- ![reserv-create-options](/ru/images/reserve/reserv-create-view.png) -->
+![reserv-create-options](/en/images/reserve/reserv-create-view-en.png)
 
-### 1. Button **+Add Reservation**
+[[delimiter rows=1]]
 
-1. Click the `+Add Reservation` button in the upper right corner of the screen.
-2. In the opened sidebar specify the guest.
-3. If necessary, select one or more tables.
-4. If necessary, edit the interval or reservation date.
-5. Fill in the remaining fields — number of guests, comment, reservation source, tags.
-6. Disable or keep SMS notification about the reservation.
-7. To save the reservation click `Save`.
-
-### 2. Selecting a Time Interval on the **Timeline**
+### 1. Selecting a Time Interval on the **Timeline**
 
 1. Find a suitable time and table on the `timeline`.
-2. Click on the timeline cell. A single click will open the sidebar to set up the reservation. Click and drag right or left will immediately set the required reservation duration. Dragging up or down will allow you to select multiple tables.
+2. Hover over the timeline cell - a **+** appears in it. A single click will open the sidebar to set up the reservation. Click and drag right or left will immediately set the required reservation duration. Dragging up or down will allow you to select multiple tables.
 3. In the opened sidebar specify the guest.
 4. Add tables or if necessary change the selected table.
 5. If necessary, edit the interval or reservation date.
 6. Fill in the remaining fields — number of guests, comment, reservation source, tags.
 7. Disable or keep SMS notification about the reservation.
 8. To save the reservation click `Save`.
+
+### 2. Quick Reservation for Walk-in Guests
+
+The button with a walking person icon above the **+** button creates a quick reservation for guests who came without a reservation. Select the number of guests and click **Create** - the reservation is created with the **Started** status, and a table is selected automatically.
+
+### 3. Button **+**
+
+1. Click the **+** button in the lower right corner of the timeline.
+2. In the opened sidebar specify the guest.
+3. If necessary, select one or more tables.
+4. If necessary, edit the interval or reservation date.
+5. Fill in the remaining fields — number of guests, comment, reservation source, tags.
+6. Disable or keep SMS notification about the reservation.
+7. To save the reservation click `Save`.
 
 
 ### Sidebar
@@ -47,12 +53,15 @@ To create a reservation, it is enough to specify **a guest**, the remaining fiel
 
 
 ### 1. Guest
-When you click on a guest, a second sidebar opens, which allows you to:
-1. Find a guest by phone number, name or loyalty card
-2. Not add a specific guest to the reservation
-3. Create a new guest and add them to the reservation 
+When you click on a guest, a second sidebar opens. In it, you can find a guest, leave the reservation without a specific guest, or create a new one.
 
-<!-- ![reserv-guest1](/ru/images/reserve/reserv-guest.jpg) -->
+![reserv-guest1](/en/images/reserve/reserv-guest-select-en.png)
+
+[[delimiter rows=1]]
+
+1. Find a guest by phone number, name or loyalty card and add them to the reservation.
+2. Do not add a specific guest - select **Walk-in Guest** or click the ghost icon next to the guest field. A **Guest name** field appears below the guest field - fill it in to address the guest by name, or leave it empty. No new guest is created in the database.
+3. Create a new guest and add them to the reservation.
 
 #### Creating a Guest
 To create a new guest, you need to specify the following data:
