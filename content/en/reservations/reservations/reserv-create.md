@@ -116,17 +116,19 @@ You can quickly specify up to 10 guests, or manually specify a larger company. B
 To specify a company of more than 10 people, click 10+ and enter the required number manually.
 
 ### 6. Reservation Source
-The field is required; **Phone call** is selected by default.
+The field is required; the default source of the location is selected automatically.
 
 Specifying the reservation source will allow you to then analyze where guest reservations come from. This helps you understand which channels work better and which ones work worse, so you can evaluate their effectiveness and optimize guest acquisition.
 
-Available reservation sources:
-- Phone call
-- Walk-in guest
-- Messenger
-- Website
+The list shows the sources enabled in the location settings, including custom sources.
 
-<!-- `screenshot with reservation sources` -->
+![Reservation Source](/en/images/reserve/reserv-source-list-en.png)
+
+[[delimiter rows=1]]
+
+[[info type=custom color=#E06823]]
+Learn more about setting up the list of sources in the **[Reservation Sources](https://wiki.cosmosresto.ru/en/reservations/settings/catalogs/)** article.
+[[/info]]
 
 ### 7. Reservation Tags
 Reservation tags help you manually mark reservations. With their help you can visually highlight important records, quickly understand the context of a reservation, group reservations and find them using filters.
