@@ -1,7 +1,7 @@
 ---
 title: "Settings"
 description: "In this section you will learn how to configure reservations for a location."
-summary: "Reservation settings for a location: online reservation schedule"
+summary: "Reservation settings for a location: online reservation schedule, reservation sources and cancellation reasons"
 icon: reservationsettings
 order: 2
 ---
