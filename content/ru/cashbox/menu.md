@@ -67,9 +67,7 @@ order: 1
 
 Фотография отображается в приложении Официант: официант открывает ее долгим нажатием на позицию в меню и может показать гостю. Подробнее - в статье [**Детализация заказа**](/ru/waiter-app/waiter-order-details#фотография-блюда).
 
-[[gallery gap=12 layout=carousel]]
-![Официант](/ru/images/waiter/order-details-photo.png)
-[[/gallery]]
+![Официант](/ru/images/waiter/order-details-photo.png "230")
 
 [[delimiter rows=1]]
 
