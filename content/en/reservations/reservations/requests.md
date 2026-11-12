@@ -190,6 +190,8 @@ After opening the card, processing actions become available. Original request da
 3. Allow `Show notifications` in the popup window in the browser.
 4. Check that notifications are enabled in your browser's system settings.
 
+While there are unprocessed requests, an orange dot is shown on the requests icon in the left menu. It disappears when all requests have been converted to reservations or rejected.
+
 [[delimiter rows=3]]
 
 **Read further:**
