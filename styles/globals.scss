@@ -1313,6 +1313,14 @@ a {
     border-radius: 20px;
   }
 
+  // ![alt](src "246"): keep the given width on phones too, never squash the height
+  img[width] {
+    width: var(--img-w);
+    max-width: 100%;
+    max-height: none;
+    height: auto;
+  }
+
   :not(pre) > code {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     background: var(--colors-bg-inline-code);
@@ -1888,7 +1896,7 @@ a {
   }
 
   .wiki-article img {
-    width: 100%;
+    width: auto;
     max-width: 100%;
   }
 
