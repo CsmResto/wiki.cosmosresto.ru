@@ -67,7 +67,9 @@ Photo requirements:
 
 The photo is shown in the Waiter app: the waiter opens it by long-pressing the item in the menu and can show it to the guest.
 
+[[gallery gap=12 layout=carousel]]
 ![Waiter](/en/images/cashbox/menu/waiter-photo-en.png)
+[[/gallery]]
 
 [[delimiter rows=1]]
 ## Export
