@@ -126,9 +126,7 @@ updatedAt: 2026-09-20
 
 Чтобы показать гостю фотографию блюда, нажмите на позицию в меню и удерживайте. Откроется карточка с названием, ценой и фотографией блюда. Кнопка `Добавить` добавляет блюдо гостю, кнопка `Закрыть` закрывает карточку.
 
-[[gallery gap=12 layout=carousel]]
-![waiter](/ru/images/waiter/order-details-photo.png)
-[[/gallery]]
+![waiter](/ru/images/waiter/order-details-photo.png "230")
 
 [[delimiter rows=1]]
 
