@@ -28,7 +28,9 @@ Configure the main mailing settings:
   - **One Channel** - the message is sent through one selected channel
   - **Cascade** - the message is sent through several channels one after another, see **[Cascade](#cascade)**
 - **Extra Priority** — enable this option if the mailing should be sent without taking the general limits into account
+- **Priority** - the share of sending this mailing gets when several mailings are sent at the same time, see **[Mailings](/en/marketing/mailings/info/#sending-priority)**.
 - **Name**
+- **Timezone** - the timezone used by the delayed sending schedule.
 - **Segments**
 - **Description**
 - **Set Mailing Limits**
@@ -56,6 +58,8 @@ Configure the conditions for triggering and sending the mailing:
 
 When **Schedule** is selected, specify the days of the week and the time interval during which messages can be sent. If the trigger occurs outside this interval, the message is postponed until the next available time.
 
+The schedule follows the timezone selected in the **Timezone** field in the main details. It is shown in the hint below the schedule.
+
 ### Triggers
 
 ![Triggers](/en/images/mailings/auto-triggers-en.png)
@@ -76,6 +80,15 @@ The recipient choice cannot be changed in an active mailing.
 **Guest Registration in Loyalty Program** - the mailing is sent when a guest registers in the loyalty program. This applies both to new guests and to guests who were already in the system before registering. Creating a guest without registering in the loyalty program does not trigger the mailing.
 
 **Closed Order** - the mailing is sent when the guest's order is closed.
+
+![timezone](/en/images/mailings/auto-timezone-en.png)
+
+[[delimiter rows=1]]
+
+If **Delayed Sending** with **Schedule** is enabled, select in the **Send mailing using** field which timezone the schedule follows:
+
+- **Mailing Timezone** - the timezone from the main details of the mailing.
+- **Trigger Event Timezone** - the timezone of the location where the order was closed. This is useful if the locations are in different timezones: for example, with a schedule from 10:00 to 20:00, guests of each location receive the message during these hours in their local time.
 
 **Bonus Accrual** - the mailing is sent when bonuses are accrued to the guest.
 

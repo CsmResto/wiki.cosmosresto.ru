@@ -18,10 +18,6 @@ To create a Manual mailing, go to **Marketing → Mailings**, select **Manual**,
 
 [[delimiter rows=1]]
 
-![Guests List](/en/images/mailings/manual-guests-en.png)
-
-[[delimiter rows=1]]
-
 In the first step, configure the main mailing settings:
 
 - **Type**
@@ -32,10 +28,17 @@ In the first step, configure the main mailing settings:
   - **One Channel** - the message is sent through one selected channel
   - **Cascade** - the message is sent through several channels one after another. If Cascade is selected, the **Cascade** step appears after the main details, where you select the channels and the delivery order. How a cascade works is described in **[Create Auto Mailing](https://wiki.cosmosresto.ru/en/marketing/mailings/create-auto/#cascade)**
 - **Extra Priority** — enable this option if the mailing should be sent without taking the general limits into account
+- **Priority** - the share of sending this mailing gets when several mailings are sent at the same time, see **[Mailings](/en/marketing/mailings/info/#sending-priority)**. The priority cannot be changed after the mailing is started.
 - **Name**
+- **Timezone** - the timezone used by the delayed sending schedule.
 - **Segments**
 - **Description**
 - **Filters**
+- **Delayed Sending** - enable this option so that messages are not sent immediately after the start:
+  - **Simple Delay** - sending starts after the specified interval after the mailing is started.
+  - **Schedule** - messages are sent only on the selected days of the week and within the specified time interval.
+
+Delayed sending is useful for large mailings that may take several hours to send. When **Schedule** is selected, messages that were not sent before the end of the allowed interval are sent in the next allowed interval, not at night. The schedule follows the timezone selected in the **Timezone** field. It is shown in the hint below the schedule.
 
 The list of guests matching the selected segments and filters is displayed at the bottom of the page. After changing segments or filters, click **Update** to refresh the list and the number of guests.
 
@@ -74,7 +77,7 @@ The confirmation window displays the final number of recipients. Click **Start**
 After the mailing is started, its settings can no longer be edited.
 [[/info]]
 
-The mailing moves from **Draft** to **Active** and receives the **In progress** status.
+The mailing moves from **Draft** to **Active** and receives the **In progress** status. If delayed sending is enabled, messages are sent after the specified delay or during the time allowed by the schedule.
 
 When all messages receive a final status, the mailing status changes to **Finished**. The number of delivered messages may differ from the number of sent messages.
 

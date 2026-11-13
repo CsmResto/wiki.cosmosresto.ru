@@ -73,41 +73,58 @@ To configure general limits on the number of messages sent to each guest, click 
 - Mailings with **Extra Priority** are sent without taking the general limits into account
 
 
+## Sending Priority
+
+When creating a mailing, select **High**, **Medium**, or **Low** in the **Priority** field. The default value is **Medium**.
+
+The priority determines what share of sending a mailing gets when several mailings of the same channel are being sent at the same time. Messages are sent in batches: every 2 minutes, one batch is sent for each channel, and the batch size depends on the channel. In each batch, 70% of the places are reserved for high-priority mailings, 20% for medium-priority mailings, and 10% for low-priority mailings. That is why low-priority mailings do not wait for the others to finish - they are sent in parallel, just more slowly. If a priority level has fewer messages than its share, the free places go to messages with a higher priority. The priority works the same way for Auto and Manual mailings.
+
+For example, a large low-priority Manual Push mailing is being sent, and at the same time a high-priority Auto Push mailing is triggered. Messages of the Auto mailing take most of each batch and are sent faster, while the Manual mailing keeps being sent in parallel.
+
+Specifics:
+
+- Priority is compared only between mailings of the same channel. For example, an SMS mailing does not affect the Push mailing queue.
+- Priority does not affect limits. To send a mailing without taking the general limits into account, use **Extra Priority**.
+- The priority of a started Manual mailing cannot be changed.
+- If you change the priority of an Auto mailing, the new value applies only to new messages.
+
+
 ## Table Settings
 
 To change the displayed columns, click the table settings button in the upper-right corner.
 
 In the panel that opens, you can:
 
-✔ Select the columns to display  
-✔ Change the column order — drag a column in the list by the icon to the left of its name  
-✔ Pin the required columns — click the pin icon to the right of the column name. Pinned columns move to the beginning of the table  
-✔ Restore the default settings using **Reset to Default**
+- Select the columns to display.
+- Change the column order - drag a column in the list by the icon to the left of its name.
+- Pin the required columns - click the pin icon to the right of the column name. Pinned columns move to the beginning of the table.
+- Restore the default settings using **Reset to Default**.
 
+[[gallery gap=12 layout=carousel]]
+![Mailings](/en/images/mailings/column-auto-en.png)
 ![Mailings](/en/images/mailings/column-en.png)
+[[/gallery]]
 
 [[delimiter rows=1]]
 
-The mailing table contains the following columns:
+By default, the table displays the following columns:
 
 - **Name**
 - **Description**
-- **Status** — the current status of the mailing. An Auto mailing can be **Active** or **On pause**, while a Manual mailing can be **In progress** or **Finished**. Draft mailings do not have a status
-- **Type** — **Mass**, **Marketing**, or **Service**
-- **Channel** — the channel used to send the message
-- **Locations & Groups**
-- **Created At**
+- **Status** - the current status of the mailing. An Auto mailing can be **Active** or **On pause**, while a Manual mailing can be **In progress**, **Finished** or **Stopped**. Draft mailings do not have a status.
+- **Guest Amount** - for Manual mailings only. The number of guests selected based on the mailing conditions at the time the mailing is launched.
+- **Channel** - the channel used to send the message.
+- **Type** - **Mass**, **Marketing**, or **Service**.
+- **Priority** - **High**, **Medium**, or **Low**, see **[Sending Priority](#sending-priority)**.
+- **Timezone** - the timezone used by the mailing schedule. If an Auto mailing follows the timezone of the location where the event occurred, **Trigger Event Timezone** is displayed.
+- **Limits** - for Auto mailings only. Individual mailing limits in the format `N times per N days`. If no limits are configured, a dash is displayed.
+- **Cost** - the total cost of all messages sent by the mailing: for an Auto mailing, for the whole time it has been running; for a Manual mailing, the sum of all messages sent. The cost is calculated only for SMS; for other channels, a dash is displayed. The mailing cost is also shown on the mailing page next to its name.
+
+The following columns can also be enabled. When enabled, they are displayed in the table according to the column order in the settings:
+
 - **Author**
+- **Created At**
 - **Last Update**
-- **Cost** — the total cost of all messages sent by the mailing: for an Auto mailing, for the whole time it has been running; for a Manual mailing, the sum of all messages sent. The cost is calculated only for SMS; for other channels, a dash is displayed. The mailing cost is also shown on the mailing page next to its name
-
-For Auto mailings only:
-
-- **Limits** — individual mailing limits in the format `N times per N days to 1 guest`. If no limits are configured, a dash is displayed
-
-For Manual mailings only:
-
-- **Guest Amount** — the number of guests selected based on the mailing conditions at the time the mailing is launched
 
 > **Note.** Table settings are saved after the page is refreshed. The settings are reset after you log out.
 
