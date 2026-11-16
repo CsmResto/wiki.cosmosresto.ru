@@ -117,10 +117,10 @@ The following columns can be enabled additionally. When enabled, they appear in 
 
 ### Requests on Timeline
 
-<!-- [[gallery gap=12 layout=carousel]]
-![Requests](/ru/images/reserve/requests/requests1.png)
-![Requests](/ru/images/reserve/requests/requests2.png)
-[[/gallery]] -->
+[[gallery gap=12 layout=carousel]]
+![Requests](/en/images/reserve/requests/requests1-en.png)
+![Requests](/en/images/reserve/requests/requests2-en.png)
+[[/gallery]]
 
 1. Go to the reservation module.
 2. Open the **Timeline** view.
@@ -129,7 +129,7 @@ The following columns can be enabled additionally. When enabled, they appear in 
 
 ### Requests on Floor Plan
 
-<!-- ![Requests](/ru/images/reserve/requests/requests3.png) -->
+![Requests](/en/images/reserve/requests/requests3-en.png)
 
 [[delimiter rows=1]]
 
@@ -146,10 +146,9 @@ Unlike other views, a system guest is immediately available here if linked to th
 
 ## Request Card
 
-<!-- [[gallery gap=12 layout=carousel]]
-![Requests](/ru/images/reserve/requests/requests5.png)
-![Requests](/ru/images/reserve/requests/requests6.png)
-[[/gallery]] -->
+![Requests](/en/images/reserve/requests/requests5-en.png)
+
+[[delimiter rows=1]]
 
 **The request card displays:**
 - Guest name specified in the form;
@@ -179,16 +178,24 @@ After opening the card, processing actions become available. Original request da
 
 **Rejected** and **Converted to reservation** statuses are final. After transitioning to one of them, the request is no longer considered active.
 
-## Enabling New Request Notifications
+## New Request Notifications
 
-<!-- ![Requests](/ru/images/reserve/requests/requests-alert.png) -->
+Notifications are turned on in the menu under the avatar in the reservation module:
+
+- **Requests Notifications** - a toggle. When it is on, a **New Request** card appears over the reservation module when a new request arrives.
+- **Enable Web Push** - system notifications. They arrive even if the browser is minimized or another program is open.
+
+![Menu under the avatar](/en/images/reserve/requests/notifications-menu-en.png)
 
 [[delimiter rows=1]]
 
-1. In the reservation module, click on your avatar to open the action menu.
-2. Select `Enable notifications`.
-3. Allow `Show notifications` in the popup window in the browser.
-4. Check that notifications are enabled in your browser's system settings.
+System notifications also require permission in the browser and in the operating system. For details, see **[Notifications](https://wiki.cosmosresto.ru/en/reservations/reservations/notifications/)**.
+
+While there are unprocessed requests, an orange dot is shown on the requests icon in the left menu. It disappears when all requests have been converted to reservations or rejected.
+
+![New requests indicator](/en/images/reserve/requests/requests-indicator-en.png)
+
+[[delimiter rows=1]]
 
 [[delimiter rows=3]]
 
