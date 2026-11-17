@@ -629,6 +629,16 @@ a {
   overflow: visible;
 }
 
+// ==text== review highlight, rendered only in `next dev` (see lib/markdown.ts)
+.wiki-review-highlight {
+  background: rgba(224, 104, 35, 0.22);
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
 .wiki-toolbar {
   display: flex;
   justify-content: space-between;
