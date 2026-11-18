@@ -9,7 +9,7 @@ updatedAt: 2026-06-01
 **CARDPR и Passquare** — сервисы для управления электронными картами лояльности. Они позволяют настроить форму регистрации в программе лояльности и оформить внешний вид электронной карты для гостей.
 
 - **[CARDPR](https://ru.cardpr.com/)** - интеграция с IIKO (Россия).
-- **[Passquare](https://passquare.com/)** - интеграция c Syrve (Все страны, кроме России).
+- **[Passquare](https://passquare.com/)** - интеграция с Syrve (все страны, кроме России).
 
 ### Этапы настройки интеграции
 
@@ -17,7 +17,7 @@ updatedAt: 2026-06-01
 Процесс настройки **одинаков** для CARDPR и Passquare. **Выбор сервиса зависит от региона использования.**
 [[/info]]
 
-1. Создайте личный кабинет в CARDPR(для РФ) или Passquare(для остальных стран).
+1. Создайте личный кабинет в CARDPR (для РФ) или Passquare (для остальных стран).
 2. Выберите и оплатите подходящий тарифный план.
 3. Создайте и настройте внешний вид электронной карты.
 4. Создайте форму выдачи карт для программы лояльности.
@@ -120,7 +120,7 @@ updatedAt: 2026-06-01
     - `URL / 1c` для **CARDPR**
     - `URL` для **Passquare**
 
-5. Укажите `Сервер/Server` и `Пароль/Password`, предоставленные поддержкой CosmosResto.
+6. Укажите `Сервер/Server` и `Пароль/Password`, предоставленные поддержкой CosmosResto.
 
 
 [[info type=custom color=#E06823]]
@@ -133,6 +133,6 @@ updatedAt: 2026-06-01
 
 — **[Настройка REDSMS & Twilio для рассылок через CosmosResto](https://wiki.cosmosresto.ru/ru/connection/redsms-twilio-connect)**
 
-— **[Автоматическое создание чека из брони](https://wiki.cosmosresto.ru/ru/reservations/reservations/reserv-order-create/)**
+— **[Автоматическое создание чека и банкета из брони](https://wiki.cosmosresto.ru/ru/connection/reserv-order-create/)**
 
 [[delimiter rows=3]]

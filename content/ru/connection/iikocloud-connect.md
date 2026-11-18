@@ -14,7 +14,7 @@ updatedAt: 2026-06-01
 
 **2.** Перейдите в раздел `Внешние заказы -> Настройка iikoCloud API`.
 
-**3.** Во вкладке `Интеграции` и нажмите `+ Добавить интеграцию`.
+**3.** Во вкладке `Интеграции` нажмите `+ Добавить интеграцию`.
 
 ![iiko-cloud](/ru/images/connection/iikocloud-connect/iikocloud-connect-1.png)
 
@@ -41,7 +41,7 @@ updatedAt: 2026-06-01
 
 [[delimiter rows=1]]
 
-**6.** Выберите **все точки** нажмите `Добавить`.
+**6.** Выберите **все точки** и нажмите `Добавить`.
 
 ![iiko-cloud](/ru/images/connection/iikocloud-connect/iikocloud-connect-4.png)
 
