@@ -88,7 +88,9 @@ To block a table, specify:
 
 **Floor Plan** is a visual representation of the venue's tables that helps assess how busy the venue is and manage reservations tied to specific tables.
 
-<!-- ![Timeline](/ru/images/reserve/timeline-view/timeline-view-7.png) -->
+![Floor Plan](/en/images/reserve/timeline-view/timeline-floorplan-en.png)
+
+[[delimiter rows=1]]
 
 [[info type=custom color=#E06823]]
 More details - in the article **[Floor Plan](https://wiki.cosmosresto.ru/en/reservations/reservations/floorplan/)**.

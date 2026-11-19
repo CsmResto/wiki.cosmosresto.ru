@@ -94,7 +94,7 @@ updatedAt: 2026-11-19
 
 **План этажа** - наглядное представление столов заведения, с помощью которого можно оценивать загрузку зала и управлять бронированиями в привязке к конкретным столам.
 
-![План этажа](/ru/images/reserve/timeline-view/timeline-view-7.png)
+![План этажа](/ru/images/reserve/timeline-view/timeline-floorplan.png)
 
 [[delimiter rows=1]]
 
