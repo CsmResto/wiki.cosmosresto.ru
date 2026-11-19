@@ -26,19 +26,20 @@ The module has three display modes for reservations. Each one is suitable for di
 
 **Timeline** is a time scale on which reservations are displayed by table.
 
-![Timeline](/en/images/reserve/timeline-view/timeline-view-2-en.jpg)
+![Timeline](/en/images/reserve/timeline-view/timeline-view-2-en.png)
 
 [[delimiter rows=1]]
 
 **Page elements:**
 
-1. List of floors and tables. Floors can be collapsed and expanded.
-2. Time scale with reservations.
-3. Button to create a reservation.
-4. Statistics of completed reservations for the day.
-5. Information on reservations on the selected floor. Colors correspond to the **[status model](https://wiki.cosmosresto.ru/en/reservations/reservations/reserv-status/)**.
-6. **No Table**, **Requests** and **Waitlist** buttons - open the corresponding lists in the sidebar on the right.
-7. **Archive** button - opens the list of canceled reservations.
+1. Day switcher.
+2. Information on reservations on the selected floor. Colors correspond to the **[status model](https://wiki.cosmosresto.ru/en/reservations/reservations/reserv-status/)**.
+3. List of floors and tables. Floors can be collapsed and expanded.
+4. Time scale with reservations.
+5. **No Table**, **Requests** and **Waitlist** buttons - open the corresponding lists in the sidebar on the right.
+6. **Archive** button - opens the list of canceled reservations.
+7. Reservation statistics for the day.
+8. Buttons for creating a reservation and a quick reservation, see **[Creating a Reservation](https://wiki.cosmosresto.ru/en/reservations/reservations/reserv-create/)** for details.
 
 ### No Table, Requests and Waitlist
 
