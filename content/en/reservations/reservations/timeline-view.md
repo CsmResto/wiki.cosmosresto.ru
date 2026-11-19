@@ -6,6 +6,12 @@ order: 1
 updatedAt: 2026-09-24
 ---
 
+**Reservation Timeline** is the main working screen of the reservations module. All reservations for the selected day are laid out by table on a time scale, and the color of each reservation shows its status. This is where it is convenient to check how busy the venue is, find a free table for the right time and create reservations right on the scale.
+
+![Reservation Timeline](/en/images/reserve/timeline-view/timeline-main-en.png)
+
+[[delimiter rows=1]]
+
 The module has three display modes for reservations. Each one is suitable for different tasks: working with reservations, analyzing occupancy and managing guest seating.
 
 1. **Timeline**
