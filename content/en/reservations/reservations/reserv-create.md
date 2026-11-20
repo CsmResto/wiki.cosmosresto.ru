@@ -160,11 +160,3 @@ If a reservation is created for the future, after selecting a guest you can choo
 <!-- [[info type=custom color=#E06823]]
 More about configuring notifications can be read in this [article](/ru/reservations/reservations/guest-create).
 [[/info]] -->
-
-[[delimiter rows=3]]
-
-**Read further:**
-
-— **[Automatic check creation from reservation](https://wiki.cosmosresto.ru/en/reservations/reservations/reserv-order-create/)**
-
-[[delimiter rows=3]]
