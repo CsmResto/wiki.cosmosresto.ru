@@ -169,6 +169,6 @@ updatedAt: 2026-09-22
 
 **Читайте дальше:**
 
-— **[Автоматическое создание чека из брони](https://wiki.cosmosresto.ru/ru/reservations/reservations/reserv-order-create/)**
+— **[Автоматическое создание чека и банкета из брони](https://wiki.cosmosresto.ru/ru/connection/reserv-order-create/)**
 
 [[delimiter rows=3]]
