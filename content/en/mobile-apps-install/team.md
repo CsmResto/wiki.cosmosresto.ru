@@ -15,9 +15,9 @@ Link to Android: [Google Play](https://play.google.com/store/apps/details?id=ru.
 
 1. Open the application
 
-2. In the **"Connection"** field enter the value that indicates your establishment
+2. In the **Connect to** field, enter your company name in CosmosResto in lowercase, for example **my-restaurant**. This value is the same for all restaurants of the company.
 
-    **How to find out:** Take the part of the link where you open CosmosResto in the browser. The required part of the link is indicated before csmresto.ru. For example, for https://demo.csmresto.ru/ the value is **demo**. If you are unsure, the value can be clarified from technical support
+    **How to find it:** open CosmosResto in a browser on your computer and look at the site address. You need the part before **.csmresto.ru**. For example, if the address is **my-restaurant.csmresto.ru**, enter **my-restaurant**. If you are not sure, contact technical support and we will help.
 
 3. Click **"Connect"**
 
@@ -29,7 +29,7 @@ Link to Android: [Google Play](https://play.google.com/store/apps/details?id=ru.
 If you encounter a problem `"Server is temporarily unavailable"` when trying to log in, then most likely the value in the second step was entered incorrectly. For this you need to:
 
 1. Click on the text **"Return to application selection"**
-2. In the **"Connect to"** field enter the value that indicates your establishment
+2. In the **Connect to** field, enter the company name again in lowercase, as in step 2.
 3. Click **"Connect"**
 4. Enter employee login details
 5. Click **"Log in"**
